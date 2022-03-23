@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8930cb69c4695514aab1cb250ea87507, type: 3}
-  m_Name: Bloodfen_Raptor
+  m_Name: River_Crocolisk
   m_EditorClassIdentifier: 
-  health: 2
-  attack: 3
+  health: 3
+  attack: 2
   mana: 2
-  name: Bloodfen Raptor
+  name: River Crocolisk
   description: 
   cardType: 2
-  image: {fileID: 21300000, guid: 073f255017adb5642a0715b54883642a, type: 3}
+  image: {fileID: 21300000, guid: 55d26a18016b2da488032d81163b58d8, type: 3}

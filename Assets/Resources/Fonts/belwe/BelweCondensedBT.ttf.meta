@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: ae7b3dfa3746d8946adfb852739f1a44
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Belwe Cn BT
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 9c7f5eea9a88a8d48bcc9c033922a3c4, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
