@@ -1,37 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-enum CardType {
+public enum CardType {
     Spell, 
     Weapon, 
     Minion
 }
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Card")]
 public class Card : ScriptableObject
 {
-    
-    Sprite frame;
-    Sprite manaSprite, healthSprite, attackSprite;
+    public int health;
+    public int attack;
 
-    string cardsURL = "Images/Cards/";
-    
+    [Range(0, 10)]
+    public int mana;
 
-    void Start()
-    {
+    public string name;
+    public string description;
 
-        manaSprite = Resources.Load<Sprite>(cardsURL + "Mana");
-        healthSprite = Resources.Load<Sprite>(cardsURL + "Health");
-        attackSprite = Resources.Load<Sprite>(cardsURL + "Attack");
-
-        frame = Resources.Load<Sprite>(cardsURL + "Frame-minion-neutral"); //ändra sen för att anpassa till typ av kort
-
-    }
-
-    void Update()
-    {
-
-    }
+    public CardType cardType;
+    public Sprite image;
 
 }
