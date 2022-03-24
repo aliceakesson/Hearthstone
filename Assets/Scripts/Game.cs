@@ -13,15 +13,36 @@ public class Game : MonoBehaviour
 
     readonly string usedFont = "belwe bold bt";
 
+    protected bool playerTurn = false;
+    bool prevPlayerTurn = false; 
+    protected bool gameIsFinished = false;
+    public Color buttonNotClickable;
+    public Color buttonClickable;
+
     void Start()
     {
+        print("Start");
+
         //ImportCard("Bloodfen_Raptor");
         ImportCard("River_Crocolisk");
+
+        playerTurn = true; 
+
     }
 
     void Update()
     {
-        
+
+        if(prevPlayerTurn == false && playerTurn == true)
+        {
+            GameObject endTurnButton = GameObject.Find("End Turn Button");
+            ColorBlock cb = endTurnButton.GetComponent<Button>().colors;
+            cb.normalColor = buttonClickable;
+            endTurnButton.GetComponent<Button>().colors = cb;
+            endTurnButton.GetComponent<Button>().interactable = true;
+        }
+        prevPlayerTurn = playerTurn;
+
     }
 
     void ImportCard(string cardName)
@@ -58,6 +79,7 @@ public class Game : MonoBehaviour
         cardObject.layer = LayerMask.NameToLayer("UI");
         cardObject.transform.parent = deck.transform;
         cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        cardObject.tag = "Card";
 
         GameObject mask = new GameObject("Image", typeof(RectTransform));
         mask.transform.parent = cardObject.transform;
@@ -175,5 +197,16 @@ public class Game : MonoBehaviour
         healthText.GetComponent<Text>().maskable = false;
         healthText.layer = LayerMask.NameToLayer("UI");
 
+    }
+
+    public void EndTurn()
+    {
+
+        GameObject endTurnButton = GameObject.Find("End Turn Button");
+        ColorBlock cb = endTurnButton.GetComponent<Button>().colors;
+        cb.normalColor = buttonNotClickable;
+        endTurnButton.GetComponent<Button>().colors = cb;
+        endTurnButton.GetComponent<Button>().interactable = false; 
+        
     }
 }
