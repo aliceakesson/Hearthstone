@@ -56,6 +56,10 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
 
+        if(this.gameObject.tag == "Card" && transform.parent.name == "Player Deck")
+        {
+
+        }
 
     }
 

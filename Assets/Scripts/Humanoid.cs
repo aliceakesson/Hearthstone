@@ -8,6 +8,10 @@ public class Humanoid : MonoBehaviour
     public List<Card> cards = new List<Card>();
     public List<GameObject> cardObjects = new List<GameObject>();
 
+    public int health;
+    public int armor;
+    public int heroPowerMana; 
+
     void Start()
     {
         
@@ -18,6 +22,7 @@ public class Humanoid : MonoBehaviour
     {
         
     }
+
 
     public virtual void DrawCard()
     {
