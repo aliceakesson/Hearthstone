@@ -565,8 +565,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b198a12523a9f8749be4799a918088f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonNotClickable: {r: 0, g: 0, b: 0, a: 0}
-  buttonClickable: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &403672904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,7 +590,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.8, g: 0.6627451, b: 0.13333334, a: 1}
     m_PressedColor: {r: 0.8, g: 0.6627451, b: 0.13333334, a: 1}
     m_SelectedColor: {r: 0.8, g: 0.6627451, b: 0.13333334, a: 1}
-    m_DisabledColor: {r: 0.8, g: 0.6627451, b: 0.13333334, a: 0.5019608}
+    m_DisabledColor: {r: 0.8, g: 0.6627451, b: 0.13333334, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0
   m_SpriteState:
@@ -1198,7 +1196,7 @@ GameObject:
   - component: {fileID: 1041083986}
   m_Layer: 5
   m_Name: Card
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1220,7 +1218,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -165.41}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1121642357
@@ -1569,6 +1567,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1582130127}
   - component: {fileID: 1582130126}
+  - component: {fileID: 1582130129}
+  - component: {fileID: 1582130128}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -1604,6 +1604,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1582130128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582130125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea3181bb9f24c9e4ba1e2818f453a5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cards: []
+--- !u!114 &1582130129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582130125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5502dc66420fa42afa47b51ca74e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cards: []
 --- !u!1 &1716664145
 GameObject:
   m_ObjectHideFlags: 0

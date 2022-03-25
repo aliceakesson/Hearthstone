@@ -19,6 +19,8 @@ public class Game : MonoBehaviour
     public Color buttonNotClickable;
     public Color buttonClickable;
 
+    
+
     void Start()
     {
         print("Start");
@@ -80,6 +82,7 @@ public class Game : MonoBehaviour
         cardObject.transform.parent = deck.transform;
         cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         cardObject.tag = "Card";
+        cardObject.AddComponent<OnClick>();
 
         GameObject mask = new GameObject("Image", typeof(RectTransform));
         mask.transform.parent = cardObject.transform;
