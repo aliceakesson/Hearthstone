@@ -25,7 +25,8 @@ public class Game : MonoBehaviour
     {
         print("Start");
 
-        //ImportCard("Bloodfen_Raptor");
+        ImportCard("Bloodfen_Raptor");
+        ImportCard("River_Crocolisk");
         ImportCard("River_Crocolisk");
 
         playerTurn = true; 
@@ -199,6 +200,27 @@ public class Game : MonoBehaviour
         healthText.GetComponent<Text>().text = health + "";
         healthText.GetComponent<Text>().maskable = false;
         healthText.layer = LayerMask.NameToLayer("UI");
+
+        cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 120);
+
+        Player p = GameObject.Find("Scripts").GetComponent<Player>();
+        p.cardObjects.Add(cardObject);
+
+        float margin = 35;
+        float cardWidth = cardObject.GetComponent<RectTransform>().rect.width;
+        float lengthOfLine = 0; 
+
+        foreach(GameObject obj in p.cardObjects)
+        {
+            lengthOfLine += cardWidth - margin; 
+        }
+
+        float startPosX = -lengthOfLine / 2;
+        for(int i = 0; i < p.cardObjects.Count; i++)
+        {
+            float x = startPosX + i * (cardWidth-margin);
+            p.cardObjects[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x, 0);
+        }
 
     }
 

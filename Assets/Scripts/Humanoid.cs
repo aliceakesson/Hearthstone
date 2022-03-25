@@ -6,6 +6,7 @@ public class Humanoid : MonoBehaviour
 {
 
     public List<Card> cards = new List<Card>();
+    public List<GameObject> cardObjects = new List<GameObject>();
 
     void Start()
     {
