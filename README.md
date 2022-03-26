@@ -6,4 +6,5 @@ Will include:
 - AI opponent
 - Ability to choose cards for game 
 
-![hearthstone 1](https://user-images.githubusercontent.com/91065258/160191422-8c6bbee7-447b-432f-8892-02fe4ce4af87.png)
+![hearthstone 1](https://user-images.githubusercontent.com/91065258/160237301-a2c2f73c-5d21-45c3-b9cd-020626668c73.png)
+
