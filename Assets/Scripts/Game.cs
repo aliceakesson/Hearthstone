@@ -77,7 +77,7 @@ public class Game : MonoBehaviour
 
         frame = Resources.Load<Sprite>(cardsFramesURL + imageName);
 
-        GameObject deck = GameObject.Find("Deck");
+        GameObject deck = GameObject.Find("Player Deck");
         GameObject cardObject = new GameObject("Card", typeof(RectTransform));
         cardObject.layer = LayerMask.NameToLayer("UI");
         cardObject.transform.parent = deck.transform;
