@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class OnClick : Game, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
 
     float boardX1 = -296, boardX2 = 296;
@@ -41,6 +41,11 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             {
                 placeable = false; 
                 GetComponent<RectTransform>().anchoredPosition = new Vector2(0, boardY);
+
+                Destroy(this.gameObject);
+
+                //ChangeCardSize("Card Normal");
+                //this.gameObject.transform.parent = GameObject.Find("Player Board").transform;
             }
             else
             {
@@ -221,4 +226,6 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         healthText.GetComponent<Text>().fontSize = healthTextExample.GetComponent<Text>().fontSize;
 
     }
+
+    
 }

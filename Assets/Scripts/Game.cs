@@ -223,6 +223,23 @@ public class Game : MonoBehaviour
         }
 
     }
+    public void ImportMercenary(string cardName)
+    {
+
+        Card card = Resources.Load<Card>(cardsURL + "cardName");
+
+        if (card.cardType == CardType.Minion)
+        {
+            Sprite frame = Resources.Load<Sprite>(cardsFramesURL + "Mercenary_Minion");
+        }
+        else //ändra senare
+        {
+            Sprite frame = Resources.Load<Sprite>(cardsFramesURL + "Mercenary_Minion");
+        }
+
+
+
+    }
 
     public void EndTurn()
     {
