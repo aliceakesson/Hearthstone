@@ -14,12 +14,12 @@ public class Game : MonoBehaviour
     readonly string usedFont = "belwe bold bt";
 
     protected bool playerTurn = false;
-    bool prevPlayerTurn = false; 
+    bool prevPlayerTurn = false;
     protected bool gameIsFinished = false;
     public Color buttonNotClickable;
     public Color buttonClickable;
 
-    
+
 
     void Start()
     {
@@ -29,14 +29,14 @@ public class Game : MonoBehaviour
         ImportCard("River_Crocolisk");
         ImportCard("River_Crocolisk");
 
-        playerTurn = true; 
+        playerTurn = true;
 
     }
 
     void Update()
     {
 
-        if(prevPlayerTurn == false && playerTurn == true)
+        if (prevPlayerTurn == false && playerTurn == true)
         {
             GameObject endTurnButton = GameObject.Find("End Turn Button");
             ColorBlock cb = endTurnButton.GetComponent<Button>().colors;
@@ -60,7 +60,7 @@ public class Game : MonoBehaviour
         string name = card.name;
         string description = card.description;
 
-        Sprite image = card.image; 
+        Sprite image = card.image;
         CardType cardType = card.cardType;
 
         Sprite manaSprite = Resources.Load<Sprite>(cardsImagesURL + "Mana");
@@ -93,7 +93,7 @@ public class Game : MonoBehaviour
         mask.GetComponent<Image>().sprite = Resources.Load<Sprite>(cardsImagesURL + imageName + "-mask");
         mask.layer = LayerMask.NameToLayer("UI");
         mask.AddComponent<Mask>();
-        mask.GetComponent<Mask>().showMaskGraphic = false; 
+        mask.GetComponent<Mask>().showMaskGraphic = false;
 
         GameObject imageObj = new GameObject("Image", typeof(RectTransform));
         imageObj.transform.parent = mask.transform;
@@ -226,16 +226,16 @@ public class Game : MonoBehaviour
     public void ImportMercenary(string cardName)
     {
 
-        Card card = Resources.Load<Card>(cardsURL + "cardName");
+        //Card card = Resources.Load<Card>(cardsURL + "cardName");
 
-        if (card.cardType == CardType.Minion)
-        {
-            Sprite frame = Resources.Load<Sprite>(cardsFramesURL + "Mercenary_Minion");
-        }
-        else //ändra senare
-        {
-            Sprite frame = Resources.Load<Sprite>(cardsFramesURL + "Mercenary_Minion");
-        }
+        //if (card.cardType == CardType.Minion)
+        //{
+        //    Sprite frame = Resources.Load<Sprite>(cardsFramesURL + "Mercenary_Minion");
+        //}
+        //else //ändra senare
+        //{
+        //    Sprite frame = Resources.Load<Sprite>(cardsFramesURL + "Mercenary_Minion");
+        //}
 
 
 
@@ -248,7 +248,7 @@ public class Game : MonoBehaviour
         ColorBlock cb = endTurnButton.GetComponent<Button>().colors;
         cb.normalColor = buttonNotClickable;
         endTurnButton.GetComponent<Button>().colors = cb;
-        endTurnButton.GetComponent<Button>().interactable = false; 
-        
+        endTurnButton.GetComponent<Button>().interactable = false;
+
     }
 }

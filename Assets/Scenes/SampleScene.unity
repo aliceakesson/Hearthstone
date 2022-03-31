@@ -888,7 +888,6 @@ GameObject:
   - component: {fileID: 403672906}
   - component: {fileID: 403672905}
   - component: {fileID: 403672904}
-  - component: {fileID: 403672903}
   m_Layer: 5
   m_Name: End Turn Button
   m_TagString: Button
@@ -916,18 +915,6 @@ RectTransform:
   m_AnchoredPosition: {x: 316, y: 17.7}
   m_SizeDelta: {x: 105.833, y: 45.586}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &403672903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403672901}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b198a12523a9f8749be4799a918088f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &403672904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2407,6 +2394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cards: []
   cardObjects: []
+  mercenaries: []
   health: 0
   armor: 0
   heroPowerMana: 0
@@ -2424,6 +2412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cards: []
   cardObjects: []
+  mercenaries: []
   health: 0
   armor: 0
   heroPowerMana: 0

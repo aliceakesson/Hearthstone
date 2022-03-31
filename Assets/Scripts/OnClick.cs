@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class OnClick : Game, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
 
     float boardX1 = -296, boardX2 = 296;
@@ -22,7 +22,7 @@ public class OnClick : Game, IPointerClickHandler, IPointerEnterHandler, IPointe
     public void OnDrag(PointerEventData eventData)
     {
 
-        if(placeable)
+        if (placeable)
         {
             GetComponent<RectTransform>().anchoredPosition += eventData.delta;
         }
@@ -33,13 +33,13 @@ public class OnClick : Game, IPointerClickHandler, IPointerEnterHandler, IPointe
     {
         print("On End Drag");
 
-        if(this.gameObject.tag == "Card")
+        if (this.gameObject.tag == "Card")
         {
             Vector2 pos = GetComponent<RectTransform>().anchoredPosition;
 
-            if(pos.x >= boardX1 && pos.x <= boardX2 && pos.y <= boardY1 && pos.y >= boardY2)
+            if (pos.x >= boardX1 && pos.x <= boardX2 && pos.y <= boardY1 && pos.y >= boardY2)
             {
-                placeable = false; 
+                placeable = false;
                 GetComponent<RectTransform>().anchoredPosition = new Vector2(0, boardY);
 
                 Destroy(this.gameObject);
@@ -61,34 +61,34 @@ public class OnClick : Game, IPointerClickHandler, IPointerEnterHandler, IPointe
     public void OnPointerEnter(PointerEventData eventData)
     {
 
-        if(this.gameObject.tag == "Card" && transform.parent.name == "Player Deck")
+        if (this.gameObject.tag == "Card" && transform.parent.name == "Player Deck")
         {
 
             ChangeCardSize("Card Big");
 
             List<GameObject> cards = GameObject.Find("Scripts").GetComponent<Player>().cardObjects;
-            int listIndex = 0; 
-            for(int i = 0; i < cards.Count; i++)
+            int listIndex = 0;
+            for (int i = 0; i < cards.Count; i++)
             {
-                if(cards[i] == this.gameObject)
+                if (cards[i] == this.gameObject)
                 {
                     listIndex = i;
-                    break; 
+                    break;
                 }
             }
 
             float margin = 50;
-            if(listIndex > 0)
+            if (listIndex > 0)
             {
-                for(int i = 0; i < listIndex; i++)
+                for (int i = 0; i < listIndex; i++)
                 {
                     Vector2 delta = new Vector2(-margin, 0);
-                    cards[i].GetComponent<RectTransform>().anchoredPosition += delta; 
+                    cards[i].GetComponent<RectTransform>().anchoredPosition += delta;
                 }
             }
-            if(listIndex < (cards.Count-1))
+            if (listIndex < (cards.Count - 1))
             {
-                for (int i = cards.Count-1; i > listIndex; i--)
+                for (int i = cards.Count - 1; i > listIndex; i--)
                 {
                     Vector2 delta = new Vector2(margin, 0);
                     cards[i].GetComponent<RectTransform>().anchoredPosition += delta;
@@ -227,5 +227,5 @@ public class OnClick : Game, IPointerClickHandler, IPointerEnterHandler, IPointe
 
     }
 
-    
+
 }
