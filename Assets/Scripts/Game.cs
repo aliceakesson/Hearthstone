@@ -29,9 +29,6 @@ public class Game : MonoBehaviour
         ImportCard("River_Crocolisk");
         ImportCard("River_Crocolisk");
 
-        ImportMercenary("Bloodfen_Raptor");
-        ImportMercenary("River_Crocolisk");
-
         playerTurn = true;
 
     }
@@ -348,7 +345,7 @@ public class Game : MonoBehaviour
         Player p = GameObject.Find("Scripts").GetComponent<Player>();
         p.mercenaries.Add(mercObject);
 
-        float margin = 20;
+        float margin = 10;
         float width = mercObject.GetComponent<RectTransform>().rect.width;
         float lengthOfLine = 0;
 
@@ -363,6 +360,33 @@ public class Game : MonoBehaviour
         {
             float x = startPosX + i * (width + margin);
             p.mercenaries[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + width / 2, 0);
+        }
+
+    }
+
+    public void ReloadCards()
+    {
+
+        if(GameObject.Find("Player Deck").transform.childCount > 0)
+        {
+            Player p = GameObject.Find("Scripts").GetComponent<Player>();
+
+            float margin = 35;
+            float cardWidth = GameObject.Find("Player Deck").transform.GetChild(0).GetComponent<RectTransform>().rect.width;
+            float lengthOfLine = 0;
+
+            foreach (GameObject obj in p.cardObjects)
+            {
+                lengthOfLine += cardWidth - margin;
+            }
+            lengthOfLine += margin;
+
+            float startPosX = -lengthOfLine / 2;
+            for (int i = 0; i < p.cardObjects.Count; i++)
+            {
+                float x = startPosX + i * (cardWidth - margin);
+                p.cardObjects[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + cardWidth / 2, 0);
+            }
         }
 
     }

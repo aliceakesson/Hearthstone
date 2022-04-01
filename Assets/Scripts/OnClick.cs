@@ -17,6 +17,14 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+
+        if(tag == "Mercenary")
+        {
+
+
+
+        }
+
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -41,9 +49,18 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             {
 
                 Game g = GameObject.Find("Scripts").GetComponent<Game>();
-                
+                g.ImportMercenary(this.gameObject.name);
 
                 Destroy(this.gameObject);
+
+                Player p = GameObject.Find("Scripts").GetComponent<Player>();
+
+                int index = 0;
+                if (transform.parent.childCount > 1)
+                    index = transform.GetSiblingIndex();
+
+                p.cardObjects.RemoveAt(index);
+                g.ReloadCards();
 
             }
             else
