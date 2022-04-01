@@ -29,6 +29,9 @@ public class Game : MonoBehaviour
         ImportCard("River_Crocolisk");
         ImportCard("River_Crocolisk");
 
+        ImportMercenary("Bloodfen_Raptor");
+        ImportMercenary("River_Crocolisk");
+
         playerTurn = true;
 
     }
@@ -78,13 +81,14 @@ public class Game : MonoBehaviour
         frame = Resources.Load<Sprite>(cardsFramesURL + imageName);
 
         GameObject deck = GameObject.Find("Player Deck");
-        GameObject cardObject = new GameObject("Card", typeof(RectTransform));
+        GameObject cardObject = new GameObject(cardName, typeof(RectTransform));
         cardObject.layer = LayerMask.NameToLayer("UI");
         cardObject.transform.parent = deck.transform;
         cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         cardObject.tag = "Card";
         cardObject.AddComponent<OnClick>();
 
+        #region Skapande av card UI
         GameObject mask = new GameObject("Image", typeof(RectTransform));
         mask.transform.parent = cardObject.transform;
         mask.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 120);
@@ -157,7 +161,7 @@ public class Game : MonoBehaviour
         manaText.GetComponent<Text>().maskable = false;
         manaText.layer = LayerMask.NameToLayer("UI");
 
-        GameObject attackObject = new GameObject("attack", typeof(RectTransform));
+        GameObject attackObject = new GameObject("Attack", typeof(RectTransform));
         attackObject.transform.parent = frameObject.transform;
         attackObject.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
         attackObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-36, -52);
@@ -200,6 +204,7 @@ public class Game : MonoBehaviour
         healthText.GetComponent<Text>().text = health + "";
         healthText.GetComponent<Text>().maskable = false;
         healthText.layer = LayerMask.NameToLayer("UI");
+        #endregion
 
         cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 120);
 
@@ -214,30 +219,151 @@ public class Game : MonoBehaviour
         {
             lengthOfLine += cardWidth - margin; 
         }
+        lengthOfLine += margin; 
 
         float startPosX = -lengthOfLine / 2;
         for(int i = 0; i < p.cardObjects.Count; i++)
         {
             float x = startPosX + i * (cardWidth-margin);
-            p.cardObjects[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x, 0);
+            p.cardObjects[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + cardWidth/2, 0);
         }
 
     }
     public void ImportMercenary(string cardName)
     {
 
-        //Card card = Resources.Load<Card>(cardsURL + "cardName");
+        Card card = Resources.Load<Card>(cardsURL + cardName);
 
-        //if (card.cardType == CardType.Minion)
-        //{
-        //    Sprite frame = Resources.Load<Sprite>(cardsFramesURL + "Mercenary_Minion");
-        //}
-        //else //ändra senare
-        //{
-        //    Sprite frame = Resources.Load<Sprite>(cardsFramesURL + "Mercenary_Minion");
-        //}
+        int health = card.health;
+        int attack = card.attack;
+        Sprite image = card.image;
 
+        Sprite healthSprite = Resources.Load<Sprite>(cardsImagesURL + "Health");
+        Sprite attackSprite = Resources.Load<Sprite>(cardsImagesURL + "Attack");
 
+        Sprite frame;
+        string imageName = "";
+            
+        if (card.cardType == CardType.Minion)
+        {
+            imageName = "Mercenary_Minion";
+        }
+        else //ändra senare
+        {
+            imageName = "Mercenary_Minion";
+        }
+
+        frame = Resources.Load<Sprite>(cardsFramesURL + imageName);
+
+        GameObject mercObject = new GameObject(cardName, typeof(RectTransform));
+        GameObject example = GameObject.Find("Mercenary Example");
+
+        mercObject.transform.parent = GameObject.Find("Player Board").transform;
+        mercObject.layer = LayerMask.NameToLayer("UI");
+
+        RectTransform rt = example.GetComponent<RectTransform>();
+        mercObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        mercObject.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+        mercObject.tag = "Mercenary";
+
+        #region Skapande av mercenary UI
+        GameObject frame1 = new GameObject("Frame", typeof(RectTransform));
+        rt = example.transform.GetChild(0).GetComponent<RectTransform>();
+        frame1.transform.parent = mercObject.transform;
+        frame1.layer = LayerMask.NameToLayer("UI");
+        frame1.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        frame1.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+        frame1.AddComponent<Image>();
+        frame1.GetComponent<Image>().sprite = Resources.Load<Sprite>(cardsFramesURL + imageName + "_mask");
+        frame1.AddComponent<Mask>();
+        frame1.GetComponent<Mask>().showMaskGraphic = false;
+
+        GameObject imageObj = new GameObject("Image", typeof(RectTransform));
+        rt = example.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        imageObj.transform.parent = frame1.transform;
+        imageObj.layer = LayerMask.NameToLayer("UI");
+        imageObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        imageObj.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+        imageObj.AddComponent<Image>();
+        imageObj.GetComponent<Image>().sprite = image;
+
+        GameObject frame2 = new GameObject("Frame Visible", typeof(RectTransform));
+        rt = example.transform.GetChild(0).GetChild(1).GetComponent<RectTransform>();
+        frame2.transform.parent = frame1.transform;
+        frame2.layer = LayerMask.NameToLayer("UI");
+        frame2.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        frame2.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+        frame2.AddComponent<Image>();
+        frame2.GetComponent<Image>().sprite = frame;
+
+        GameObject attackObj = new GameObject("Attack", typeof(RectTransform));
+        rt = example.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<RectTransform>();
+        attackObj.transform.parent = frame2.transform;
+        attackObj.layer = LayerMask.NameToLayer("UI");
+        attackObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
+        attackObj.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+        attackObj.AddComponent<Image>();
+        attackObj.GetComponent<Image>().sprite = attackSprite;
+        attackObj.GetComponent<Image>().maskable = false;
+
+        GameObject attackText = new GameObject("Text", typeof(RectTransform));
+        rt = example.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        attackText.transform.parent = attackObj.transform;
+        attackText.layer = LayerMask.NameToLayer("UI");
+        attackText.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
+        attackText.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+        attackText.AddComponent<Text>();
+        attackText.GetComponent<Text>().text = attack + "";
+        attackText.GetComponent<Text>().font = Resources.Load<Font>(belweFontsURL + usedFont);
+        attackText.GetComponent<Text>().fontSize = 10;
+        attackText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+        attackText.GetComponent<Text>().color = Color.white;
+        attackText.GetComponent<Text>().maskable = false;
+
+        GameObject healthObj = new GameObject("health", typeof(RectTransform));
+        rt = example.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<RectTransform>();
+        healthObj.transform.parent = frame2.transform;
+        healthObj.layer = LayerMask.NameToLayer("UI");
+        healthObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
+        healthObj.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+        healthObj.AddComponent<Image>();
+        healthObj.GetComponent<Image>().sprite = healthSprite;
+        healthObj.GetComponent<Image>().maskable = false;
+
+        GameObject healthText = new GameObject("Text", typeof(RectTransform));
+        rt = example.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<RectTransform>();
+        healthText.transform.parent = healthObj.transform;
+        healthText.layer = LayerMask.NameToLayer("UI");
+        healthText.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
+        healthText.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+        healthText.AddComponent<Text>();
+        healthText.GetComponent<Text>().text = health + "";
+        healthText.GetComponent<Text>().font = Resources.Load<Font>(belweFontsURL + usedFont);
+        healthText.GetComponent<Text>().fontSize = 10;
+        healthText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+        healthText.GetComponent<Text>().color = Color.white;
+        healthText.GetComponent<Text>().maskable = false;
+        #endregion
+
+        Player p = GameObject.Find("Scripts").GetComponent<Player>();
+        p.mercenaries.Add(mercObject);
+
+        float margin = 20;
+        float width = mercObject.GetComponent<RectTransform>().rect.width;
+        float lengthOfLine = 0;
+
+        foreach (GameObject obj in p.mercenaries)
+        {
+            lengthOfLine += width + margin;
+        }
+        lengthOfLine -= margin;
+
+        float startPosX = -lengthOfLine / 2;
+        for (int i = 0; i < p.mercenaries.Count; i++)
+        {
+            float x = startPosX + i * (width + margin);
+            p.mercenaries[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + width / 2, 0);
+        }
 
     }
 

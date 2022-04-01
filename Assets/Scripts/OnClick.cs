@@ -39,13 +39,12 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
             if (pos.x >= boardX1 && pos.x <= boardX2 && pos.y <= boardY1 && pos.y >= boardY2)
             {
-                placeable = false;
-                GetComponent<RectTransform>().anchoredPosition = new Vector2(0, boardY);
+
+                Game g = GameObject.Find("Scripts").GetComponent<Game>();
+                
 
                 Destroy(this.gameObject);
 
-                //ChangeCardSize("Card Normal");
-                //this.gameObject.transform.parent = GameObject.Find("Player Board").transform;
             }
             else
             {

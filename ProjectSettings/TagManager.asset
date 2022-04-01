@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Card
   - Button
+  - Mercenary
   layers:
   - Default
   - TransparentFX
