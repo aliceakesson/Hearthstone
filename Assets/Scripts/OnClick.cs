@@ -49,7 +49,7 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             {
 
                 Game g = GameObject.Find("Scripts").GetComponent<Game>();
-                g.ImportMercenary(this.gameObject.name);
+                g.ImportMercenary(this.gameObject.name, 1);
                 
                 Destroy(this.gameObject);
 
