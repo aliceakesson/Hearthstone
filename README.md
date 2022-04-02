@@ -6,5 +6,10 @@ Will include:
 - AI opponent
 - Ability to choose cards for game 
 
+Currently includes: 
+- Game board 
+- Ability to drag cards to board 
+- Simple UI
+
 ![hearthstone 1](https://user-images.githubusercontent.com/91065258/160237301-a2c2f73c-5d21-45c3-b9cd-020626668c73.png)
 
