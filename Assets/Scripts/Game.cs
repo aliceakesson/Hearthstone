@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// "Main"-klassen, här implementeras all gameplay
+/// </summary>
 public class Game : MonoBehaviour
 {
 
@@ -48,6 +51,10 @@ public class Game : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Importerar ett kort till antingen spelaren eller fiendens kortlek
+    /// </summary>
+    /// <param name="cardName">Namnet på kortet att importera</param>
     void ImportCard(string cardName)
     {
 
@@ -226,6 +233,11 @@ public class Game : MonoBehaviour
         }
 
     }
+
+    /// <summary>
+    /// Importerar en mercenary (spelbar karaktär) till antingen spelaren eller fiendens del av spelplanen
+    /// </summary>
+    /// <param name="cardName">Namnet på kortet att importera</param>
     public void ImportMercenary(string cardName)
     {
 
@@ -364,6 +376,9 @@ public class Game : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Uppdaterar korthögen för spelare eller fiende
+    /// </summary>
     public void ReloadCards()
     {
 
@@ -391,6 +406,9 @@ public class Game : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Metod kallad när knappen "End Turn Button" är klickad
+    /// </summary>
     public void EndTurn()
     {
 

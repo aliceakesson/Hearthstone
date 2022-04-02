@@ -50,7 +50,7 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
                 Game g = GameObject.Find("Scripts").GetComponent<Game>();
                 g.ImportMercenary(this.gameObject.name);
-
+                
                 Destroy(this.gameObject);
 
                 Player p = GameObject.Find("Scripts").GetComponent<Player>();
@@ -156,6 +156,10 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
     }
 
+    /// <summary>
+    /// Ändrar storlek på ett kort 
+    /// </summary>
+    /// <param name="objectName">Namnet på kortet vars storlek ska implementeras på detta objekt</param>
     void ChangeCardSize(string objectName)
     {
 

@@ -25,7 +25,9 @@ public class Humanoid : MonoBehaviour
         
     }
 
-
+    /// <summary>
+    /// Metod som drar ett nytt kort till handen
+    /// </summary>
     public virtual void DrawCard()
     {
 
