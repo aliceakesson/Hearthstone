@@ -16,13 +16,11 @@ public class Game : MonoBehaviour
 
     readonly string usedFont = "belwe bold bt";
 
-    protected bool playerTurn = false;
+    public bool playerTurn = false;
     bool prevPlayerTurn = false;
     protected bool gameIsFinished = false;
     public Color buttonNotClickable;
     public Color buttonClickable;
-
-
 
     void Start()
     {
@@ -264,22 +262,7 @@ public class Game : MonoBehaviour
             Player p = GameObject.Find("Scripts").GetComponent<Player>();
             p.cardObjects.Add(cardObject);
 
-            float margin = 35;
-            float cardWidth = cardObject.GetComponent<RectTransform>().rect.width;
-            float lengthOfLine = 0;
-
-            foreach (GameObject obj in p.cardObjects)
-            {
-                lengthOfLine += cardWidth - margin;
-            }
-            lengthOfLine += margin;
-
-            float startPosX = -lengthOfLine / 2;
-            for (int i = 0; i < p.cardObjects.Count; i++)
-            {
-                float x = startPosX + i * (cardWidth - margin);
-                p.cardObjects[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + cardWidth / 2, 0);
-            }
+            ReloadCards(1);
         }
         else
         {
@@ -474,29 +457,73 @@ public class Game : MonoBehaviour
     /// <summary>
     /// Uppdaterar korthögen för spelare eller fiende
     /// </summary>
-    public void ReloadCards()
+    /// <param name="side">Sidan där kort ska uppdateras (0 = fiende, 1 = spelare)</param>
+    public void ReloadCards(int side)
     {
 
-        if(GameObject.Find("Player Deck").transform.childCount > 0)
+        if(side == 0)
+        {
+
+            Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+            if (e.cardObjects.Count > 0)
+            {
+
+                float margin = 35;
+                float cardWidth = GameObject.Find("Enemy Deck").transform.GetChild(0).GetComponent<RectTransform>().rect.width;
+                float lengthOfLine = 0;
+
+                foreach (GameObject obj in e.cardObjects)
+                {
+                    lengthOfLine += cardWidth - margin;
+                }
+                lengthOfLine += margin;
+
+                //float totalAngle = 30;
+                //float angle = totalAngle / p.cardObjects.Count;
+                //float startAngle = -totalAngle / 2;
+
+                float startPosX = -lengthOfLine / 2;
+                for (int i = 0; i < e.cardObjects.Count; i++)
+                {
+                    float x = startPosX + i * (cardWidth - margin);
+                    e.cardObjects[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + cardWidth / 2, 0);
+                    //p.cardObjects[i].GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, -1 * (startAngle + angle*i));
+                }
+            }
+
+        }
+        else if(side == 1)
         {
             Player p = GameObject.Find("Scripts").GetComponent<Player>();
-
-            float margin = 35;
-            float cardWidth = GameObject.Find("Player Deck").transform.GetChild(0).GetComponent<RectTransform>().rect.width;
-            float lengthOfLine = 0;
-
-            foreach (GameObject obj in p.cardObjects)
+            if (p.cardObjects.Count > 0)
             {
-                lengthOfLine += cardWidth - margin;
-            }
-            lengthOfLine += margin;
 
-            float startPosX = -lengthOfLine / 2;
-            for (int i = 0; i < p.cardObjects.Count; i++)
-            {
-                float x = startPosX + i * (cardWidth - margin);
-                p.cardObjects[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + cardWidth / 2, 0);
+                float margin = 35;
+                float cardWidth = GameObject.Find("Player Deck").transform.GetChild(0).GetComponent<RectTransform>().rect.width;
+                float lengthOfLine = 0;
+
+                foreach (GameObject obj in p.cardObjects)
+                {
+                    lengthOfLine += cardWidth - margin;
+                }
+                lengthOfLine += margin;
+
+                //float totalAngle = 30;
+                //float angle = totalAngle / p.cardObjects.Count;
+                //float startAngle = -totalAngle / 2;
+
+                float startPosX = -lengthOfLine / 2;
+                for (int i = 0; i < p.cardObjects.Count; i++)
+                {
+                    float x = startPosX + i * (cardWidth - margin);
+                    p.cardObjects[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + cardWidth / 2, 0);
+                    //p.cardObjects[i].GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, -1 * (startAngle + angle*i));
+                }
             }
+        }
+        else
+        {
+            Debug.Log("Fel i kod i metod ReloadCards(int)");
         }
 
     }
@@ -507,11 +534,33 @@ public class Game : MonoBehaviour
     public void EndTurn()
     {
 
+        playerTurn = false; 
+
         GameObject endTurnButton = GameObject.Find("End Turn Button");
         ColorBlock cb = endTurnButton.GetComponent<Button>().colors;
         cb.normalColor = buttonNotClickable;
         endTurnButton.GetComponent<Button>().colors = cb;
         endTurnButton.GetComponent<Button>().interactable = false;
+
+        //Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+
+        //List<GameObject> mercenaries = e.mercenaries; 
+        //if(mercenaries.Count > 0)
+        //{
+
+        //}
+
+        //List<GameObject> deck = e.cardObjects;
+        //if(deck.Count > 0)
+        //{
+
+        //}
+
+        //cb.normalColor = buttonClickable;
+        //endTurnButton.GetComponent<Button>().colors = cb;
+        //endTurnButton.GetComponent<Button>().interactable = true;
+        //playerTurn = true; 
+
 
     }
 }

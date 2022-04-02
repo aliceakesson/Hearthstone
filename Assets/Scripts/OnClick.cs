@@ -29,8 +29,8 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-
-        if (placeable)
+        Game g = GameObject.Find("Scripts").GetComponent<Game>();
+        if (placeable && g.playerTurn)
         {
             GetComponent<RectTransform>().anchoredPosition += eventData.delta;
         }
@@ -60,7 +60,7 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
                     index = transform.GetSiblingIndex();
 
                 p.cardObjects.RemoveAt(index);
-                g.ReloadCards();
+                g.ReloadCards(1);
 
             }
             else
@@ -77,7 +77,8 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
 
-        if (this.gameObject.tag == "Card" && transform.parent.name == "Player Deck")
+        Game g = GameObject.Find("Scripts").GetComponent<Game>();
+        if (this.gameObject.tag == "Card" && transform.parent.name == "Player Deck" && g.playerTurn)
         {
 
             ChangeCardSize("Card Big");
@@ -118,7 +119,8 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     public void OnPointerExit(PointerEventData eventData)
     {
 
-        if (this.gameObject.tag == "Card" && transform.parent.name == "Player Deck")
+        Game g = GameObject.Find("Scripts").GetComponent<Game>();
+        if (this.gameObject.tag == "Card" && transform.parent.name == "Player Deck" && g.playerTurn)
         {
 
             ChangeCardSize("Card Normal");
