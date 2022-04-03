@@ -37,7 +37,7 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             arrowClone.layer = LayerMask.NameToLayer("UI");
 
             RectTransform rt = arrowClone.GetComponent<RectTransform>();
-            rt.position = new Vector2(onBeginDragStartPos.x, onBeginDragStartPos.y + rt.rect.height/2);
+            rt.position = onBeginDragStartPos; 
 
         }
 
@@ -67,56 +67,55 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             float arrowHeight = Mathf.Sqrt(Mathf.Pow(mousePos.x - worldStartPos.x, 2) + Mathf.Pow(mousePos.y - worldStartPos.y, 2));
 
             float margin = 20;
-            float boxHeight = margin;
-            if (arrowHeight > margin)
+            if (arrowHeight < margin)
             {
-                boxHeight = arrowHeight;
+                arrowHeight = margin; 
             }
 
-            RectTransform rt = boxes.GetComponent<RectTransform>();
-            float prevHeight = rt.rect.height;
-            rt.sizeDelta = new Vector2(rt.rect.width, boxHeight);
+            RectTransform rt = arrowClone.GetComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(rt.rect.width, arrowHeight*2);
+
+            rt = boxes.GetComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(rt.rect.width, arrowHeight);
+
+            float prevY = rt.anchoredPosition.y;
+            rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, arrowHeight/2);
 
             foreach (Transform box in boxes.transform)
             {
                 rt = box.gameObject.GetComponent<RectTransform>();
-                rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y + (boxHeight - prevHeight));
+                rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y + (arrowHeight/2 - prevY));
             }
 
-            rt = arrowClone.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(rt.rect.width, boxHeight);
-            rt.position = new Vector2(onBeginDragStartPos.x, onBeginDragStartPos.y + (rt.rect.height) / 2);
+            float angle = 0;
+            if (mousePos.x > worldStartPos.x) //till höger om mercenary
+            {
+                if (mousePos.y > worldStartPos.y) //över mercenary
+                {
+                    angle = Mathf.Atan2((mousePos.y - onBeginDragStartPos.y), (mousePos.x - onBeginDragStartPos.x)) * Mathf.Rad2Deg;
+                    angle = 90 - angle;
+                }
+                else if (mousePos.y < worldStartPos.y)
+                {
+                    angle = Mathf.Atan2((onBeginDragStartPos.y - mousePos.y), (mousePos.x - onBeginDragStartPos.x)) * Mathf.Rad2Deg;
+                    angle += 90;
+                }
+            }
+            else if (mousePos.x < worldStartPos.x)
+            {
+                if (mousePos.y > worldStartPos.y)
+                {
+                    angle = Mathf.Atan2((mousePos.y - onBeginDragStartPos.y), (onBeginDragStartPos.x - mousePos.x)) * Mathf.Rad2Deg;
+                    angle += 270;
+                }
+                else if (mousePos.y < worldStartPos.y)
+                {
+                    angle = Mathf.Atan2((onBeginDragStartPos.x - mousePos.x), (onBeginDragStartPos.y - mousePos.y)) * Mathf.Rad2Deg;
+                    angle += 180;
+                }
+            }
 
-
-            //float angle = 0;
-            //if (mousePos.x > worldStartPos.x) //till höger om mercenary
-            //{
-            //    if (mousePos.y > worldStartPos.y) //över mercenary
-            //    {
-            //        angle = Mathf.Atan2((mousePos.y - onBeginDragStartPos.y), (mousePos.x - onBeginDragStartPos.x)) * Mathf.Rad2Deg;
-            //        angle = 90 - angle;
-            //    }
-            //    else if (mousePos.y < worldStartPos.y)
-            //    {
-            //        angle = Mathf.Atan2((onBeginDragStartPos.y - mousePos.y), (mousePos.x - onBeginDragStartPos.x)) * Mathf.Rad2Deg;
-            //        angle += 90;
-            //    }
-            //}
-            //else if (mousePos.x < worldStartPos.x)
-            //{
-            //    if (mousePos.y > worldStartPos.y)
-            //    {
-            //        angle = Mathf.Atan2((mousePos.y - onBeginDragStartPos.y), (onBeginDragStartPos.x - mousePos.x)) * Mathf.Rad2Deg;
-            //        angle += 270;
-            //    }
-            //    else if (mousePos.y < worldStartPos.y)
-            //    {
-            //        angle = Mathf.Atan2((onBeginDragStartPos.x - mousePos.x), (onBeginDragStartPos.y - mousePos.x)) * Mathf.Rad2Deg;
-            //        angle += 180;
-            //    }
-            //}
-
-            //rt.Rotate(new Vector3(0, 0, -angle), Space.Self);
+            arrowClone.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, -angle), Space.Self);
 
         }
     }
