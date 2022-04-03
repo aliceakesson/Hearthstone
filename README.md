@@ -10,6 +10,8 @@ Currently includes:
 - Game board 
 - Ability to drag cards to board 
 - Simple UI
+- Mercenaries
 
-![hearthstone 1](https://user-images.githubusercontent.com/91065258/160237301-a2c2f73c-5d21-45c3-b9cd-020626668c73.png)
+![hearthstone 1](https://user-images.githubusercontent.com/91065258/161441322-e8053ef2-f6b3-47bd-8c3f-cea9857e0379.png)
+
 
