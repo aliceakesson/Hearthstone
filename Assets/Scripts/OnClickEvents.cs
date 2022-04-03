@@ -4,158 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-
-    float boardX1 = -296, boardX2 = 296;
-    float boardY1 = 257, boardY2 = 166;
-
-    float boardY = 203;
-    float deckY = 0;
-
-    bool placeable = true;
-
-    Vector2 onBeginDragStartPos;
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-
-        print("On Begin Drag");
-
-        if(tag == "Mercenary")
-        {
-
-            GameObject arrow = GameObject.Find("Arrow");
-
-            GameObject arrowClone = Instantiate(arrow);
-            GameObject triangle = arrowClone.transform.GetChild(0).gameObject;
-            GameObject boxes = arrowClone.transform.GetChild(1).gameObject;
-
-            onBeginDragStartPos = this.gameObject.GetComponent<RectTransform>().position;
-
-            arrowClone.transform.parent = GameObject.Find("Board").transform;
-            arrowClone.layer = LayerMask.NameToLayer("UI");
-
-            RectTransform rt = arrowClone.GetComponent<RectTransform>();
-            rt.position = onBeginDragStartPos; 
-
-        }
-
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        if(tag == "Card")
-        {
-            Game g = GameObject.Find("Scripts").GetComponent<Game>();
-            if (placeable && g.playerTurn)
-            {
-                GetComponent<RectTransform>().anchoredPosition += eventData.delta;
-            }
-        }
-        else if(tag == "Mercenary")
-        {
-
-            GameObject arrowClone = GameObject.Find("Arrow(Clone)");
-            GameObject triangle = arrowClone.transform.GetChild(0).gameObject;
-            GameObject boxes = arrowClone.transform.GetChild(1).gameObject;
-
-            arrowClone.GetComponent<RectTransform>().rotation = Quaternion.identity;
-
-            Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            Vector2 worldStartPos = this.gameObject.GetComponent<RectTransform>().position;
-            float arrowHeight = Mathf.Sqrt(Mathf.Pow(mousePos.x - worldStartPos.x, 2) + Mathf.Pow(mousePos.y - worldStartPos.y, 2));
-
-            float margin = 20;
-            if (arrowHeight < margin)
-            {
-                arrowHeight = margin; 
-            }
-
-            RectTransform rt = arrowClone.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(rt.rect.width, arrowHeight*2);
-
-            rt = boxes.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(rt.rect.width, arrowHeight);
-
-            float prevY = rt.anchoredPosition.y;
-            rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, arrowHeight/2);
-
-            foreach (Transform box in boxes.transform)
-            {
-                rt = box.gameObject.GetComponent<RectTransform>();
-                rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y + (arrowHeight/2 - prevY));
-            }
-
-            float angle = 0;
-            if (mousePos.x > worldStartPos.x) //till höger om mercenary
-            {
-                if (mousePos.y > worldStartPos.y) //över mercenary
-                {
-                    angle = Mathf.Atan2((mousePos.y - onBeginDragStartPos.y), (mousePos.x - onBeginDragStartPos.x)) * Mathf.Rad2Deg;
-                    angle = 90 - angle;
-                }
-                else if (mousePos.y < worldStartPos.y)
-                {
-                    angle = Mathf.Atan2((onBeginDragStartPos.y - mousePos.y), (mousePos.x - onBeginDragStartPos.x)) * Mathf.Rad2Deg;
-                    angle += 90;
-                }
-            }
-            else if (mousePos.x < worldStartPos.x)
-            {
-                if (mousePos.y > worldStartPos.y)
-                {
-                    angle = Mathf.Atan2((mousePos.y - onBeginDragStartPos.y), (onBeginDragStartPos.x - mousePos.x)) * Mathf.Rad2Deg;
-                    angle += 270;
-                }
-                else if (mousePos.y < worldStartPos.y)
-                {
-                    angle = Mathf.Atan2((onBeginDragStartPos.x - mousePos.x), (onBeginDragStartPos.y - mousePos.y)) * Mathf.Rad2Deg;
-                    angle += 180;
-                }
-            }
-
-            arrowClone.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, -angle), Space.Self);
-
-        }
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        print("On End Drag");
-
-        if (this.gameObject.tag == "Card")
-        {
-            Vector2 pos = GetComponent<RectTransform>().anchoredPosition;
-
-            if (pos.x >= boardX1 && pos.x <= boardX2 && pos.y <= boardY1 && pos.y >= boardY2)
-            {
-
-                Game g = GameObject.Find("Scripts").GetComponent<Game>();
-                g.ImportMercenary(this.gameObject.name, 1);
-                
-                Destroy(this.gameObject);
-
-                Player p = GameObject.Find("Scripts").GetComponent<Player>();
-
-                int index = 0;
-                if (transform.parent.childCount > 1)
-                    index = transform.GetSiblingIndex();
-
-                p.cardObjects.RemoveAt(index);
-                g.ReloadCards(1);
-
-            }
-            else
-            {
-                GetComponent<RectTransform>().anchoredPosition = new Vector2(0, deckY);
-            }
-        }
-        else if (tag == "Mercenary")
-        {
-            Destroy(GameObject.Find("Arrow(Clone)"));
-        }
-    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -202,7 +52,7 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         }
         else if(tag == "Mercenary")
         {
-            print("On Pointer Enter");
+            print("On Pointer Enter Mercenary");
         }
 
     }

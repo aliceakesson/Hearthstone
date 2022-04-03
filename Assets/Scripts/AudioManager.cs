@@ -24,6 +24,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spelar vald låt när projektet kör 
+    /// </summary>
+    /// <param name="name">Namn som ljudet har i AudioManager-menyn</param>
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -32,6 +36,10 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Stoppar vald låt 
+    /// </summary>
+    /// <param name="name">Namn som ljudet har i AudioManager-menyn</param>
     public void Stop(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);

@@ -40,7 +40,7 @@ public class Game : MonoBehaviour
 
         playerTurn = true;
 
-        FindObjectOfType<AudioManager>().Play("test");
+        FindObjectOfType<AudioManager>().Play("test3");
 
     }
 
@@ -139,7 +139,9 @@ public class Game : MonoBehaviour
             cardObject.transform.parent = deck.transform;
             cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
             cardObject.tag = "Card";
-            cardObject.AddComponent<OnClick>();
+            cardObject.AddComponent<OnClickEvents>();
+            cardObject.AddComponent<OnDragEvents>();
+            cardObject.AddComponent<CanvasGroup>();
 
             #region Skapande av card UI
             GameObject mask = new GameObject("Image", typeof(RectTransform));
@@ -325,7 +327,9 @@ public class Game : MonoBehaviour
         mercObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         mercObject.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
         mercObject.tag = "Mercenary";
-        mercObject.AddComponent<OnClick>();
+        mercObject.AddComponent<OnClickEvents>();
+        mercObject.AddComponent<OnDragEvents>();
+        mercObject.AddComponent<CanvasGroup>();
 
         #region Skapande av mercenary UI
         GameObject frame1 = new GameObject("Frame", typeof(RectTransform));

@@ -448,9 +448,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: test
+  - name: test1
     clip: {fileID: 8300000, guid: 084155ecc7b32c548b63a9fadc73ef3b, type: 3}
     volume: 0.506
+    pitch: 0.78
+    loop: 1
+    source: {fileID: 0}
+  - name: test2
+    clip: {fileID: 8300000, guid: f9310c8a5d4eeb24792f124a0974b4fb, type: 3}
+    volume: 0.403
+    pitch: 0.78
+    loop: 1
+    source: {fileID: 0}
+  - name: test3
+    clip: {fileID: 8300000, guid: c0e0be595675eb441b12963060def853, type: 3}
+    volume: 0.381
     pitch: 0.78
     loop: 1
     source: {fileID: 0}
