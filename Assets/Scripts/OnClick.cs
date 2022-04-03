@@ -151,10 +151,10 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
                 GetComponent<RectTransform>().anchoredPosition = new Vector2(0, deckY);
             }
         }
-        //else if(tag == "Mercenary")
-        //{
-        //    Destroy(GameObject.Find("Arrow(Clone)"));
-        //}
+        else if (tag == "Mercenary")
+        {
+            Destroy(GameObject.Find("Arrow(Clone)"));
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
