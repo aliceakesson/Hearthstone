@@ -40,6 +40,8 @@ public class Game : MonoBehaviour
 
         playerTurn = true;
 
+        FindObjectOfType<AudioManager>().Play("test");
+
     }
 
     void Update()

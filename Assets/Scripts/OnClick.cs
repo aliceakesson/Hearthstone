@@ -200,6 +200,10 @@ public class OnClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             }
 
         }
+        else if(tag == "Mercenary")
+        {
+            print("On Pointer Enter");
+        }
 
     }
 
