@@ -323,6 +323,7 @@ public class Game : MonoBehaviour
         mercObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         mercObject.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
         mercObject.tag = "Mercenary";
+        mercObject.AddComponent<OnClick>();
 
         #region Skapande av mercenary UI
         GameObject frame1 = new GameObject("Frame", typeof(RectTransform));
