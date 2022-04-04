@@ -64,7 +64,7 @@ public class Game : MonoBehaviour
     /// </summary>
     /// <param name="cardName">Namnet på kortet att importera</param>
     /// <param name="side">Sidan där kortet ska läggas på (0 = fiende, 1 = spelare)</param>
-    void ImportCard(string cardName, int side)
+    public void ImportCard(string cardName, int side)
     {
 
         Card card = Resources.Load<Card>(cardsURL + cardName);

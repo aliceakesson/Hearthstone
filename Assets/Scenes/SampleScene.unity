@@ -1820,7 +1820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.6509434, g: 0.15659486, b: 0.15659486, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3953,7 +3953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3181bb9f24c9e4ba1e2818f453a5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards: []
   cardObjects: []
   mercenaries: []
   health: 0
@@ -3971,7 +3970,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5502dc66420fa42afa47b51ca74e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards: []
   cardObjects: []
   mercenaries: []
   health: 0

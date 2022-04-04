@@ -18,6 +18,14 @@ public class Enemy : Humanoid
 
     public override void DrawCard()
     {
+        Game g = GameObject.Find("Scripts").GetComponent<Game>();
+        Card[] cards = Resources.LoadAll<Card>("Cards/");
+        int index = Random.Range(0, cards.Length - 1);
+
+        string name = cards[index].name;
+        name = name.Replace(" ", "_");
+
+        g.ImportCard(name, 0);
 
     }
 }

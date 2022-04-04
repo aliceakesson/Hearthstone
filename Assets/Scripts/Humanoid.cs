@@ -5,8 +5,6 @@ using UnityEngine;
 public class Humanoid : MonoBehaviour
 {
 
-    public List<Card> cards = new List<Card>();
-
     public List<GameObject> cardObjects = new List<GameObject>();
     public List<GameObject> mercenaries = new List<GameObject>();
 
@@ -30,6 +28,15 @@ public class Humanoid : MonoBehaviour
     /// </summary>
     public virtual void DrawCard()
     {
+
+    //    Game g = GameObject.Find("Scripts").GetComponent<Game>();
+    //    Card[] cards = Resources.LoadAll<Card>("Cards/");
+    //    int index = Random.Range(0, cards.Length - 1);
+
+    //    string name = cards[index].name;
+    //    name = name.Replace(" ", "_");
+
+    //    g.ImportCard(name, 1);
 
     }
 }

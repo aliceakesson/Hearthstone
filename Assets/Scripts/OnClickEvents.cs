@@ -7,12 +7,16 @@ using UnityEngine.EventSystems;
 public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
 
+    public bool pointerIsOverObject = false; 
+
     public void OnPointerClick(PointerEventData eventData)
     {
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+
+        pointerIsOverObject = true; 
 
         Game g = GameObject.Find("Scripts").GetComponent<Game>();
         if (this.gameObject.tag == "Card" && transform.parent.name == "Player Deck" && g.playerTurn)
@@ -55,10 +59,13 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             print("On Pointer Enter Mercenary");
         }
 
+
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+
+        pointerIsOverObject = false; 
 
         Game g = GameObject.Find("Scripts").GetComponent<Game>();
         if (this.gameObject.tag == "Card" && transform.parent.name == "Player Deck" && g.playerTurn)

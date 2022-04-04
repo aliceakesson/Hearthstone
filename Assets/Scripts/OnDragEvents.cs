@@ -26,8 +26,6 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         if(tag == "Card")
         {
             card_onBeginDragStartPos = this.gameObject.GetComponent<RectTransform>().anchoredPosition;
-
-            GetComponent<CanvasGroup>().blocksRaycasts = false; 
         }
         else if (tag == "Mercenary")
         {
@@ -45,6 +43,8 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
             RectTransform rt = arrowClone.GetComponent<RectTransform>();
             rt.position = merc_onBeginDragStartPos;
+
+            GetComponent<CanvasGroup>().blocksRaycasts = false; 
 
         }
 
@@ -161,6 +161,26 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         else if (tag == "Mercenary")
         {
             Destroy(GameObject.Find("Arrow(Clone)"));
+
+            foreach(Transform enemyMerc in GameObject.Find("Enemy Board").transform)
+            {
+
+                if(enemyMerc.GetComponent<OnClickEvents>().pointerIsOverObject)
+                {
+                    Player p = GameObject.Find("Scripts").GetComponent<Player>();
+
+                    int index = 0;
+                    if (GameObject.Find("Enemy Board").transform.childCount > 1)
+                        index = enemyMerc.GetSiblingIndex();
+
+                    p.Attack(index);
+
+                    break; 
+                }
+
+            }
+
+            GetComponent<CanvasGroup>().blocksRaycasts = true; 
         }
     }
 
