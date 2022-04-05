@@ -13,12 +13,15 @@ public class Player : Humanoid
     
     void Update()
     {
-        
+
     }
 
     public void Attack(int index)
     {
+        print("Attack: " + index);
 
+        GameObject obj = GameObject.Find("Enemy Board").transform.GetChild(index).gameObject;
+        
     }
 
     public override void DrawCard()

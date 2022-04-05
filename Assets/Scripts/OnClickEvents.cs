@@ -56,7 +56,7 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         }
         else if(tag == "Mercenary")
         {
-            print("On Pointer Enter Mercenary");
+            print("on enter ");
         }
 
 
@@ -102,6 +102,10 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 }
             }
 
+        }
+        else if(tag == "Mercenary")
+        {
+            print("on exit ");
         }
 
     }

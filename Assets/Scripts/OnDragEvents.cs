@@ -21,7 +21,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     public void OnBeginDrag(PointerEventData eventData)
     {
 
-        print("On Begin Drag");
+        //print("On Begin Drag");
 
         if(tag == "Card")
         {
@@ -129,7 +129,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        print("On End Drag");
+        //print("On End Drag");
 
         if (this.gameObject.tag == "Card")
         {
@@ -162,21 +162,29 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         {
             Destroy(GameObject.Find("Arrow(Clone)"));
 
-            foreach(Transform enemyMerc in GameObject.Find("Enemy Board").transform)
+            foreach (Transform enemyMerc in GameObject.Find("Enemy Board").transform)
             {
-
-                if(enemyMerc.GetComponent<OnClickEvents>().pointerIsOverObject)
+                try
                 {
-                    Player p = GameObject.Find("Scripts").GetComponent<Player>();
+                    if (enemyMerc.GetComponent<OnClickEvents>().pointerIsOverObject)
+                    {
+                        print("if sats");
+                        Player p = GameObject.Find("Scripts").GetComponent<Player>();
 
-                    int index = 0;
-                    if (GameObject.Find("Enemy Board").transform.childCount > 1)
-                        index = enemyMerc.GetSiblingIndex();
+                        int index = 0;
+                        if (GameObject.Find("Enemy Board").transform.childCount > 1)
+                            index = enemyMerc.GetSiblingIndex();
 
-                    p.Attack(index);
+                        print("test3");
+                        p.Attack(index);
 
-                    break; 
-                }
+                        break;
+                    }
+                    else
+                    {
+                        print("else");
+                    }
+                } catch(MissingComponentException mce) { }
 
             }
 
