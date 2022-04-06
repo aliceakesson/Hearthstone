@@ -6,9 +6,8 @@ Will include:
 - AI opponent
 - Ability to choose cards for game
 
-+ other basic mechanics required for the game
++other basic mechanics required for the game
 
-<br>
 Currently includes: 
 - Game board 
 - Ability to drag cards to board 
