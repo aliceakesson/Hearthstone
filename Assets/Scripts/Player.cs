@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Humanoid
 {
@@ -16,11 +17,32 @@ public class Player : Humanoid
 
     }
 
-    public void Attack(int index)
+    public void Attack(int playerIndex, int enemyIndex)
     {
-        print("Attack: " + index);
+        print("Attack: " + enemyIndex);
 
-        GameObject obj = GameObject.Find("Enemy Board").transform.GetChild(index).gameObject;
+        GameObject playerObj = GameObject.Find("Player Board").transform.GetChild(playerIndex).gameObject;
+        GameObject enemyObj = GameObject.Find("Enemy Board").transform.GetChild(enemyIndex).gameObject;
+
+        try
+        {
+            int attack = playerObj.GetComponent<Mercenary>().attack; 
+            enemyObj.GetComponent<Mercenary>().health -= attack;
+
+            Text healthText = enemyObj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>();
+            healthText.text = enemyObj.GetComponent<Mercenary>().health + ""; 
+
+            if(enemyObj.GetComponent<Mercenary>().health <= 0)
+            {
+                Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+                e.mercenaries.Remove(enemyObj);
+
+                Game g = GameObject.Find("Scripts").GetComponent<Game>();
+                g.ReloadMercenaries(0);
+
+                Destroy(enemyObj);
+            }
+        } catch(MissingComponentException mce) { }
         
     }
 

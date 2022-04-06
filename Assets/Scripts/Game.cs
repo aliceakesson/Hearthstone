@@ -327,9 +327,18 @@ public class Game : MonoBehaviour
         mercObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         mercObject.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
         mercObject.tag = "Mercenary";
+
+        if(side == 1)
+        {
+            mercObject.AddComponent<OnDragEvents>();
+        }
+
         mercObject.AddComponent<OnClickEvents>();
-        mercObject.AddComponent<OnDragEvents>();
         mercObject.AddComponent<CanvasGroup>();
+
+        mercObject.AddComponent<Mercenary>();
+        mercObject.GetComponent<Mercenary>().health = health;
+        mercObject.GetComponent<Mercenary>().attack = attack;
 
         #region Skapande av mercenary UI
         GameObject frame1 = new GameObject("Frame", typeof(RectTransform));
@@ -536,10 +545,85 @@ public class Game : MonoBehaviour
     }
 
     /// <summary>
+    /// Uppdaterar karaktärer på spelplan för spelare eller fiende
+    /// </summary>
+    /// <param name="side">Sidan där det ska uppdateras (0 = fiende, 1 = spelare)</param>
+    public void ReloadMercenaries(int side)
+    {
+
+        if (side == 0)
+        {
+
+            Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+
+            float margin = 10;
+            if(GameObject.Find("Enemy Board").transform.childCount > 0)
+            {
+                float width = GameObject.Find("Enemy Board").transform.GetChild(0).GetComponent<RectTransform>().rect.width;
+                float lengthOfLine = 0;
+
+                foreach (GameObject obj in e.mercenaries)
+                {
+                    lengthOfLine += width + margin;
+                }
+                lengthOfLine -= margin;
+
+                float startPosX = -lengthOfLine / 2;
+                for (int i = 0; i < e.mercenaries.Count; i++)
+                {
+                    float x = startPosX + i * (width + margin);
+                    e.mercenaries[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + width / 2, 0);
+                }
+            }
+
+        }
+        else if (side == 1)
+        {
+            Player p = GameObject.Find("Scripts").GetComponent<Player>();
+
+            float margin = 10;
+            if(GameObject.Find("Player Board").transform.childCount > 0)
+            {
+                float width = GameObject.Find("Player Board").transform.GetChild(0).GetComponent<RectTransform>().rect.width;
+                float lengthOfLine = 0;
+
+                foreach (GameObject obj in p.mercenaries)
+                {
+                    lengthOfLine += width + margin;
+                }
+                lengthOfLine -= margin;
+
+                float startPosX = -lengthOfLine / 2;
+                for (int i = 0; i < p.mercenaries.Count; i++)
+                {
+                    float x = startPosX + i * (width + margin);
+                    p.mercenaries[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + width / 2, 0);
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Fel i kod i metod ReloadCards(int)");
+        }
+
+    }
+
+    /// <summary>
     /// Metod kallad när knappen "End Turn Button" är klickad
     /// </summary>
     public void EndTurn()
     {
+
+        foreach(Transform mercenary in GameObject.Find("Player Board").transform)
+        {
+            mercenary.GetComponent<OnDragEvents>().draggable = false; 
+        }
+
+        foreach (Transform mercenary in GameObject.Find("Enemy Board").transform)
+        {
+            mercenary.GetComponent<OnDragEvents>().draggable = true;
+        }
+
 
         playerTurn = false; 
 

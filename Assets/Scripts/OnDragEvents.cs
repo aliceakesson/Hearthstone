@@ -14,6 +14,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     float deckY = 0;
 
     bool placeable = true;
+    public bool draggable = true; 
 
     Vector2 card_onBeginDragStartPos;
     Vector2 merc_onBeginDragStartPos;
@@ -30,21 +31,25 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         else if (tag == "Mercenary")
         {
 
-            GameObject arrow = GameObject.Find("Arrow");
+            if(draggable)
+            {
+                GameObject arrow = GameObject.Find("Arrow");
 
-            GameObject arrowClone = Instantiate(arrow);
-            GameObject triangle = arrowClone.transform.GetChild(0).gameObject;
-            GameObject boxes = arrowClone.transform.GetChild(1).gameObject;
+                GameObject arrowClone = Instantiate(arrow);
+                GameObject triangle = arrowClone.transform.GetChild(0).gameObject;
+                GameObject boxes = arrowClone.transform.GetChild(1).gameObject;
 
-            merc_onBeginDragStartPos = this.gameObject.GetComponent<RectTransform>().position;
+                merc_onBeginDragStartPos = this.gameObject.GetComponent<RectTransform>().position;
 
-            arrowClone.transform.parent = GameObject.Find("Board").transform;
-            arrowClone.layer = LayerMask.NameToLayer("UI");
+                arrowClone.transform.parent = GameObject.Find("Board").transform;
+                arrowClone.layer = LayerMask.NameToLayer("UI");
 
-            RectTransform rt = arrowClone.GetComponent<RectTransform>();
-            rt.position = merc_onBeginDragStartPos;
+                RectTransform rt = arrowClone.GetComponent<RectTransform>();
+                rt.position = merc_onBeginDragStartPos;
 
-            GetComponent<CanvasGroup>().blocksRaycasts = false; 
+                GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+            }
 
         }
 
@@ -63,67 +68,70 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         else if (tag == "Mercenary")
         {
 
-            GameObject arrowClone = GameObject.Find("Arrow(Clone)");
-            GameObject triangle = arrowClone.transform.GetChild(0).gameObject;
-            GameObject boxes = arrowClone.transform.GetChild(1).gameObject;
-
-            arrowClone.GetComponent<RectTransform>().rotation = Quaternion.identity;
-
-            Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            Vector2 worldStartPos = this.gameObject.GetComponent<RectTransform>().position;
-            float arrowHeight = Mathf.Sqrt(Mathf.Pow(mousePos.x - worldStartPos.x, 2) + Mathf.Pow(mousePos.y - worldStartPos.y, 2));
-
-            float margin = 20;
-            if (arrowHeight < margin)
+            if(draggable)
             {
-                arrowHeight = margin;
-            }
+                GameObject arrowClone = GameObject.Find("Arrow(Clone)");
+                GameObject triangle = arrowClone.transform.GetChild(0).gameObject;
+                GameObject boxes = arrowClone.transform.GetChild(1).gameObject;
 
-            RectTransform rt = arrowClone.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(rt.rect.width, arrowHeight * 2);
+                arrowClone.GetComponent<RectTransform>().rotation = Quaternion.identity;
 
-            rt = boxes.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(rt.rect.width, arrowHeight);
+                Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                Vector2 worldStartPos = this.gameObject.GetComponent<RectTransform>().position;
+                float arrowHeight = Mathf.Sqrt(Mathf.Pow(mousePos.x - worldStartPos.x, 2) + Mathf.Pow(mousePos.y - worldStartPos.y, 2));
 
-            float prevY = rt.anchoredPosition.y;
-            rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, arrowHeight / 2);
-
-            foreach (Transform box in boxes.transform)
-            {
-                rt = box.gameObject.GetComponent<RectTransform>();
-                rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y + (arrowHeight / 2 - prevY));
-            }
-
-            float angle = 0;
-            if (mousePos.x > worldStartPos.x) //till höger om mercenary
-            {
-                if (mousePos.y > worldStartPos.y) //över mercenary
+                float margin = 20;
+                if (arrowHeight < margin)
                 {
-                    angle = Mathf.Atan2((mousePos.y - merc_onBeginDragStartPos.y), (mousePos.x - merc_onBeginDragStartPos.x)) * Mathf.Rad2Deg;
-                    angle = 90 - angle;
+                    arrowHeight = margin;
                 }
-                else if (mousePos.y < worldStartPos.y)
-                {
-                    angle = Mathf.Atan2((merc_onBeginDragStartPos.y - mousePos.y), (mousePos.x - merc_onBeginDragStartPos.x)) * Mathf.Rad2Deg;
-                    angle += 90;
-                }
-            }
-            else if (mousePos.x < worldStartPos.x)
-            {
-                if (mousePos.y > worldStartPos.y)
-                {
-                    angle = Mathf.Atan2((mousePos.y - merc_onBeginDragStartPos.y), (merc_onBeginDragStartPos.x - mousePos.x)) * Mathf.Rad2Deg;
-                    angle += 270;
-                }
-                else if (mousePos.y < worldStartPos.y)
-                {
-                    angle = Mathf.Atan2((merc_onBeginDragStartPos.x - mousePos.x), (merc_onBeginDragStartPos.y - mousePos.y)) * Mathf.Rad2Deg;
-                    angle += 180;
-                }
-            }
 
-            arrowClone.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, -angle), Space.Self);
+                RectTransform rt = arrowClone.GetComponent<RectTransform>();
+                rt.sizeDelta = new Vector2(rt.rect.width, arrowHeight * 2);
 
+                rt = boxes.GetComponent<RectTransform>();
+                rt.sizeDelta = new Vector2(rt.rect.width, arrowHeight);
+
+                float prevY = rt.anchoredPosition.y;
+                rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, arrowHeight / 2);
+
+                foreach (Transform box in boxes.transform)
+                {
+                    rt = box.gameObject.GetComponent<RectTransform>();
+                    rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y + (arrowHeight / 2 - prevY));
+                }
+
+                float angle = 0;
+                if (mousePos.x > worldStartPos.x) //till höger om mercenary
+                {
+                    if (mousePos.y > worldStartPos.y) //över mercenary
+                    {
+                        angle = Mathf.Atan2((mousePos.y - merc_onBeginDragStartPos.y), (mousePos.x - merc_onBeginDragStartPos.x)) * Mathf.Rad2Deg;
+                        angle = 90 - angle;
+                    }
+                    else if (mousePos.y < worldStartPos.y)
+                    {
+                        angle = Mathf.Atan2((merc_onBeginDragStartPos.y - mousePos.y), (mousePos.x - merc_onBeginDragStartPos.x)) * Mathf.Rad2Deg;
+                        angle += 90;
+                    }
+                }
+                else if (mousePos.x < worldStartPos.x)
+                {
+                    if (mousePos.y > worldStartPos.y)
+                    {
+                        angle = Mathf.Atan2((mousePos.y - merc_onBeginDragStartPos.y), (merc_onBeginDragStartPos.x - mousePos.x)) * Mathf.Rad2Deg;
+                        angle += 270;
+                    }
+                    else if (mousePos.y < worldStartPos.y)
+                    {
+                        angle = Mathf.Atan2((merc_onBeginDragStartPos.x - mousePos.x), (merc_onBeginDragStartPos.y - mousePos.y)) * Mathf.Rad2Deg;
+                        angle += 180;
+                    }
+                }
+
+                arrowClone.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, -angle), Space.Self);
+            }
+            
         }
     }
 
@@ -160,35 +168,40 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         }
         else if (tag == "Mercenary")
         {
-            Destroy(GameObject.Find("Arrow(Clone)"));
-
-            foreach (Transform enemyMerc in GameObject.Find("Enemy Board").transform)
+            if(draggable)
             {
-                try
+                Destroy(GameObject.Find("Arrow(Clone)"));
+
+                foreach (Transform enemyMerc in GameObject.Find("Enemy Board").transform)
                 {
-                    if (enemyMerc.GetComponent<OnClickEvents>().pointerIsOverObject)
+                    try
                     {
-                        print("if sats");
-                        Player p = GameObject.Find("Scripts").GetComponent<Player>();
+                        if (enemyMerc.GetComponent<OnClickEvents>().pointerIsOverObject)
+                        {
+                            Player p = GameObject.Find("Scripts").GetComponent<Player>();
 
-                        int index = 0;
-                        if (GameObject.Find("Enemy Board").transform.childCount > 1)
-                            index = enemyMerc.GetSiblingIndex();
+                            int playerIndex = 0;
+                            if (GameObject.Find("Player Board").transform.childCount > 1)
+                                playerIndex = transform.GetSiblingIndex();
 
-                        print("test3");
-                        p.Attack(index);
+                            int enemyIndex = 0;
+                            if (GameObject.Find("Enemy Board").transform.childCount > 1)
+                                enemyIndex = enemyMerc.GetSiblingIndex();
 
-                        break;
+                            p.Attack(playerIndex, enemyIndex);
+
+                            break;
+                        }
                     }
-                    else
-                    {
-                        print("else");
-                    }
-                } catch(MissingComponentException mce) { }
+                    catch (MissingComponentException mce) { }
 
+                }
+
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+                draggable = false; 
             }
-
-            GetComponent<CanvasGroup>().blocksRaycasts = true; 
+            
         }
     }
 
