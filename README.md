@@ -4,7 +4,8 @@ Hearthstone in Unity with focus on OOP (exam project for coding class)
 Will include:
 - Warrior for player, Paladin for AI (with Basic Card Decks)
 - AI opponent
-- Ability to choose cards for game 
+- Ability to choose cards for game
+
 +other basic mechanics required for the game
 
 Currently includes: 
