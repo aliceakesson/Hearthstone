@@ -42,6 +42,17 @@ public class Game : MonoBehaviour
 
         FindObjectOfType<AudioManager>().Play("test3");
 
+        Player p = GameObject.Find("Scripts").GetComponent<Player>();
+        Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+
+        p.health = 30;
+        p.armor = 0;
+        p.heroPowerMana = 2; 
+
+        e.health = 30;
+        e.armor = 0;
+        e.heroPowerMana = 2; 
+
     }
 
     void Update()
@@ -619,12 +630,6 @@ public class Game : MonoBehaviour
             mercenary.GetComponent<OnDragEvents>().draggable = false; 
         }
 
-        foreach (Transform mercenary in GameObject.Find("Enemy Board").transform)
-        {
-            mercenary.GetComponent<OnDragEvents>().draggable = true;
-        }
-
-
         playerTurn = false; 
 
         GameObject endTurnButton = GameObject.Find("End Turn Button");
@@ -633,25 +638,37 @@ public class Game : MonoBehaviour
         endTurnButton.GetComponent<Button>().colors = cb;
         endTurnButton.GetComponent<Button>().interactable = false;
 
-        //Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+        Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+        List<GameObject> mercenaries = e.mercenaries;
+        if (mercenaries.Count > 0)
+        {
 
-        //List<GameObject> mercenaries = e.mercenaries; 
-        //if(mercenaries.Count > 0)
-        //{
+        }
 
-        //}
+        if (e.cardObjects.Count > 0)
+        {
 
-        //List<GameObject> deck = e.cardObjects;
-        //if(deck.Count > 0)
-        //{
+            int index = 0;
+            if(e.cardObjects.Count > 1)
+            {
+                index = Random.Range(0, e.cardObjects.Count-1);
+            }
 
-        //}
+            ImportMercenary(e.cardObjects[index].name, 0);
 
-        //cb.normalColor = buttonClickable;
-        //endTurnButton.GetComponent<Button>().colors = cb;
-        //endTurnButton.GetComponent<Button>().interactable = true;
-        //playerTurn = true; 
+            e.cardObjects.RemoveAt(index);
+            ReloadCards(0);
 
+        }
+
+        foreach (Transform mercenary in GameObject.Find("Player Board").transform)
+        {
+            mercenary.GetComponent<OnDragEvents>().draggable = true;
+        }
+        cb.normalColor = buttonClickable;
+        endTurnButton.GetComponent<Button>().colors = cb;
+        endTurnButton.GetComponent<Button>().interactable = true;
+        playerTurn = true;
 
     }
 }
