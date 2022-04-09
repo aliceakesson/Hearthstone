@@ -12,16 +12,6 @@ public class Humanoid : MonoBehaviour
     public int armor;
     public int heroPowerMana; 
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     /// <summary>
     /// Metod som drar ett nytt kort till handen

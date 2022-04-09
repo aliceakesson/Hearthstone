@@ -5,18 +5,12 @@ using UnityEngine.UI;
 
 public class Player : Humanoid
 {
-    
-    void Start()
-    {
-        
-    }
 
-    
-    void Update()
-    {
-
-    }
-
+    /// <summary>
+    /// Skadar en av fiendes soldater
+    /// </summary>
+    /// <param name="playerIndex">Spelarens soldats plats på spelplanen räknat från vänster</param>
+    /// <param name="enemyIndex">Fiendens soldats plats på spelplanen räknat från vänster</param>
     public void Attack(int playerIndex, int enemyIndex)
     {
         print("Attack: " + enemyIndex);

@@ -22,6 +22,8 @@ public class Game : MonoBehaviour
     public Color buttonNotClickable;
     public Color buttonClickable;
 
+    public int maxMana = 1; 
+
     void Start()
     {
         print("Start");
@@ -52,6 +54,14 @@ public class Game : MonoBehaviour
         e.health = 30;
         e.armor = 0;
         e.heroPowerMana = 2; 
+
+        foreach(Transform mana in GameObject.Find("Mana Bar").transform)
+        {
+            mana.GetComponent<Image>().color = new Color(100, 100, 100);
+            mana.GetComponent<Image>().enabled = false; 
+        }
+
+        GameObject.Find("Mana Text").GetComponent<Text>().text = "0/1";
 
     }
 
@@ -624,8 +634,10 @@ public class Game : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
+        GameObject playerBoard = GameObject.Find("Player Board");
+        GameObject enemyBoard = GameObject.Find("Enemy Board");
 
-        foreach(Transform mercenary in GameObject.Find("Player Board").transform)
+        foreach (Transform mercenary in playerBoard.transform)
         {
             mercenary.GetComponent<OnDragEvents>().draggable = false; 
         }
@@ -642,6 +654,23 @@ public class Game : MonoBehaviour
         List<GameObject> mercenaries = e.mercenaries;
         if (mercenaries.Count > 0)
         {
+
+            foreach(Transform mercenary in enemyBoard.transform)
+            {
+                int enemyIndex = 0;
+                if (mercenaries.Count > 1)
+                    enemyIndex = mercenary.GetSiblingIndex();
+
+                int playerIndex = 0;
+                
+                if(playerBoard.transform.childCount > 1)
+                {
+                    playerIndex = Random.Range(0, playerBoard.transform.childCount - 1);
+                }
+
+                e.Attack(enemyIndex, playerIndex);
+
+            }
 
         }
 
@@ -671,4 +700,5 @@ public class Game : MonoBehaviour
         playerTurn = true;
 
     }
+
 }

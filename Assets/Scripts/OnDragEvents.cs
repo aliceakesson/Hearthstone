@@ -27,6 +27,30 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         if(tag == "Card")
         {
             card_onBeginDragStartPos = this.gameObject.GetComponent<RectTransform>().anchoredPosition;
+
+            foreach(Transform mercenary in GameObject.Find("Player Board").transform)
+            {
+                mercenary.GetChild(0).GetComponent<Image>().raycastTarget = false; 
+                mercenary.GetChild(0).GetChild(0).GetComponent<Image>().raycastTarget = false; 
+                mercenary.GetChild(0).GetChild(1).GetComponent<Image>().raycastTarget = false; 
+                mercenary.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().raycastTarget = false; 
+                mercenary.GetChild(0).GetChild(1).GetChild(1).GetComponent<Image>().raycastTarget = false;
+
+                mercenary.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().raycastTarget = false;
+                mercenary.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().raycastTarget = false;
+            }
+
+            foreach (Transform mercenary in GameObject.Find("Enemy Board").transform)
+            {
+                mercenary.GetChild(0).GetComponent<Image>().raycastTarget = false;
+                mercenary.GetChild(0).GetChild(0).GetComponent<Image>().raycastTarget = false;
+                mercenary.GetChild(0).GetChild(1).GetComponent<Image>().raycastTarget = false;
+                mercenary.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().raycastTarget = false;
+                mercenary.GetChild(0).GetChild(1).GetChild(1).GetComponent<Image>().raycastTarget = false;
+
+                mercenary.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().raycastTarget = false;
+                mercenary.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().raycastTarget = false;
+            }
         }
         else if (tag == "Mercenary")
         {
@@ -164,6 +188,30 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
             else
             {
                 GetComponent<RectTransform>().anchoredPosition = card_onBeginDragStartPos;
+            }
+
+            foreach (Transform mercenary in GameObject.Find("Player Board").transform)
+            {
+                mercenary.GetChild(0).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(0).GetChild(0).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(0).GetChild(1).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(0).GetChild(1).GetChild(1).GetComponent<Image>().raycastTarget = true;
+
+                mercenary.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().raycastTarget = true;
+                mercenary.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().raycastTarget = true;
+            }
+
+            foreach (Transform mercenary in GameObject.Find("Enemy Board").transform)
+            {
+                mercenary.GetChild(0).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(0).GetChild(0).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(0).GetChild(1).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(0).GetChild(1).GetChild(1).GetComponent<Image>().raycastTarget = true;
+
+                mercenary.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().raycastTarget = true;
+                mercenary.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().raycastTarget = false;
             }
         }
         else if (tag == "Mercenary")
