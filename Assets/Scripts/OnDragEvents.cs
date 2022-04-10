@@ -171,18 +171,42 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
             {
 
                 Game g = GameObject.Find("Scripts").GetComponent<Game>();
-                g.ImportMercenary(this.gameObject.name, 1);
 
-                Destroy(this.gameObject);
+                int manaLeft = g.maxMana - (GameObject.Find("Mana Text").GetComponent<Text>().text[0] - 48); //ascii
+                int mana = Resources.Load<Card>("Cards/" + this.gameObject.name).mana; //cards url
 
-                Player p = GameObject.Find("Scripts").GetComponent<Player>();
+                if(manaLeft >= mana)
+                {
+                    
+                    g.ImportMercenary(this.gameObject.name, 1);
 
-                int index = 0;
-                if (transform.parent.childCount > 1)
-                    index = transform.GetSiblingIndex();
+                    Destroy(this.gameObject);
 
-                p.cardObjects.RemoveAt(index);
-                g.ReloadCards(1);
+                    Player p = GameObject.Find("Scripts").GetComponent<Player>();
+
+                    int index = 0;
+                    if (transform.parent.childCount > 1)
+                        index = transform.GetSiblingIndex();
+
+                    p.cardObjects.RemoveAt(index);
+                    g.ReloadCards(1);
+
+                    manaLeft -= mana;
+                    int manaUsed = g.maxMana - manaLeft;
+                    foreach (Transform manaObj in GameObject.Find("Mana Bar").transform)
+                    {
+                        if(manaObj.GetSiblingIndex() < manaUsed)
+                        {
+                            manaObj.GetComponent<Image>().color = g.manaLight; 
+                        }
+                    }
+                    GameObject.Find("Mana Text").GetComponent<Text>().text = manaUsed + "/" + g.maxMana;
+
+                }
+                else
+                {
+                    GetComponent<RectTransform>().anchoredPosition = card_onBeginDragStartPos;
+                }
 
             }
             else

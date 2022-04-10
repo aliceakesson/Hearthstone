@@ -22,7 +22,8 @@ public class Game : MonoBehaviour
     public Color buttonNotClickable;
     public Color buttonClickable;
 
-    public int maxMana = 1; 
+    public int maxMana = 1;
+    public Color manaLight, manaDark; 
 
     void Start()
     {
@@ -57,8 +58,15 @@ public class Game : MonoBehaviour
 
         foreach(Transform mana in GameObject.Find("Mana Bar").transform)
         {
-            mana.GetComponent<Image>().color = new Color(100, 100, 100);
-            mana.GetComponent<Image>().enabled = false; 
+            mana.GetComponent<Image>().color = manaDark;
+            if (mana.GetSiblingIndex() < maxMana)
+            {
+                mana.GetComponent<Image>().enabled = true;
+            }
+            else
+            {
+                mana.GetComponent<Image>().enabled = false;
+            }
         }
 
         GameObject.Find("Mana Text").GetComponent<Text>().text = "0/1";
@@ -661,14 +669,21 @@ public class Game : MonoBehaviour
                 if (mercenaries.Count > 1)
                     enemyIndex = mercenary.GetSiblingIndex();
 
-                int playerIndex = 0;
-                
-                if(playerBoard.transform.childCount > 1)
+                if(playerBoard.transform.childCount > 0)
                 {
-                    playerIndex = Random.Range(0, playerBoard.transform.childCount - 1);
-                }
+                    int playerIndex = 0;
 
-                e.Attack(enemyIndex, playerIndex);
+                    if (playerBoard.transform.childCount > 1)
+                    {
+                        playerIndex = Random.Range(0, playerBoard.transform.childCount - 1);
+                    }
+
+                    e.Attack(enemyIndex, playerIndex);
+                }
+                else
+                {
+                    //attackera hero 
+                }
 
             }
 
@@ -689,6 +704,23 @@ public class Game : MonoBehaviour
             ReloadCards(0);
 
         }
+
+        if(maxMana < 10)
+            maxMana++;
+
+        foreach (Transform mana in GameObject.Find("Mana Bar").transform)
+        {
+            if(mana.GetSiblingIndex() < maxMana)
+            {
+                mana.GetComponent<Image>().color = manaDark;
+                mana.GetComponent<Image>().enabled = true;
+            }
+            else
+            {
+                mana.GetComponent<Image>().enabled = false;
+            }
+        }
+        GameObject.Find("Mana Text").GetComponent<Text>().text = "0/" + maxMana;
 
         foreach (Transform mercenary in GameObject.Find("Player Board").transform)
         {
