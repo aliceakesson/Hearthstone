@@ -37,9 +37,9 @@ public class Game : MonoBehaviour
         ImportCard("River_Crocolisk", 0);
         ImportCard("River_Crocolisk", 0);
 
-        ImportMercenary("River_Crocolisk", 1);
-        ImportMercenary("River_Crocolisk", 0);
-        ImportMercenary("Bloodfen_Raptor", 0);
+        //ImportMercenary("River_Crocolisk", 1);
+        //ImportMercenary("River_Crocolisk", 0);
+        //ImportMercenary("Bloodfen_Raptor", 0);
 
         playerTurn = true;
 

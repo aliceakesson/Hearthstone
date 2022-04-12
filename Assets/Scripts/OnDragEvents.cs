@@ -14,7 +14,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     float deckY = 0;
 
     bool placeable = true;
-    public bool draggable = true; 
+    public bool draggable = false; 
 
     Vector2 card_onBeginDragStartPos;
     Vector2 merc_onBeginDragStartPos;
