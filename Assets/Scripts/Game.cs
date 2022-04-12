@@ -18,7 +18,7 @@ public class Game : MonoBehaviour
 
     public bool playerTurn = false;
     bool prevPlayerTurn = false;
-    protected bool gameIsFinished = false;
+    public bool gameIsFinished = false;
     public Color buttonNotClickable;
     public Color buttonClickable;
 
@@ -649,6 +649,7 @@ public class Game : MonoBehaviour
         {
             mercenary.GetComponent<OnDragEvents>().draggable = false; 
         }
+        GameObject.Find("Player Hero").GetComponent<OnDragEvents>().draggable = false;
 
         playerTurn = false; 
 
@@ -726,6 +727,7 @@ public class Game : MonoBehaviour
         {
             mercenary.GetComponent<OnDragEvents>().draggable = true;
         }
+        GameObject.Find("Player Hero").GetComponent<OnDragEvents>().draggable = true; 
         cb.normalColor = buttonClickable;
         endTurnButton.GetComponent<Button>().colors = cb;
         endTurnButton.GetComponent<Button>().interactable = true;

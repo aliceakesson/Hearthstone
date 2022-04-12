@@ -52,7 +52,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                 mercenary.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().raycastTarget = false;
             }
         }
-        else if (tag == "Mercenary")
+        else if (tag == "Mercenary" || (tag == "Hero" && GameObject.Find("Scripts").GetComponent<Player>().attack > 0))
         {
 
             if(draggable)
@@ -71,7 +71,8 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                 RectTransform rt = arrowClone.GetComponent<RectTransform>();
                 rt.position = merc_onBeginDragStartPos;
 
-                GetComponent<CanvasGroup>().blocksRaycasts = false;
+                if(tag == "Mercenary")
+                    GetComponent<CanvasGroup>().blocksRaycasts = false;
 
             }
 
@@ -89,7 +90,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                 GetComponent<RectTransform>().anchoredPosition += eventData.delta;
             }
         }
-        else if (tag == "Mercenary")
+        else if (tag == "Mercenary" || (tag == "Hero" && GameObject.Find("Scripts").GetComponent<Player>().attack > 0))
         {
 
             if(draggable)
@@ -238,7 +239,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                 mercenary.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().raycastTarget = false;
             }
         }
-        else if (tag == "Mercenary")
+        else if (tag == "Mercenary" || (tag == "Hero" && GameObject.Find("Scripts").GetComponent<Player>().attack > 0))
         {
             if(draggable)
             {
@@ -253,7 +254,9 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                             Player p = GameObject.Find("Scripts").GetComponent<Player>();
 
                             int playerIndex = 0;
-                            if (GameObject.Find("Player Board").transform.childCount > 1)
+                            if (tag == "Hero")
+                                playerIndex = -1;
+                            else if(GameObject.Find("Player Board").transform.childCount > 1)
                                 playerIndex = transform.GetSiblingIndex();
 
                             int enemyIndex = 0;
@@ -269,7 +272,25 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
                 }
 
-                GetComponent<CanvasGroup>().blocksRaycasts = true;
+                try
+                {
+                    if (GameObject.Find("Enemy Hero").GetComponent<OnClickEvents>().pointerIsOverObject)
+                    {
+                        Player p = GameObject.Find("Scripts").GetComponent<Player>();
+
+                        int playerIndex = 0;
+                        if (tag == "Hero")
+                            playerIndex = -1;
+                        else if (GameObject.Find("Player Board").transform.childCount > 1)
+                            playerIndex = transform.GetSiblingIndex();
+
+                        p.Attack(playerIndex, -1);
+                    }
+                }
+                catch (MissingComponentException mce) { }
+
+                if (tag == "Mercenary")
+                    GetComponent<CanvasGroup>().blocksRaycasts = true;
 
                 draggable = false; 
             }

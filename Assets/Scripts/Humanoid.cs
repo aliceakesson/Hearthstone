@@ -9,6 +9,7 @@ public class Humanoid : MonoBehaviour
     public List<GameObject> mercenaries = new List<GameObject>();
 
     public int health;
+    public int attack;
     public int armor;
     public int heroPowerMana; 
 

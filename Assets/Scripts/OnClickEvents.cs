@@ -19,7 +19,7 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         pointerIsOverObject = true; 
 
         Game g = GameObject.Find("Scripts").GetComponent<Game>();
-        if (this.gameObject.tag == "Card" && transform.parent.name == "Player Deck" && g.playerTurn)
+        if (tag == "Card" && transform.parent.name == "Player Deck" && g.playerTurn)
         {
 
             ChangeCardSize("Card Big");
@@ -54,10 +54,6 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             }
 
         }
-        else if(tag == "Mercenary")
-        {
-            //print("on enter ");
-        }
 
 
     }
@@ -68,7 +64,7 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         pointerIsOverObject = false; 
 
         Game g = GameObject.Find("Scripts").GetComponent<Game>();
-        if (this.gameObject.tag == "Card" && transform.parent.name == "Player Deck" && g.playerTurn)
+        if (tag == "Card" && transform.parent.name == "Player Deck" && g.playerTurn)
         {
 
             ChangeCardSize("Card Normal");
@@ -102,10 +98,6 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 }
             }
 
-        }
-        else if(tag == "Mercenary")
-        {
-            //print("on exit ");
         }
 
     }
