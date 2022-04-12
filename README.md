@@ -15,6 +15,4 @@ Currently includes:
 - Mercenaries
 - Ability to attack mercenaries
 
-![hearthstone 1](https://user-images.githubusercontent.com/91065258/161441322-e8053ef2-f6b3-47bd-8c3f-cea9857e0379.png)
-
-
+![hearthstone 1](https://user-images.githubusercontent.com/91065258/162974221-935360d8-aff0-4f2d-9775-d97089791657.png)
