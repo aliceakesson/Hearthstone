@@ -37,7 +37,9 @@ public class Game : MonoBehaviour
         ImportCard("River_Crocolisk", 0);
         ImportCard("River_Crocolisk", 0);
 
-        //ImportMercenary("River_Crocolisk", 1);
+        ImportCard("Fiery War Axe", 1);
+
+        ImportMercenary("River_Crocolisk", 1);
         //ImportMercenary("River_Crocolisk", 0);
         //ImportMercenary("Bloodfen_Raptor", 0);
 
@@ -148,15 +150,24 @@ public class Game : MonoBehaviour
             Sprite image = card.image;
             CardType cardType = card.cardType;
 
+            int durability = card.durability; 
+
             Sprite manaSprite = Resources.Load<Sprite>(cardsImagesURL + "Mana");
             Sprite healthSprite = Resources.Load<Sprite>(cardsImagesURL + "Health");
             Sprite attackSprite = Resources.Load<Sprite>(cardsImagesURL + "Attack");
+            if(cardType == CardType.Weapon)
+            {
+                healthSprite = Resources.Load<Sprite>(cardsImagesURL + "Durability");
+                attackSprite = Resources.Load<Sprite>(cardsImagesURL + "Weapon Attack");
+            }
 
             Sprite frame;
             string imageName = "";
 
             if (cardType == CardType.Minion)
                 imageName = "Frame-minion-neutral";
+            else if(cardType == CardType.Weapon)
+                imageName = "Frame-weapon-warrior";
             else //ändra sen för att anpassa till typ av kort
                 imageName = "Frame-minion-neutral";
 
@@ -286,6 +297,8 @@ public class Game : MonoBehaviour
             healthText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
             healthText.GetComponent<Text>().color = Color.white;
             healthText.GetComponent<Text>().text = health + "";
+            if(cardType == CardType.Weapon)
+                healthText.GetComponent<Text>().text = durability + ""; 
             healthText.GetComponent<Text>().maskable = false;
             healthText.layer = LayerMask.NameToLayer("UI");
             #endregion
@@ -496,6 +509,11 @@ public class Game : MonoBehaviour
             }
 
         }
+
+    }
+
+    public void AddWeapon(string weaponName, int side)
+    {
 
     }
 

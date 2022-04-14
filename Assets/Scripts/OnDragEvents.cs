@@ -168,6 +168,8 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         {
             Vector2 pos = GetComponent<RectTransform>().anchoredPosition;
 
+            Card card = Resources.Load<Card>("Cards/" + this.gameObject.name);
+
             if (pos.x >= boardX1 && pos.x <= boardX2 && pos.y <= boardY1 && pos.y >= boardY2)
             {
 
@@ -179,7 +181,10 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                 if(manaLeft >= mana)
                 {
                     
-                    g.ImportMercenary(this.gameObject.name, 1);
+                    if(card.cardType == CardType.Weapon)
+                        g.AddWeapon(this.gameObject.name, 1);
+                    else
+                        g.ImportMercenary(this.gameObject.name, 1);
 
                     Destroy(this.gameObject);
 

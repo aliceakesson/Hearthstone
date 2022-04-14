@@ -29,4 +29,6 @@ public class Card : ScriptableObject
     public CardType cardType;
     public Sprite image;
 
+    public int durability;
+
 }

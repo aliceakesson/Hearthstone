@@ -44,58 +44,62 @@ public class Enemy : Humanoid
             }
             else
             {
-                GameObject playerObj = GameObject.Find("Player Board").transform.GetChild(playerIndex).gameObject;
-                GameObject enemyObj = GameObject.Find("Enemy Hero").gameObject;
-
-                try
+                if(this.attack > 0)
                 {
-                    int attack = this.attack;
-                    playerObj.GetComponent<Mercenary>().health -= attack;
-
-                    Text healthText = playerObj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>();
-                    healthText.text = playerObj.GetComponent<Mercenary>().health + "";
-
-                    if (playerObj.GetComponent<Mercenary>().health <= 0)
-                    {
-                        Player p = GameObject.Find("Scripts").GetComponent<Player>();
-                        p.mercenaries.Remove(playerObj);
-
-                        Game g = GameObject.Find("Scripts").GetComponent<Game>();
-                        g.ReloadMercenaries(1);
-
-                        Destroy(playerObj);
-                    }
-                }
-                catch (MissingComponentException mce) { }
-            }
-        }
-        else
-        {
-            if(this.attack > 0)
-            {
-                if (enemyIndex >= 0)
-                {
-                    GameObject enemyObj = GameObject.Find("Enemy Board").transform.GetChild(enemyIndex).gameObject;
-                    Player playerObj = GameObject.Find("Scripts").GetComponent<Player>();
+                    GameObject playerObj = GameObject.Find("Player Board").transform.GetChild(playerIndex).gameObject;
+                    GameObject enemyObj = GameObject.Find("Enemy Hero").gameObject;
 
                     try
                     {
-                        int attack = enemyObj.GetComponent<Mercenary>().attack;
-                        playerObj.health -= attack;
+                        int attack = this.attack;
+                        playerObj.GetComponent<Mercenary>().health -= attack;
 
-                        Text healthText = GameObject.Find("Player Hero").transform.GetChild(1).GetComponent<Text>();
-                        healthText.text = playerObj.health + "";
+                        Text healthText = playerObj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>();
+                        healthText.text = playerObj.GetComponent<Mercenary>().health + "";
 
-                        if (playerObj.health <= 0)
+                        if (playerObj.GetComponent<Mercenary>().health <= 0)
                         {
-                            //Game over
-                            print("You Win");
-                            GameObject.Find("Scripts").GetComponent<Game>().gameIsFinished = true;
+                            Player p = GameObject.Find("Scripts").GetComponent<Player>();
+                            p.mercenaries.Remove(playerObj);
+
+                            Game g = GameObject.Find("Scripts").GetComponent<Game>();
+                            g.ReloadMercenaries(1);
+
+                            Destroy(playerObj);
                         }
                     }
                     catch (MissingComponentException mce) { }
                 }
-                else
+            }
+        }
+        else
+        {
+            
+            if (enemyIndex >= 0)
+            {
+                GameObject enemyObj = GameObject.Find("Enemy Board").transform.GetChild(enemyIndex).gameObject;
+                Player playerObj = GameObject.Find("Scripts").GetComponent<Player>();
+
+                try
+                {
+                    int attack = enemyObj.GetComponent<Mercenary>().attack;
+                    playerObj.health -= attack;
+
+                    Text healthText = GameObject.Find("Player Hero").transform.GetChild(1).GetComponent<Text>();
+                    healthText.text = playerObj.health + "";
+
+                    if (playerObj.health <= 0)
+                    {
+                        //Game over
+                        print("You Win");
+                        GameObject.Find("Scripts").GetComponent<Game>().gameIsFinished = true;
+                    }
+                }
+                catch (MissingComponentException mce) { }
+            }
+            else
+            {
+                if(this.attack > 0)
                 {
                     GameObject enemyObj = GameObject.Find("Enemy Hero").gameObject;
                     Player playerObj = GameObject.Find("Scripts").GetComponent<Player>();
@@ -118,6 +122,7 @@ public class Enemy : Humanoid
                     catch (MissingComponentException mce) { }
                 }
             }
+            
         }
 
     }
