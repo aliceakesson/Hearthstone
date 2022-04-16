@@ -73,6 +73,19 @@ public class Game : MonoBehaviour
 
         GameObject.Find("Mana Text").GetComponent<Text>().text = "0/1";
 
+        GameObject hero = GameObject.Find("Player Hero");
+        hero.transform.GetChild(2).GetComponent<Image>().enabled = false; 
+        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
+        hero.transform.GetChild(3).GetComponent<Image>().enabled = false;
+        hero.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
+        GameObject weapon = GameObject.Find("Player Weapon");
+        weapon.transform.GetChild(0).GetComponent<Image>().enabled = false; 
+        weapon.transform.GetChild(1).GetComponent<Image>().enabled = false; 
+        weapon.transform.GetChild(2).GetComponent<Image>().enabled = false; 
+        weapon.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false; 
+        weapon.transform.GetChild(3).GetComponent<Image>().enabled = false;
+        weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
     }
 
     void Update()
