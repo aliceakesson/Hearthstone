@@ -86,6 +86,15 @@ public class Game : MonoBehaviour
         weapon.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false; 
         weapon.transform.GetChild(3).GetComponent<Image>().enabled = false;
         weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
+        weapon = GameObject.Find("Enemy Weapon");
+        weapon.transform.GetChild(0).GetComponent<Image>().enabled = false;
+        weapon.transform.GetChild(1).GetComponent<Image>().enabled = false;
+        weapon.transform.GetChild(2).GetComponent<Image>().enabled = false;
+        weapon.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
+        weapon.transform.GetChild(3).GetComponent<Image>().enabled = false;
+        weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
     }
 
     void Update()
@@ -527,6 +536,46 @@ public class Game : MonoBehaviour
 
     public void AddWeapon(string weaponName, int side)
     {
+
+        Card card = Resources.Load<Card>("Cards/" + weaponName);
+        GameObject weaponObj, hero;
+        if (side == 0)
+        {
+            weaponObj = GameObject.Find("Enemy Weapon");
+            hero = GameObject.Find("Enemy Hero");
+        }
+        else if (side == 1)
+        {
+            weaponObj = GameObject.Find("Player Weapon");
+            hero = GameObject.Find("Player Hero");
+        }
+        else
+        {
+            Debug.Log("Värde på int side i AddWeapon(string, int) är felaktigt initierad");
+            return; 
+        }
+
+        weaponObj.transform.GetChild(0).GetComponent<Image>().enabled = true;
+        weaponObj.transform.GetChild(0).GetComponent<Image>().sprite = card.image;
+        weaponObj.transform.GetChild(1).GetComponent<Image>().enabled = true;
+
+        weaponObj.transform.GetChild(2).GetComponent<Image>().enabled = true;
+        weaponObj.transform.GetChild(3).GetComponent<Image>().enabled = true;
+
+        weaponObj.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = true;
+        weaponObj.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
+
+        weaponObj.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = true;
+        weaponObj.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = card.durability + "";
+
+        hero.transform.GetChild(2).GetComponent<Image>().enabled = true; 
+        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = true; 
+        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
+
+        if (side == 0)
+            GameObject.Find("Scripts").GetComponent<Enemy>().attack = card.attack;
+        else if(side == 1)
+            GameObject.Find("Scripts").GetComponent<Player>().attack = card.attack;
 
     }
 

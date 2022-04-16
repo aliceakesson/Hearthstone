@@ -67,6 +67,11 @@ public class Player : Humanoid
 
                             Destroy(enemyObj);
                         }
+
+                        //??
+                        this.health -= this.attack;
+                        playerObj.transform.GetChild(1).GetComponent<Text>().text = this.health + "";
+                        
                     }
                     catch (MissingComponentException mce) { }
                 }
