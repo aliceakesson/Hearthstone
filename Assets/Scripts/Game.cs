@@ -38,6 +38,7 @@ public class Game : MonoBehaviour
         ImportCard("River_Crocolisk", 0);
 
         ImportCard("Fiery War Axe", 1);
+        ImportCard("Fiery War Axe", 1);
 
         ImportMercenary("River_Crocolisk", 1);
         //ImportMercenary("River_Crocolisk", 0);
@@ -75,6 +76,12 @@ public class Game : MonoBehaviour
 
         GameObject hero = GameObject.Find("Player Hero");
         hero.transform.GetChild(2).GetComponent<Image>().enabled = false; 
+        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
+        hero.transform.GetChild(3).GetComponent<Image>().enabled = false;
+        hero.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
+        hero = GameObject.Find("Enemy Hero");
+        hero.transform.GetChild(2).GetComponent<Image>().enabled = false;
         hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
         hero.transform.GetChild(3).GetComponent<Image>().enabled = false;
         hero.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;

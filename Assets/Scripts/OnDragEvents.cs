@@ -180,33 +180,50 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
                 if(manaLeft >= mana)
                 {
-                    
+
+                    bool changeMade = false; 
                     if(card.cardType == CardType.Weapon)
-                        g.AddWeapon(this.gameObject.name, 1);
-                    else
-                        g.ImportMercenary(this.gameObject.name, 1);
-
-                    Destroy(this.gameObject);
-
-                    Player p = GameObject.Find("Scripts").GetComponent<Player>();
-
-                    int index = 0;
-                    if (transform.parent.childCount > 1)
-                        index = transform.GetSiblingIndex();
-
-                    p.cardObjects.RemoveAt(index);
-                    g.ReloadCards(1);
-
-                    manaLeft -= mana;
-                    int manaUsed = g.maxMana - manaLeft;
-                    foreach (Transform manaObj in GameObject.Find("Mana Bar").transform)
                     {
-                        if(manaObj.GetSiblingIndex() < manaUsed)
+                        if(!GameObject.Find("Player Weapon").transform.GetChild(0).GetComponent<Image>().enabled)
                         {
-                            manaObj.GetComponent<Image>().color = g.manaLight; 
+                            g.AddWeapon(this.gameObject.name, 1);
+                            changeMade = true; 
+                        }
+                        else
+                        {
+                            GetComponent<RectTransform>().anchoredPosition = card_onBeginDragStartPos;
                         }
                     }
-                    GameObject.Find("Mana Text").GetComponent<Text>().text = manaUsed + "/" + g.maxMana;
+                    else
+                    {
+                        g.ImportMercenary(this.gameObject.name, 1);
+                        changeMade = true; 
+                    }
+
+                    if(changeMade)
+                    {
+                        Destroy(this.gameObject);
+
+                        Player p = GameObject.Find("Scripts").GetComponent<Player>();
+
+                        int index = 0;
+                        if (transform.parent.childCount > 1)
+                            index = transform.GetSiblingIndex();
+
+                        p.cardObjects.RemoveAt(index);
+                        g.ReloadCards(1);
+
+                        manaLeft -= mana;
+                        int manaUsed = g.maxMana - manaLeft;
+                        foreach (Transform manaObj in GameObject.Find("Mana Bar").transform)
+                        {
+                            if (manaObj.GetSiblingIndex() < manaUsed)
+                            {
+                                manaObj.GetComponent<Image>().color = g.manaLight;
+                            }
+                        }
+                        GameObject.Find("Mana Text").GetComponent<Text>().text = manaUsed + "/" + g.maxMana;
+                    }
 
                 }
                 else
