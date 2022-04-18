@@ -2667,10 +2667,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 501314452}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c78502ea7d2de41a54cd14e0b74006, type: 3}
+  m_Script: {fileID: 11500000, guid: b198a12523a9f8749be4799a918088f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  draggable: 1
+  pointerIsOverObject: 0
 --- !u!1 &515132146
 GameObject:
   m_ObjectHideFlags: 0
