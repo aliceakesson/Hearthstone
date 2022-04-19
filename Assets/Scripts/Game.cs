@@ -109,7 +109,7 @@ public class Game : MonoBehaviour
 
         if (prevPlayerTurn == false && playerTurn == true)
         {
-            GameObject endTurnButton = GameObject.Find("End Turn Button");
+            GameObject endTurnButton = GameObject.Find("Button");
             ColorBlock cb = endTurnButton.GetComponent<Button>().colors;
             cb.normalColor = buttonClickable;
             endTurnButton.GetComponent<Button>().colors = cb;
@@ -740,7 +740,9 @@ public class Game : MonoBehaviour
 
         playerTurn = false; 
 
-        GameObject endTurnButton = GameObject.Find("End Turn Button");
+        GameObject endTurnButton = GameObject.Find("Button");
+        endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "ENEMY TURN";
+        endTurnButton.transform.GetChild(0).GetComponent<Text>().fontSize = 12;
         ColorBlock cb = endTurnButton.GetComponent<Button>().colors;
         cb.normalColor = buttonNotClickable;
         endTurnButton.GetComponent<Button>().colors = cb;
@@ -818,6 +820,8 @@ public class Game : MonoBehaviour
         cb.normalColor = buttonClickable;
         endTurnButton.GetComponent<Button>().colors = cb;
         endTurnButton.GetComponent<Button>().interactable = true;
+        endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "END TURN";
+        endTurnButton.transform.GetChild(0).GetComponent<Text>().fontSize = 14;
         playerTurn = true;
 
     }

@@ -71,6 +71,27 @@ public class Player : Humanoid
                         //??
                         this.health -= this.attack;
                         playerObj.transform.GetChild(1).GetComponent<Text>().text = this.health + "";
+
+                        GameObject weapon = GameObject.Find("Player Weapon");
+                        int durability = int.Parse(weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().text);
+                        durability--; 
+                        if(durability <= 0)
+                        {
+
+                            weapon.transform.GetChild(0).GetComponent<Image>().enabled = false;
+                            weapon.transform.GetChild(1).GetComponent<Image>().enabled = false;
+                            weapon.transform.GetChild(2).GetComponent<Image>().enabled = false;
+                            weapon.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
+                            weapon.transform.GetChild(3).GetComponent<Image>().enabled = false;
+                            weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
+                            this.attack = 0; 
+
+                        }
+                        else
+                        {
+                            weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = durability + "";
+                        }
                         
                     }
                     catch (MissingComponentException mce) { }
@@ -123,6 +144,32 @@ public class Player : Humanoid
                             print("You Win");
                             GameObject.Find("Scripts").GetComponent<Game>().gameIsFinished = true;
                         }
+
+                        //??
+                        this.health -= this.attack;
+                        playerObj.transform.GetChild(1).GetComponent<Text>().text = this.health + "";
+
+                        GameObject weapon = GameObject.Find("Player Weapon");
+                        int durability = int.Parse(weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().text);
+                        durability--;
+                        if (durability <= 0)
+                        {
+
+                            weapon.transform.GetChild(0).GetComponent<Image>().enabled = false;
+                            weapon.transform.GetChild(1).GetComponent<Image>().enabled = false;
+                            weapon.transform.GetChild(2).GetComponent<Image>().enabled = false;
+                            weapon.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
+                            weapon.transform.GetChild(3).GetComponent<Image>().enabled = false;
+                            weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
+                            this.attack = 0;
+
+                        }
+                        else
+                        {
+                            weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = durability + "";
+                        }
+
                     }
                     catch (MissingComponentException mce) { }
                 }

@@ -1748,7 +1748,7 @@ GameObject:
   - component: {fileID: 403672905}
   - component: {fileID: 403672904}
   m_Layer: 5
-  m_Name: End Turn Button
+  m_Name: Button
   m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
