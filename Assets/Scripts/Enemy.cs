@@ -11,7 +11,7 @@ public class Enemy : Humanoid
     /// </summary>
     /// <param name="enemyIndex">Fiendens soldats plats på spelplanen räknat från vänster</param>
     /// <param name="playerIndex">Spelarens soldats plats på spelplanen räknat från vänster</param>
-    public void Attack(int enemyIndex, int playerIndex)
+    public override void Attack(int enemyIndex, int playerIndex)
     {
 
         if (playerIndex >= 0)

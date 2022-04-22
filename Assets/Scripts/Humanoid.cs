@@ -13,21 +13,16 @@ public class Humanoid : MonoBehaviour
     public int armor;
     public int heroPowerMana; 
 
+    /// <summary>
+    /// Metod där spelaren eller fienden attackerar motsatta sidan
+    /// </summary>
+    /// <param name="index1"></param>
+    /// <param name="index2"></param>
+    public virtual void Attack(int index1, int index2) { }
 
     /// <summary>
     /// Metod som drar ett nytt kort till handen
     /// </summary>
-    public virtual void DrawCard()
-    {
+    public virtual void DrawCard() { }
 
-    //    Game g = GameObject.Find("Scripts").GetComponent<Game>();
-    //    Card[] cards = Resources.LoadAll<Card>("Cards/");
-    //    int index = Random.Range(0, cards.Length - 1);
-
-    //    string name = cards[index].name;
-    //    name = name.Replace(" ", "_");
-
-    //    g.ImportCard(name, 1);
-
-    }
 }

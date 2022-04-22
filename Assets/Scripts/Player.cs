@@ -11,7 +11,7 @@ public class Player : Humanoid
     /// </summary>
     /// <param name="playerIndex">Spelarens soldats plats på spelplanen räknat från vänster</param>
     /// <param name="enemyIndex">Fiendens soldats plats på spelplanen räknat från vänster</param>
-    public void Attack(int playerIndex, int enemyIndex)
+    public override void Attack(int playerIndex, int enemyIndex)
     {
 
         if(enemyIndex >= 0)
@@ -144,7 +144,7 @@ public class Player : Humanoid
                             print("You Win");
                             GameObject.Find("Scripts").GetComponent<Game>().gameIsFinished = true;
                         }
-
+                        
                         //??
                         this.health -= this.attack;
                         playerObj.transform.GetChild(1).GetComponent<Text>().text = this.health + "";

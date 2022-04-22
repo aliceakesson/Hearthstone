@@ -103,7 +103,6 @@ public class Game : MonoBehaviour
         weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
 
     }
-
     void Update()
     {
 
@@ -118,6 +117,7 @@ public class Game : MonoBehaviour
         prevPlayerTurn = playerTurn;
 
     }
+
 
     /// <summary>
     /// Importerar ett kort till antingen spelaren eller fiendens kortlek
@@ -541,6 +541,11 @@ public class Game : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Lägger till ett vapen till karaktären 
+    /// </summary>
+    /// <param name="weaponName">Namnet på vapnet</param>
+    /// <param name="side">Sidan där vapnet ska läggas till (1 == spelare, 2 == fiende)</param>
     public void AddWeapon(string weaponName, int side)
     {
 
