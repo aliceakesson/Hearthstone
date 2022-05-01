@@ -743,6 +743,8 @@ public class Game : MonoBehaviour
         }
         GameObject.Find("Player Hero").GetComponent<OnDragEvents>().draggable = false;
 
+        GameObject.Find("Player HeroPower").GetComponent<OnClickEvents>().clickable = false;
+
         playerTurn = false; 
 
         GameObject endTurnButton = GameObject.Find("Button");
@@ -827,6 +829,8 @@ public class Game : MonoBehaviour
         endTurnButton.GetComponent<Button>().interactable = true;
         endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "END TURN";
         endTurnButton.transform.GetChild(0).GetComponent<Text>().fontSize = 14;
+
+        GameObject.Find("Player HeroPower").GetComponent<OnClickEvents>().clickable = true;
         playerTurn = true;
 
     }

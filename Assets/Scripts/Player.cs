@@ -192,4 +192,59 @@ public class Player : Humanoid
         g.ImportCard(name, 1);
 
     }
+
+    public override void UseHeroPower(string heroPowerName)
+    {
+
+        GameObject heroPowerObject = GameObject.Find("Player HeroPower"); // initering senare när jag har implimenterat grafiken
+        
+
+        Game g = GameObject.Find("Scripts").GetComponent<Game>();
+        int manaLeft = g.maxMana - (GameObject.Find("Mana Text").GetComponent<Text>().text[0] - 48); //ascii
+        int mana = 2;
+
+        bool changeMade = false; 
+
+        if (heroPowerObject.GetComponent<OnClickEvents>().clickable && manaLeft >= mana)
+        {
+            switch (heroPowerName)
+            {
+                case "Armor Up!": // Använder switch/case för flexibilitet senare, behövs dock ej
+                    try
+                    {
+                        GameObject armor = GameObject.Find("Player Hero").transform.GetChild(3).gameObject;
+                        int currentArmor = int.Parse(armor.transform.GetChild(0).GetComponent<Text>().text);
+                        if (!armor.transform.GetChild(0).GetComponent<Text>().enabled)
+                        {
+                            currentArmor = 0;
+                            armor.GetComponent<Image>().enabled = true;
+                            armor.transform.GetChild(0).GetComponent<Text>().enabled = true;
+                        }
+                        currentArmor++;
+                        armor.transform.GetChild(0).GetComponent<Text>().text = currentArmor + "";
+
+                        changeMade = true; 
+                    }
+                    catch (System.NullReferenceException nre) { }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if(changeMade)
+        {
+            manaLeft -= mana;
+            int manaUsed = g.maxMana - manaLeft;
+            foreach (Transform manaObj in GameObject.Find("Mana Bar").transform)
+            {
+                if (manaObj.GetSiblingIndex() < manaUsed)
+                {
+                    manaObj.GetComponent<Image>().color = g.manaLight;
+                }
+            }
+            GameObject.Find("Mana Text").GetComponent<Text>().text = manaUsed + "/" + g.maxMana;
+        } 
+
+    }
 }

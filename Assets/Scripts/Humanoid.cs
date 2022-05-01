@@ -25,4 +25,9 @@ public class Humanoid : MonoBehaviour
     /// </summary>
     public virtual void DrawCard() { }
 
+    public virtual void UseHeroPower(string heroPowerName)
+    {
+
+    }
+
 }

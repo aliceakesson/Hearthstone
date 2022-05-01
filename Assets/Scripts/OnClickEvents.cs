@@ -7,10 +7,15 @@ using UnityEngine.EventSystems;
 public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
 
-    public bool pointerIsOverObject = false; 
+    public bool pointerIsOverObject = false;
+    public bool clickable = true;
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if(this.gameObject.name == "Player HeroPower") 
+        {
+            clickable = false;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -72,9 +72,12 @@ public class Enemy : Humanoid
                 }
             }
         }
-        else
+        else // player index < 0
         {
-            
+            bool hasArmor = false;
+            if (GameObject.Find("Player Hero").transform.GetChild(3).GetComponent<Image>().enabled)
+                hasArmor = true; 
+
             if (enemyIndex >= 0)
             {
                 GameObject enemyObj = GameObject.Find("Enemy Board").transform.GetChild(enemyIndex).gameObject;
@@ -83,10 +86,42 @@ public class Enemy : Humanoid
                 try
                 {
                     int attack = enemyObj.GetComponent<Mercenary>().attack;
-                    playerObj.health -= attack;
+                    GameObject armorObj = GameObject.Find("Player Hero").transform.GetChild(3).gameObject; 
 
-                    Text healthText = GameObject.Find("Player Hero").transform.GetChild(1).GetComponent<Text>();
-                    healthText.text = playerObj.health + "";
+                    if (hasArmor) {
+                        try
+                        {
+                            int armor = int.Parse(armorObj.transform.GetChild(0).GetComponent<Text>().text);
+                            if(attack < armor)
+                            {
+                                int i = armor - attack;
+                                armorObj.transform.GetChild(0).GetComponent<Text>().text = i + "";
+                            }
+                            else
+                            {
+                                if (attack > armor)
+                                {
+                                    int rest = attack - armor;
+                                    health -= rest;
+
+                                    Text healthText = GameObject.Find("Player Hero").transform.GetChild(1).GetComponent<Text>();
+                                    healthText.text = playerObj.health + "";
+                                }
+
+                                armorObj.transform.GetChild(0).GetComponent<Text>().text = "0";
+                                armorObj.GetComponent<Image>().enabled = false;
+                                armorObj.transform.GetChild(0).GetComponent<Text>().enabled = false;
+
+                            }
+                        } catch(System.FormatException fe) { }
+                    }
+                    else
+                    {
+                        playerObj.health -= attack;
+
+                        Text healthText = GameObject.Find("Player Hero").transform.GetChild(1).GetComponent<Text>();
+                        healthText.text = playerObj.health + "";
+                    }
 
                     if (playerObj.health <= 0)
                     {
