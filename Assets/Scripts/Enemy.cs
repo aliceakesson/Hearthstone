@@ -174,4 +174,26 @@ public class Enemy : Humanoid
         g.ImportCard(name, 0);
 
     }
+
+    public override void UseHeroPower(string heroPowerName)
+    {
+
+        switch (heroPowerName)
+        {
+            case "Reinforce": // Använder switch/case för flexibilitet senare, behövs dock ej
+                try
+                {
+                    Game g = GameObject.Find("Scripts").GetComponent<Game>();
+                    g.ImportMercenary("Silver_Hand_Recruit", 0);
+                    g.ReloadMercenaries(0);
+                }
+                catch (System.NullReferenceException nre) { }
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
 }

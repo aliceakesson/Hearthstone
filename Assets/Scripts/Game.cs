@@ -57,7 +57,7 @@ public class Game : MonoBehaviour
 
         e.health = 30;
         e.armor = 0;
-        e.heroPowerMana = 2; 
+        e.heroPowerMana = 2;
 
         foreach(Transform mana in GameObject.Find("Mana Bar").transform)
         {
@@ -745,7 +745,16 @@ public class Game : MonoBehaviour
 
         GameObject.Find("Player HeroPower").GetComponent<OnClickEvents>().clickable = false;
 
-        playerTurn = false; 
+        playerTurn = false;
+
+        GameObject heroPowerObj = GameObject.Find("Player HeroPower");
+        heroPowerObj.GetComponent<OnClickEvents>().clickable = false;
+        heroPowerObj.transform.GetChild(0).GetComponent<Image>().enabled = false; 
+        heroPowerObj.transform.GetChild(1).GetComponent<Image>().enabled = false;
+
+        GameObject heroPowerObj2 = GameObject.Find("Enemy HeroPower");
+        heroPowerObj2.transform.GetChild(0).GetComponent<Image>().enabled = true;
+        heroPowerObj2.transform.GetChild(1).GetComponent<Image>().enabled = true;
 
         GameObject endTurnButton = GameObject.Find("Button");
         endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "ENEMY TURN";
@@ -802,6 +811,8 @@ public class Game : MonoBehaviour
 
         }
 
+        //reloadar. nu är det spelarens tur igen
+
         if(maxMana < 10)
             maxMana++;
 
@@ -830,7 +841,12 @@ public class Game : MonoBehaviour
         endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "END TURN";
         endTurnButton.transform.GetChild(0).GetComponent<Text>().fontSize = 14;
 
-        GameObject.Find("Player HeroPower").GetComponent<OnClickEvents>().clickable = true;
+        heroPowerObj.GetComponent<OnClickEvents>().clickable = true;
+        heroPowerObj.transform.GetChild(0).GetComponent<Image>().enabled = true;
+        heroPowerObj.transform.GetChild(1).GetComponent<Image>().enabled = true;
+
+        heroPowerObj2.transform.GetChild(0).GetComponent<Image>().enabled = false;
+        heroPowerObj2.transform.GetChild(1).GetComponent<Image>().enabled = false;
         playerTurn = true;
 
     }

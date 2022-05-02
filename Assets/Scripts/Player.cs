@@ -196,7 +196,7 @@ public class Player : Humanoid
     public override void UseHeroPower(string heroPowerName)
     {
 
-        GameObject heroPowerObject = GameObject.Find("Player HeroPower"); // initering senare när jag har implimenterat grafiken
+        GameObject heroPowerObject = GameObject.Find("Player HeroPower"); 
         
 
         Game g = GameObject.Find("Scripts").GetComponent<Game>();
@@ -209,7 +209,7 @@ public class Player : Humanoid
         {
             switch (heroPowerName)
             {
-                case "Armor Up!": // Använder switch/case för flexibilitet senare, behövs dock ej
+                case "Armor_Up!": // Använder switch/case för flexibilitet senare, behövs dock ej
                     try
                     {
                         GameObject armor = GameObject.Find("Player Hero").transform.GetChild(3).gameObject;
@@ -220,7 +220,7 @@ public class Player : Humanoid
                             armor.GetComponent<Image>().enabled = true;
                             armor.transform.GetChild(0).GetComponent<Text>().enabled = true;
                         }
-                        currentArmor++;
+                        currentArmor+=2;
                         armor.transform.GetChild(0).GetComponent<Text>().text = currentArmor + "";
 
                         changeMade = true; 
