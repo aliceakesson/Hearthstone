@@ -126,7 +126,7 @@ public class Enemy : Humanoid
                     if (playerObj.health <= 0)
                     {
                         //Game over
-                        print("You Win");
+                        print("Game Over");
                         GameObject.Find("Scripts").GetComponent<Game>().gameIsFinished = true;
                     }
                 }
@@ -150,7 +150,7 @@ public class Enemy : Humanoid
                         if (playerObj.health <= 0)
                         {
                             //Game over
-                            print("You Win");
+                            print("Game Over");
                             GameObject.Find("Scripts").GetComponent<Game>().gameIsFinished = true;
                         }
                     }

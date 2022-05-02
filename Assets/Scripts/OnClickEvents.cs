@@ -172,35 +172,43 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         manaText.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
         manaText.GetComponent<Text>().fontSize = manaTextExample.GetComponent<Text>().fontSize;
 
-        GameObject attack = frame.transform.GetChild(3).gameObject;
-        GameObject attackExample = frameExample.transform.GetChild(3).gameObject;
-        rt = attackExample.GetComponent<RectTransform>();
+        if(tag == "Card")
+        {
+            Card card = Resources.Load<Card>("Cards/" + this.name);
 
-        attack.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
-        attack.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
+            if (card.cardType != CardType.Spell)
+            {
+                GameObject attack = frame.transform.GetChild(3).gameObject;
+                GameObject attackExample = frameExample.transform.GetChild(3).gameObject;
+                rt = attackExample.GetComponent<RectTransform>();
 
-        GameObject attackText = attack.transform.GetChild(0).gameObject;
-        GameObject attackTextExample = attackExample.transform.GetChild(0).gameObject;
-        rt = attackTextExample.GetComponent<RectTransform>();
+                attack.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+                attack.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
 
-        attackText.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
-        attackText.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
-        attackText.GetComponent<Text>().fontSize = attackTextExample.GetComponent<Text>().fontSize;
+                GameObject attackText = attack.transform.GetChild(0).gameObject;
+                GameObject attackTextExample = attackExample.transform.GetChild(0).gameObject;
+                rt = attackTextExample.GetComponent<RectTransform>();
 
-        GameObject health = frame.transform.GetChild(4).gameObject;
-        GameObject healthExample = frameExample.transform.GetChild(4).gameObject;
-        rt = healthExample.GetComponent<RectTransform>();
+                attackText.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+                attackText.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
+                attackText.GetComponent<Text>().fontSize = attackTextExample.GetComponent<Text>().fontSize;
 
-        health.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
-        health.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
+                GameObject health = frame.transform.GetChild(4).gameObject;
+                GameObject healthExample = frameExample.transform.GetChild(4).gameObject;
+                rt = healthExample.GetComponent<RectTransform>();
 
-        GameObject healthText = health.transform.GetChild(0).gameObject;
-        GameObject healthTextExample = healthExample.transform.GetChild(0).gameObject;
-        rt = healthTextExample.GetComponent<RectTransform>();
+                health.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+                health.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
 
-        healthText.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
-        healthText.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
-        healthText.GetComponent<Text>().fontSize = healthTextExample.GetComponent<Text>().fontSize;
+                GameObject healthText = health.transform.GetChild(0).gameObject;
+                GameObject healthTextExample = healthExample.transform.GetChild(0).gameObject;
+                rt = healthTextExample.GetComponent<RectTransform>();
+
+                healthText.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+                healthText.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
+                healthText.GetComponent<Text>().fontSize = healthTextExample.GetComponent<Text>().fontSize;
+            }
+        }
 
     }
 

@@ -37,6 +37,8 @@ public class Game : MonoBehaviour
         ImportCard("River_Crocolisk", 0);
         ImportCard("River_Crocolisk", 0);
 
+        ImportCard("Cleave", 1);
+
         ImportCard("Fiery War Axe", 1);
         ImportCard("Fiery War Axe", 1);
 
@@ -169,6 +171,9 @@ public class Game : MonoBehaviour
         }
         else if(side == 1)
         {
+
+            GameObject cardCopy = GameObject.Find("Card Normal");
+
             int health = card.health;
             int attack = card.attack;
             int mana = card.mana;
@@ -197,6 +202,8 @@ public class Game : MonoBehaviour
                 imageName = "Frame-minion-neutral";
             else if(cardType == CardType.Weapon)
                 imageName = "Frame-weapon-warrior";
+            else if (cardType == CardType.Spell)
+                imageName = "Frame-spell-warrior";
             else //ändra sen för att anpassa till typ av kort
                 imageName = "Frame-minion-neutral";
 
@@ -252,13 +259,15 @@ public class Game : MonoBehaviour
             nameText.layer = LayerMask.NameToLayer("UI");
 
             GameObject descriptionText = new GameObject("Description", typeof(RectTransform));
+            GameObject descriptionCopy = cardCopy.transform.GetChild(0).GetChild(1).GetChild(1).gameObject; 
             descriptionText.transform.parent = frameObject.transform;
-            descriptionText.GetComponent<RectTransform>().sizeDelta = new Vector2(70, 18);
-            descriptionText.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -25);
+            descriptionText.GetComponent<RectTransform>().sizeDelta = new Vector2(descriptionCopy.GetComponent<RectTransform>().rect.width, descriptionCopy.GetComponent<RectTransform>().rect.height);
+            descriptionText.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, descriptionCopy.GetComponent<RectTransform>().anchoredPosition.y);
             descriptionText.AddComponent<Text>();
             descriptionText.GetComponent<Text>().font = Resources.Load<Font>(belweFontsURL + usedFont);
-            descriptionText.GetComponent<Text>().fontSize = 8;
-            descriptionText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+            descriptionText.GetComponent<Text>().fontSize = descriptionCopy.GetComponent<Text>().fontSize;
+            descriptionText.GetComponent<Text>().verticalOverflow = descriptionCopy.GetComponent<Text>().verticalOverflow; 
+            descriptionText.GetComponent<Text>().alignment = descriptionCopy.GetComponent<Text>().alignment;
             descriptionText.GetComponent<Text>().color = Color.white;
             descriptionText.GetComponent<Text>().text = description;
             descriptionText.layer = LayerMask.NameToLayer("UI");
@@ -285,51 +294,55 @@ public class Game : MonoBehaviour
             manaText.GetComponent<Text>().maskable = false;
             manaText.layer = LayerMask.NameToLayer("UI");
 
-            GameObject attackObject = new GameObject("Attack", typeof(RectTransform));
-            attackObject.transform.parent = frameObject.transform;
-            attackObject.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
-            attackObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-36, -52);
-            attackObject.AddComponent<Image>();
-            attackObject.GetComponent<Image>().sprite = attackSprite;
-            attackObject.GetComponent<Image>().maskable = false;
-            attackObject.layer = LayerMask.NameToLayer("UI");
+            if(cardType != CardType.Spell)
+            {
+                GameObject attackObject = new GameObject("Attack", typeof(RectTransform));
+                attackObject.transform.parent = frameObject.transform;
+                attackObject.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
+                attackObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-36, -52);
+                attackObject.AddComponent<Image>();
+                attackObject.GetComponent<Image>().sprite = attackSprite;
+                attackObject.GetComponent<Image>().maskable = false;
+                attackObject.layer = LayerMask.NameToLayer("UI");
 
-            GameObject attackText = new GameObject("Text", typeof(RectTransform));
-            attackText.transform.parent = attackObject.transform;
-            attackText.GetComponent<RectTransform>().sizeDelta = new Vector2(30, 30);
-            attackText.GetComponent<RectTransform>().anchoredPosition = new Vector2(2, -1);
-            attackText.AddComponent<Text>();
-            attackText.GetComponent<Text>().font = Resources.Load<Font>(belweFontsURL + usedFont);
-            attackText.GetComponent<Text>().fontSize = 18;
-            attackText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
-            attackText.GetComponent<Text>().color = Color.white;
-            attackText.GetComponent<Text>().text = attack + "";
-            attackText.GetComponent<Text>().maskable = false;
-            attackText.layer = LayerMask.NameToLayer("UI");
+                GameObject attackText = new GameObject("Text", typeof(RectTransform));
+                attackText.transform.parent = attackObject.transform;
+                attackText.GetComponent<RectTransform>().sizeDelta = new Vector2(30, 30);
+                attackText.GetComponent<RectTransform>().anchoredPosition = new Vector2(2, -1);
+                attackText.AddComponent<Text>();
+                attackText.GetComponent<Text>().font = Resources.Load<Font>(belweFontsURL + usedFont);
+                attackText.GetComponent<Text>().fontSize = 18;
+                attackText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+                attackText.GetComponent<Text>().color = Color.white;
+                attackText.GetComponent<Text>().text = attack + "";
+                attackText.GetComponent<Text>().maskable = false;
+                attackText.layer = LayerMask.NameToLayer("UI");
 
-            GameObject healthObject = new GameObject("health", typeof(RectTransform));
-            healthObject.transform.parent = frameObject.transform;
-            healthObject.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
-            healthObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(36, -52);
-            healthObject.AddComponent<Image>();
-            healthObject.GetComponent<Image>().sprite = healthSprite;
-            healthObject.GetComponent<Image>().maskable = false;
-            healthObject.layer = LayerMask.NameToLayer("UI");
+                GameObject healthObject = new GameObject("health", typeof(RectTransform));
+                healthObject.transform.parent = frameObject.transform;
+                healthObject.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
+                healthObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(36, -52);
+                healthObject.AddComponent<Image>();
+                healthObject.GetComponent<Image>().sprite = healthSprite;
+                healthObject.GetComponent<Image>().maskable = false;
+                healthObject.layer = LayerMask.NameToLayer("UI");
 
-            GameObject healthText = new GameObject("Text", typeof(RectTransform));
-            healthText.transform.parent = healthObject.transform;
-            healthText.GetComponent<RectTransform>().sizeDelta = new Vector2(30, 30);
-            healthText.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -1);
-            healthText.AddComponent<Text>();
-            healthText.GetComponent<Text>().font = Resources.Load<Font>(belweFontsURL + usedFont);
-            healthText.GetComponent<Text>().fontSize = 18;
-            healthText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
-            healthText.GetComponent<Text>().color = Color.white;
-            healthText.GetComponent<Text>().text = health + "";
-            if(cardType == CardType.Weapon)
-                healthText.GetComponent<Text>().text = durability + ""; 
-            healthText.GetComponent<Text>().maskable = false;
-            healthText.layer = LayerMask.NameToLayer("UI");
+                GameObject healthText = new GameObject("Text", typeof(RectTransform));
+                healthText.transform.parent = healthObject.transform;
+                healthText.GetComponent<RectTransform>().sizeDelta = new Vector2(30, 30);
+                healthText.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -1);
+                healthText.AddComponent<Text>();
+                healthText.GetComponent<Text>().font = Resources.Load<Font>(belweFontsURL + usedFont);
+                healthText.GetComponent<Text>().fontSize = 18;
+                healthText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+                healthText.GetComponent<Text>().color = Color.white;
+                healthText.GetComponent<Text>().text = health + "";
+                if (cardType == CardType.Weapon)
+                    healthText.GetComponent<Text>().text = durability + "";
+                healthText.GetComponent<Text>().maskable = false;
+                healthText.layer = LayerMask.NameToLayer("UI");
+            }
+
             #endregion
 
             cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 120);
@@ -788,7 +801,7 @@ public class Game : MonoBehaviour
                 }
                 else
                 {
-                    //attackera hero 
+                    e.Attack(enemyIndex, -1);
                 }
 
             }
