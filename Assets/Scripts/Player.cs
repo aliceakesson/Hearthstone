@@ -247,4 +247,24 @@ public class Player : Humanoid
         } 
 
     }
+
+    public override void DealDamage(int enemyIndex, int damage)
+    {
+        GameObject enemy = GameObject.Find("Enemy Board").transform.GetChild(enemyIndex).gameObject;
+        enemy.GetComponent<Mercenary>().health -= 2; 
+        
+        if(enemy.GetComponent<Mercenary>().health <= 0)
+        {
+            Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+            e.mercenaries.Remove(enemy);
+            Game g = GameObject.Find("Scripts").GetComponent<Game>();
+            g.ReloadMercenaries(0);
+            Destroy(enemy);
+        }
+        else
+        {
+            enemy.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = enemy.GetComponent<Mercenary>().health + ""; 
+        }
+    }
+
 }

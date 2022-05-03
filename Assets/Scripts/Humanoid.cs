@@ -30,4 +30,6 @@ public class Humanoid : MonoBehaviour
 
     }
 
+    public virtual void DealDamage(int index, int dmg) { }
+
 }

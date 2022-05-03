@@ -162,6 +162,8 @@ public class Enemy : Humanoid
 
     }
 
+
+
     public override void DrawCard()
     {
         Game g = GameObject.Find("Scripts").GetComponent<Game>();
@@ -194,6 +196,10 @@ public class Enemy : Humanoid
         }
 
 
+    }
+
+    public override void DealDamage(int playerIndex, int damage)
+    {
     }
 
 }

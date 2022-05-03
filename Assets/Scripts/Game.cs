@@ -38,6 +38,7 @@ public class Game : MonoBehaviour
         ImportCard("River_Crocolisk", 0);
 
         ImportCard("Cleave", 1);
+        ImportCard("Cleave", 1);
 
         ImportCard("Fiery War Axe", 1);
         ImportCard("Fiery War Axe", 1);

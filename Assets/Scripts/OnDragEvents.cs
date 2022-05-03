@@ -194,10 +194,52 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                             GetComponent<RectTransform>().anchoredPosition = card_onBeginDragStartPos;
                         }
                     }
-                    else
+                    else if(card.cardType == CardType.Minion)
                     {
                         g.ImportMercenary(this.gameObject.name, 1);
                         changeMade = true; 
+                    }
+                    else if(card.cardType == CardType.Spell)
+                    {
+                        changeMade = true; 
+                        switch(this.gameObject.name)
+                        {
+                            case "Cleave":
+                                print("Cleave");
+                                Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+                                Player p = GameObject.Find("Scripts").GetComponent<Player>();
+                                List<GameObject> enemyMercenaries = e.mercenaries;
+                                if (enemyMercenaries.Count == 0)
+                                    changeMade = false; 
+                                else if(enemyMercenaries.Count == 1)
+                                {
+                                    p.DealDamage(0, 2);
+                                }
+                                else if(enemyMercenaries.Count == 2)
+                                {
+                                    p.DealDamage(0, 2);
+                                    p.DealDamage(1, 2);
+                                }
+                                else
+                                {
+                                    List<int> allIndexes = new List<int>();
+                                    for(int i = 0; i < e.mercenaries.Count; i++)
+                                    {
+                                        allIndexes.Add(i); 
+                                    }
+                                    int n1 = allIndexes[Random.Range(0, allIndexes.Count)];
+
+                                    allIndexes.RemoveAt(n1);
+                                    int n2 = allIndexes[Random.Range(0, allIndexes.Count)];
+
+                                    p.DealDamage(n1, 2);
+                                    p.DealDamage(n2, 2);
+                                }
+                                break; 
+                            default:
+                                changeMade = false; 
+                                break; 
+                        }
                     }
 
                     if(changeMade)
@@ -223,6 +265,10 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                             }
                         }
                         GameObject.Find("Mana Text").GetComponent<Text>().text = manaUsed + "/" + g.maxMana;
+                    }
+                    else
+                    {
+                        GetComponent<RectTransform>().anchoredPosition = card_onBeginDragStartPos;
                     }
 
                 }
