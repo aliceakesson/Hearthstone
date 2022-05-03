@@ -78,10 +78,10 @@ public class Game : MonoBehaviour
         GameObject.Find("Mana Text").GetComponent<Text>().text = "0/1";
 
         GameObject hero = GameObject.Find("Player Hero");
-        hero.transform.GetChild(2).GetComponent<Image>().enabled = false; 
-        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
-        hero.transform.GetChild(3).GetComponent<Image>().enabled = false;
+        hero.transform.GetChild(3).GetComponent<Image>().enabled = false; 
         hero.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+        hero.transform.GetChild(4).GetComponent<Image>().enabled = false;
+        hero.transform.GetChild(4).GetChild(0).GetComponent<Text>().enabled = false;
 
         hero = GameObject.Find("Enemy Hero");
         hero.transform.GetChild(2).GetComponent<Image>().enabled = false;
@@ -90,12 +90,13 @@ public class Game : MonoBehaviour
         hero.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
 
         GameObject weapon = GameObject.Find("Player Weapon");
-        weapon.transform.GetChild(0).GetComponent<Image>().enabled = false; 
-        weapon.transform.GetChild(1).GetComponent<Image>().enabled = false; 
-        weapon.transform.GetChild(2).GetComponent<Image>().enabled = false; 
-        weapon.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false; 
-        weapon.transform.GetChild(3).GetComponent<Image>().enabled = false;
-        weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+        weapon.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = false; 
+        weapon.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = false; 
+        weapon.transform.GetChild(1).GetChild(1).GetComponent<Image>().enabled = false; 
+        weapon.transform.GetChild(1).GetChild(2).GetComponent<Image>().enabled = false; 
+        weapon.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().enabled = false; 
+        weapon.transform.GetChild(1).GetChild(3).GetComponent<Image>().enabled = false;
+        weapon.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
 
         weapon = GameObject.Find("Enemy Weapon");
         weapon.transform.GetChild(0).GetComponent<Image>().enabled = false;
@@ -221,12 +222,31 @@ public class Game : MonoBehaviour
             cardObject.AddComponent<CanvasGroup>();
 
             #region Skapande av card UI
+            GameObject border = new GameObject("Green Border", typeof(RectTransform));
+            border.transform.parent = cardObject.transform;
+            border.GetComponent<RectTransform>().sizeDelta = new Vector2(125, 125);
+            border.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+            border.AddComponent<Image>();
+            border.GetComponent<Image>().sprite = Resources.Load<Sprite>(cardsFramesURL + imageName + "-mask");
+            border.layer = LayerMask.NameToLayer("UI");
+            border.AddComponent<Mask>();
+            border.GetComponent<Mask>().showMaskGraphic = false;
+            border.tag = "Green Border";
+
+            GameObject borderObject = new GameObject("Object", typeof(RectTransform));
+            borderObject.transform.parent = border.transform;
+            borderObject.GetComponent<RectTransform>().sizeDelta = new Vector2(125, 125);
+            borderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+            borderObject.layer = LayerMask.NameToLayer("UI");
+            borderObject.AddComponent<Image>();
+            borderObject.GetComponent<Image>().color = GameObject.Find("Scripts").GetComponent<Game>().buttonClickable;
+
             GameObject mask = new GameObject("Image", typeof(RectTransform));
             mask.transform.parent = cardObject.transform;
             mask.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 120);
             mask.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
             mask.AddComponent<Image>();
-            mask.GetComponent<Image>().sprite = Resources.Load<Sprite>(cardsImagesURL + imageName + "-mask");
+            mask.GetComponent<Image>().sprite = Resources.Load<Sprite>(cardsFramesURL + imageName + "-mask");
             mask.layer = LayerMask.NameToLayer("UI");
             mask.AddComponent<Mask>();
             mask.GetComponent<Mask>().showMaskGraphic = false;
@@ -260,7 +280,7 @@ public class Game : MonoBehaviour
             nameText.layer = LayerMask.NameToLayer("UI");
 
             GameObject descriptionText = new GameObject("Description", typeof(RectTransform));
-            GameObject descriptionCopy = cardCopy.transform.GetChild(0).GetChild(1).GetChild(1).gameObject; 
+            GameObject descriptionCopy = cardCopy.transform.GetChild(1).GetChild(1).GetChild(1).gameObject; 
             descriptionText.transform.parent = frameObject.transform;
             descriptionText.GetComponent<RectTransform>().sizeDelta = new Vector2(descriptionCopy.GetComponent<RectTransform>().rect.width, descriptionCopy.GetComponent<RectTransform>().rect.height);
             descriptionText.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, descriptionCopy.GetComponent<RectTransform>().anchoredPosition.y);
@@ -393,11 +413,11 @@ public class Game : MonoBehaviour
             
         if (card.cardType == CardType.Minion)
         {
-            imageName = "Mercenary_Minion";
+            imageName = "Mercenary-Minion";
         }
         else //ändra senare
         {
-            imageName = "Mercenary_Minion";
+            imageName = "Mercenary-Minion";
         }
 
         frame = Resources.Load<Sprite>(cardsFramesURL + imageName);
@@ -426,19 +446,43 @@ public class Game : MonoBehaviour
         mercObject.GetComponent<Mercenary>().attack = attack;
 
         #region Skapande av mercenary UI
+        if(side == 1)
+        {
+            GameObject border = new GameObject("Green Border", typeof(RectTransform));
+            rt = example.transform.GetChild(0).GetComponent<RectTransform>();
+            border.transform.parent = mercObject.transform;
+            border.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+            border.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+            border.AddComponent<Image>();
+            border.GetComponent<Image>().sprite = Resources.Load<Sprite>(cardsFramesURL + imageName + "-mask");
+            border.layer = LayerMask.NameToLayer("UI");
+            border.AddComponent<Mask>();
+            border.GetComponent<Mask>().showMaskGraphic = false;
+            border.tag = "Green Border";
+
+            GameObject borderObject = new GameObject("Object", typeof(RectTransform));
+            rt = example.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+            borderObject.transform.parent = border.transform;
+            borderObject.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
+            borderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+            borderObject.layer = LayerMask.NameToLayer("UI");
+            borderObject.AddComponent<Image>();
+            borderObject.GetComponent<Image>().color = GameObject.Find("Scripts").GetComponent<Game>().buttonClickable;
+        }
+
         GameObject frame1 = new GameObject("Frame", typeof(RectTransform));
-        rt = example.transform.GetChild(0).GetComponent<RectTransform>();
+        rt = example.transform.GetChild(1).GetComponent<RectTransform>();
         frame1.transform.parent = mercObject.transform;
         frame1.layer = LayerMask.NameToLayer("UI");
         frame1.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         frame1.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
         frame1.AddComponent<Image>();
-        frame1.GetComponent<Image>().sprite = Resources.Load<Sprite>(cardsFramesURL + imageName + "_mask");
+        frame1.GetComponent<Image>().sprite = Resources.Load<Sprite>(cardsFramesURL + imageName + "-mask");
         frame1.AddComponent<Mask>();
         frame1.GetComponent<Mask>().showMaskGraphic = false;
 
         GameObject imageObj = new GameObject("Image", typeof(RectTransform));
-        rt = example.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        rt = example.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
         imageObj.transform.parent = frame1.transform;
         imageObj.layer = LayerMask.NameToLayer("UI");
         imageObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
@@ -447,7 +491,7 @@ public class Game : MonoBehaviour
         imageObj.GetComponent<Image>().sprite = image;
 
         GameObject frame2 = new GameObject("Frame Visible", typeof(RectTransform));
-        rt = example.transform.GetChild(0).GetChild(1).GetComponent<RectTransform>();
+        rt = example.transform.GetChild(1).GetChild(1).GetComponent<RectTransform>();
         frame2.transform.parent = frame1.transform;
         frame2.layer = LayerMask.NameToLayer("UI");
         frame2.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
@@ -456,7 +500,7 @@ public class Game : MonoBehaviour
         frame2.GetComponent<Image>().sprite = frame;
 
         GameObject attackObj = new GameObject("Attack", typeof(RectTransform));
-        rt = example.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<RectTransform>();
+        rt = example.transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<RectTransform>();
         attackObj.transform.parent = frame2.transform;
         attackObj.layer = LayerMask.NameToLayer("UI");
         attackObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
@@ -466,7 +510,7 @@ public class Game : MonoBehaviour
         attackObj.GetComponent<Image>().maskable = false;
 
         GameObject attackText = new GameObject("Text", typeof(RectTransform));
-        rt = example.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        rt = example.transform.GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetComponent<RectTransform>();
         attackText.transform.parent = attackObj.transform;
         attackText.layer = LayerMask.NameToLayer("UI");
         attackText.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
@@ -480,7 +524,7 @@ public class Game : MonoBehaviour
         attackText.GetComponent<Text>().maskable = false;
 
         GameObject healthObj = new GameObject("health", typeof(RectTransform));
-        rt = example.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<RectTransform>();
+        rt = example.transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<RectTransform>();
         healthObj.transform.parent = frame2.transform;
         healthObj.layer = LayerMask.NameToLayer("UI");
         healthObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
@@ -490,7 +534,7 @@ public class Game : MonoBehaviour
         healthObj.GetComponent<Image>().maskable = false;
 
         GameObject healthText = new GameObject("Text", typeof(RectTransform));
-        rt = example.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<RectTransform>();
+        rt = example.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<RectTransform>();
         healthText.transform.parent = healthObj.transform;
         healthText.layer = LayerMask.NameToLayer("UI");
         healthText.GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y);
@@ -581,22 +625,22 @@ public class Game : MonoBehaviour
             return; 
         }
 
-        weaponObj.transform.GetChild(0).GetComponent<Image>().enabled = true;
-        weaponObj.transform.GetChild(0).GetComponent<Image>().sprite = card.image;
-        weaponObj.transform.GetChild(1).GetComponent<Image>().enabled = true;
+        weaponObj.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = true;
+        weaponObj.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = card.image;
+        weaponObj.transform.GetChild(1).GetChild(1).GetComponent<Image>().enabled = true;
 
-        weaponObj.transform.GetChild(2).GetComponent<Image>().enabled = true;
-        weaponObj.transform.GetChild(3).GetComponent<Image>().enabled = true;
+        weaponObj.transform.GetChild(1).GetChild(2).GetComponent<Image>().enabled = true;
+        weaponObj.transform.GetChild(1).GetChild(3).GetComponent<Image>().enabled = true;
+    
+        weaponObj.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().enabled = true;
+        weaponObj.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
+    
+        weaponObj.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().enabled = true;
+        weaponObj.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().text = card.durability + "";
 
-        weaponObj.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = true;
-        weaponObj.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
-
-        weaponObj.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = true;
-        weaponObj.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = card.durability + "";
-
-        hero.transform.GetChild(2).GetComponent<Image>().enabled = true; 
-        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = true; 
-        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
+        hero.transform.GetChild(3).GetComponent<Image>().enabled = true; 
+        hero.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = true; 
+        hero.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = card.attack + "";
 
         if (side == 0)
             GameObject.Find("Scripts").GetComponent<Enemy>().attack = card.attack;
@@ -758,6 +802,15 @@ public class Game : MonoBehaviour
         GameObject.Find("Player Hero").GetComponent<OnDragEvents>().draggable = false;
 
         GameObject.Find("Player HeroPower").GetComponent<OnClickEvents>().clickable = false;
+
+        try
+        {
+            GameObject[] borders = GameObject.FindGameObjectsWithTag("Green Border");
+            foreach (GameObject border in borders)
+            {
+                border.transform.GetChild(0).GetComponent<Image>().enabled = false;
+            }
+        } catch(MissingComponentException mce) { }
 
         playerTurn = false;
 

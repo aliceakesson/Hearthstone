@@ -122,9 +122,17 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
         GameObject bigSizeCard = GameObject.Find(objectName);
 
-        GameObject image1 = transform.GetChild(0).gameObject;
-        GameObject image1Example = bigSizeCard.transform.GetChild(0).gameObject;
-        Rect r = image1Example.GetComponent<RectTransform>().rect;
+        GameObject border = transform.GetChild(0).gameObject;
+        Rect r = bigSizeCard.transform.GetChild(0).gameObject.GetComponent<RectTransform>().rect; 
+        border.GetComponent<RectTransform>().sizeDelta = new Vector2(r.width, r.height);
+
+        GameObject borderObject = transform.GetChild(0).GetChild(0).gameObject;
+        r = bigSizeCard.transform.GetChild(0).GetChild(0).gameObject.GetComponent<RectTransform>().rect;
+        borderObject.GetComponent<RectTransform>().sizeDelta = new Vector2(r.width, r.height);
+
+        GameObject image1 = transform.GetChild(1).gameObject;
+        GameObject image1Example = bigSizeCard.transform.GetChild(1).gameObject;
+        r = image1Example.GetComponent<RectTransform>().rect;
 
         image1.GetComponent<RectTransform>().sizeDelta = new Vector2(r.width, r.height);
 

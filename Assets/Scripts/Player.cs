@@ -212,7 +212,7 @@ public class Player : Humanoid
                 case "Armor_Up!": // Använder switch/case för flexibilitet senare, behövs dock ej
                     try
                     {
-                        GameObject armor = GameObject.Find("Player Hero").transform.GetChild(3).gameObject;
+                        GameObject armor = GameObject.Find("Player Hero").transform.GetChild(4).gameObject;
                         int currentArmor = int.Parse(armor.transform.GetChild(0).GetComponent<Text>().text);
                         if (!armor.transform.GetChild(0).GetComponent<Text>().enabled)
                         {

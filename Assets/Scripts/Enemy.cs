@@ -26,7 +26,7 @@ public class Enemy : Humanoid
                     int attack = enemyObj.GetComponent<Mercenary>().attack;
                     playerObj.GetComponent<Mercenary>().health -= attack;
 
-                    Text healthText = playerObj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>();
+                    Text healthText = playerObj.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>();
                     healthText.text = playerObj.GetComponent<Mercenary>().health + "";
 
                     if (playerObj.GetComponent<Mercenary>().health <= 0)
@@ -54,7 +54,7 @@ public class Enemy : Humanoid
                         int attack = this.attack;
                         playerObj.GetComponent<Mercenary>().health -= attack;
 
-                        Text healthText = playerObj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>();
+                        Text healthText = playerObj.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>();
                         healthText.text = playerObj.GetComponent<Mercenary>().health + "";
 
                         if (playerObj.GetComponent<Mercenary>().health <= 0)
@@ -75,7 +75,7 @@ public class Enemy : Humanoid
         else // player index < 0
         {
             bool hasArmor = false;
-            if (GameObject.Find("Player Hero").transform.GetChild(3).GetComponent<Image>().enabled)
+            if (GameObject.Find("Player Hero").transform.GetChild(4).GetComponent<Image>().enabled)
                 hasArmor = true; 
 
             if (enemyIndex >= 0)
@@ -86,7 +86,7 @@ public class Enemy : Humanoid
                 try
                 {
                     int attack = enemyObj.GetComponent<Mercenary>().attack;
-                    GameObject armorObj = GameObject.Find("Player Hero").transform.GetChild(3).gameObject; 
+                    GameObject armorObj = GameObject.Find("Player Hero").transform.GetChild(4).gameObject; 
 
                     if (hasArmor) {
                         try
@@ -104,7 +104,7 @@ public class Enemy : Humanoid
                                     int rest = attack - armor;
                                     health -= rest;
 
-                                    Text healthText = GameObject.Find("Player Hero").transform.GetChild(1).GetComponent<Text>();
+                                    Text healthText = GameObject.Find("Player Hero").transform.GetChild(2).GetComponent<Text>();
                                     healthText.text = playerObj.health + "";
                                 }
 
@@ -119,7 +119,7 @@ public class Enemy : Humanoid
                     {
                         playerObj.health -= attack;
 
-                        Text healthText = GameObject.Find("Player Hero").transform.GetChild(1).GetComponent<Text>();
+                        Text healthText = GameObject.Find("Player Hero").transform.GetChild(2).GetComponent<Text>();
                         healthText.text = playerObj.health + "";
                     }
 

@@ -8,6 +8,7 @@ TagManager:
   - Button
   - Mercenary
   - Hero
+  - Green Border
   layers:
   - Default
   - TransparentFX

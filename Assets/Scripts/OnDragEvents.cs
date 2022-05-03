@@ -30,14 +30,14 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
             foreach(Transform mercenary in GameObject.Find("Player Board").transform)
             {
-                mercenary.GetChild(0).GetComponent<Image>().raycastTarget = false; 
-                mercenary.GetChild(0).GetChild(0).GetComponent<Image>().raycastTarget = false; 
-                mercenary.GetChild(0).GetChild(1).GetComponent<Image>().raycastTarget = false; 
-                mercenary.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().raycastTarget = false; 
-                mercenary.GetChild(0).GetChild(1).GetChild(1).GetComponent<Image>().raycastTarget = false;
+                mercenary.GetChild(1).GetComponent<Image>().raycastTarget = false; 
+                mercenary.GetChild(1).GetChild(0).GetComponent<Image>().raycastTarget = false; 
+                mercenary.GetChild(1).GetChild(1).GetComponent<Image>().raycastTarget = false; 
+                mercenary.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>().raycastTarget = false; 
+                mercenary.GetChild(1).GetChild(1).GetChild(1).GetComponent<Image>().raycastTarget = false;
 
-                mercenary.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().raycastTarget = false;
-                mercenary.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().raycastTarget = false;
+                mercenary.GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().raycastTarget = false;
+                mercenary.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().raycastTarget = false;
             }
 
             foreach (Transform mercenary in GameObject.Find("Enemy Board").transform)
@@ -184,7 +184,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                     bool changeMade = false; 
                     if(card.cardType == CardType.Weapon)
                     {
-                        if(!GameObject.Find("Player Weapon").transform.GetChild(0).GetComponent<Image>().enabled)
+                        if(!GameObject.Find("Player Weapon").transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled)
                         {
                             g.AddWeapon(this.gameObject.name, 1);
                             changeMade = true; 
@@ -285,14 +285,14 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
             foreach (Transform mercenary in GameObject.Find("Player Board").transform)
             {
-                mercenary.GetChild(0).GetComponent<Image>().raycastTarget = true;
-                mercenary.GetChild(0).GetChild(0).GetComponent<Image>().raycastTarget = true;
-                mercenary.GetChild(0).GetChild(1).GetComponent<Image>().raycastTarget = true;
-                mercenary.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().raycastTarget = true;
-                mercenary.GetChild(0).GetChild(1).GetChild(1).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(1).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(1).GetChild(0).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(1).GetChild(1).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>().raycastTarget = true;
+                mercenary.GetChild(1).GetChild(1).GetChild(1).GetComponent<Image>().raycastTarget = true;
 
-                mercenary.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().raycastTarget = true;
-                mercenary.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().raycastTarget = true;
+                mercenary.GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().raycastTarget = true;
+                mercenary.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().raycastTarget = true;
             }
 
             foreach (Transform mercenary in GameObject.Find("Enemy Board").transform)
