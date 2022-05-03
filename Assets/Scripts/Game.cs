@@ -78,10 +78,10 @@ public class Game : MonoBehaviour
         GameObject.Find("Mana Text").GetComponent<Text>().text = "0/1";
 
         GameObject hero = GameObject.Find("Player Hero");
-        hero.transform.GetChild(3).GetComponent<Image>().enabled = false; 
+        hero.transform.GetChild(2).GetComponent<Image>().enabled = false; 
+        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
+        hero.transform.GetChild(3).GetComponent<Image>().enabled = false;
         hero.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
-        hero.transform.GetChild(4).GetComponent<Image>().enabled = false;
-        hero.transform.GetChild(4).GetChild(0).GetComponent<Text>().enabled = false;
 
         hero = GameObject.Find("Enemy Hero");
         hero.transform.GetChild(2).GetComponent<Image>().enabled = false;
@@ -91,12 +91,11 @@ public class Game : MonoBehaviour
 
         GameObject weapon = GameObject.Find("Player Weapon");
         weapon.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = false; 
-        weapon.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = false; 
-        weapon.transform.GetChild(1).GetChild(1).GetComponent<Image>().enabled = false; 
-        weapon.transform.GetChild(1).GetChild(2).GetComponent<Image>().enabled = false; 
-        weapon.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().enabled = false; 
-        weapon.transform.GetChild(1).GetChild(3).GetComponent<Image>().enabled = false;
-        weapon.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+        weapon.transform.GetChild(0).GetChild(1).GetComponent<Image>().enabled = false; 
+        weapon.transform.GetChild(0).GetChild(2).GetComponent<Image>().enabled = false; 
+        weapon.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().enabled = false; 
+        weapon.transform.GetChild(0).GetChild(3).GetComponent<Image>().enabled = false;
+        weapon.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
 
         weapon = GameObject.Find("Enemy Weapon");
         weapon.transform.GetChild(0).GetComponent<Image>().enabled = false;
@@ -625,22 +624,22 @@ public class Game : MonoBehaviour
             return; 
         }
 
-        weaponObj.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = true;
-        weaponObj.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = card.image;
-        weaponObj.transform.GetChild(1).GetChild(1).GetComponent<Image>().enabled = true;
+        weaponObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = true;
+        weaponObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = card.image;
+        weaponObj.transform.GetChild(0).GetChild(1).GetComponent<Image>().enabled = true;
 
-        weaponObj.transform.GetChild(1).GetChild(2).GetComponent<Image>().enabled = true;
-        weaponObj.transform.GetChild(1).GetChild(3).GetComponent<Image>().enabled = true;
+        weaponObj.transform.GetChild(0).GetChild(2).GetComponent<Image>().enabled = true;
+        weaponObj.transform.GetChild(0).GetChild(3).GetComponent<Image>().enabled = true;
     
-        weaponObj.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().enabled = true;
-        weaponObj.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
+        weaponObj.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().enabled = true;
+        weaponObj.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
     
-        weaponObj.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().enabled = true;
-        weaponObj.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().text = card.durability + "";
+        weaponObj.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().enabled = true;
+        weaponObj.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text = card.durability + "";
 
-        hero.transform.GetChild(3).GetComponent<Image>().enabled = true; 
-        hero.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = true; 
-        hero.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = card.attack + "";
+        hero.transform.GetChild(2).GetComponent<Image>().enabled = true; 
+        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = true; 
+        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
 
         if (side == 0)
             GameObject.Find("Scripts").GetComponent<Enemy>().attack = card.attack;
@@ -915,6 +914,26 @@ public class Game : MonoBehaviour
         heroPowerObj2.transform.GetChild(0).GetComponent<Image>().enabled = false;
         heroPowerObj2.transform.GetChild(1).GetComponent<Image>().enabled = false;
         playerTurn = true;
+
+    }
+
+    public void ReloadBorders()
+    {
+
+        int manaLeft = maxMana - (GameObject.Find("Mana Text").GetComponent<Text>().text[0] - 48); //ascii
+        foreach(GameObject border in GameObject.FindGameObjectsWithTag("Green Border"))
+        {
+            if(border.layer == LayerMask.NameToLayer("UI"))
+            {
+                int requiredMana = 0; 
+                GameObject parentObject = border.transform.parent.gameObject; 
+                if(parentObject.name == "Player HeroPower")
+                {
+                    requiredMana = 2; 
+                }
+                //else if()
+            }
+        }
 
     }
 
