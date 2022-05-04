@@ -913,6 +913,9 @@ public class Game : MonoBehaviour
 
         heroPowerObj2.transform.GetChild(0).GetComponent<Image>().enabled = false;
         heroPowerObj2.transform.GetChild(1).GetComponent<Image>().enabled = false;
+
+        ReloadBorders();
+
         playerTurn = true;
 
     }
@@ -931,7 +934,28 @@ public class Game : MonoBehaviour
                 {
                     requiredMana = 2; 
                 }
-                //else if()
+                else if (parentObject.tag == "Mercenary")
+                {
+                    requiredMana = 0; 
+                }
+                else if(parentObject.tag == "Card")
+                {
+                    try
+                    {
+                        requiredMana = int.Parse(parentObject.transform.GetChild(1).GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().text);
+                    } catch(System.FormatException fe) { }
+                }
+                else
+                {
+                    print(parentObject.name);
+                    print("Något gick fel i metoden ReloadBounds() i Game.cs");
+                    return; 
+                }
+
+                if(requiredMana <= manaLeft)
+                {
+                    parentObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = true; 
+                }
             }
         }
 

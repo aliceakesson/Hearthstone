@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 11022918}
   - component: {fileID: 11022920}
   - component: {fileID: 11022919}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 78446332}
   - component: {fileID: 78446334}
   - component: {fileID: 78446333}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1396,7 +1396,7 @@ GameObject:
   - component: {fileID: 300945909}
   - component: {fileID: 300945911}
   - component: {fileID: 300945910}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Frame Visible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1735,7 +1735,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 386112738}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Mercenary Example
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1774,7 +1774,7 @@ GameObject:
   - component: {fileID: 393282143}
   - component: {fileID: 393282145}
   - component: {fileID: 393282144}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2942,7 +2942,7 @@ GameObject:
   - component: {fileID: 518871579}
   - component: {fileID: 518871578}
   - component: {fileID: 518871577}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3033,7 +3033,7 @@ GameObject:
   - component: {fileID: 537036414}
   - component: {fileID: 537036413}
   - component: {fileID: 537036412}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Green Border
   m_TagString: Green Border
   m_Icon: {fileID: 0}
@@ -4203,7 +4203,7 @@ GameObject:
   - component: {fileID: 757679510}
   - component: {fileID: 757679512}
   - component: {fileID: 757679511}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5657,7 +5657,7 @@ GameObject:
   - component: {fileID: 1138676533}
   - component: {fileID: 1138676535}
   - component: {fileID: 1138676534}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8726,7 +8726,7 @@ GameObject:
   - component: {fileID: 1822080541}
   - component: {fileID: 1822080543}
   - component: {fileID: 1822080542}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
