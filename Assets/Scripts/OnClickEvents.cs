@@ -17,7 +17,7 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             if(this.gameObject.GetComponent<OnClickEvents>().clickable)
             {
                 Player p = GameObject.Find("Scripts").GetComponent<Player>();
-                p.UseHeroPower(this.gameObject.transform.GetChild(0).GetComponent<Image>().sprite.name);
+                p.UseHeroPower(this.gameObject.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite.name);
 
                 clickable = false;
             }

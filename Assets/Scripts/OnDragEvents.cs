@@ -300,6 +300,8 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                             }
                         }
                         GameObject.Find("Mana Text").GetComponent<Text>().text = manaUsed + "/" + g.maxMana;
+
+                        g.ReloadBorders();
                     }
                     else
                     {

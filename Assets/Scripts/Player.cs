@@ -41,6 +41,8 @@ public class Player : Humanoid
                     }
                 }
                 catch (MissingComponentException mce) { }
+
+                playerObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = false; 
             }
             else 
             {
@@ -122,6 +124,8 @@ public class Player : Humanoid
                     }
                 }
                 catch (MissingComponentException mce) { }
+
+                playerObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = false;
             }
             else
             {
@@ -196,8 +200,8 @@ public class Player : Humanoid
     public override void UseHeroPower(string heroPowerName)
     {
 
+        print(heroPowerName);
         GameObject heroPowerObject = GameObject.Find("Player HeroPower"); 
-        
 
         Game g = GameObject.Find("Scripts").GetComponent<Game>();
         int manaLeft = g.maxMana - (GameObject.Find("Mana Text").GetComponent<Text>().text[0] - 48); //ascii
@@ -212,7 +216,7 @@ public class Player : Humanoid
                 case "Armor_Up!": // Använder switch/case för flexibilitet senare, behövs dock ej
                     try
                     {
-                        GameObject armor = GameObject.Find("Player Hero").transform.GetChild(4).gameObject;
+                        GameObject armor = GameObject.Find("Player Hero").transform.GetChild(3).gameObject;
                         int currentArmor = int.Parse(armor.transform.GetChild(0).GetComponent<Text>().text);
                         if (!armor.transform.GetChild(0).GetComponent<Text>().enabled)
                         {
@@ -244,6 +248,9 @@ public class Player : Humanoid
                 }
             }
             GameObject.Find("Mana Text").GetComponent<Text>().text = manaUsed + "/" + g.maxMana;
+
+            heroPowerObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = false;
+            g.ReloadBorders();
         } 
 
     }
