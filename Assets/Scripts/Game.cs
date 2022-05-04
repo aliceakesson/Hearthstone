@@ -985,15 +985,24 @@ public class Game : MonoBehaviour
         {
             if(border.layer == LayerMask.NameToLayer("UI"))
             {
-                int requiredMana = 0; 
+                int requiredMana = 0;
+                bool choseable = true; 
                 GameObject parentObject = border.transform.parent.gameObject; 
                 if(parentObject.name == "Player HeroPower")
                 {
-                    requiredMana = 2; 
+                    requiredMana = 2;
+                    if (parentObject.GetComponent<OnClickEvents>().clickable == false)
+                    {
+                        choseable = false;
+                    }
                 }
                 else if (parentObject.tag == "Mercenary")
                 {
                     requiredMana = 0; 
+                    if(parentObject.GetComponent<OnDragEvents>().draggable == false)
+                    {
+                        choseable = false; 
+                    }
                 }
                 else if(parentObject.tag == "Card")
                 {
@@ -1009,7 +1018,7 @@ public class Game : MonoBehaviour
                     return; 
                 }
 
-                if(requiredMana <= manaLeft)
+                if(requiredMana <= manaLeft && choseable)
                 {
                     parentObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = true; 
                 }
