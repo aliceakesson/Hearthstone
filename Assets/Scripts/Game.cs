@@ -23,7 +23,17 @@ public class Game : MonoBehaviour
     public Color buttonClickable;
 
     public int maxMana = 1;
-    public Color manaLight, manaDark; 
+    public Color manaLight, manaDark;
+
+    List<List<string>> warriorDeck = new List<List<string>>();
+    List<string> warriorDeck_spell = new List<string>();
+    List<string> warriorDeck_weapon = new List<string>();
+    List<string> warriorDeck_minion = new List<string>();
+
+    List<List<string>> paladinDeck = new List<List<string>>();
+    List<string> paladinDeck_spell = new List<string>();
+    List<string> paladinDeck_weapon = new List<string>();
+    List<string> paladinDeck_minion = new List<string>();
 
     void Start()
     {
@@ -38,10 +48,10 @@ public class Game : MonoBehaviour
         ImportCard("River_Crocolisk", 0);
 
         ImportCard("Cleave", 1);
-        ImportCard("Cleave", 1);
+        ImportCard("Execute", 1);
 
-        ImportCard("Fiery War Axe", 1);
-        ImportCard("Fiery War Axe", 1);
+        ImportCard("Fiery_War_Axe", 1);
+        ImportCard("Fiery_War_Axe", 1);
 
         ImportMercenary("River_Crocolisk", 1);
         //ImportMercenary("River_Crocolisk", 0);
@@ -104,6 +114,53 @@ public class Game : MonoBehaviour
         weapon.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
         weapon.transform.GetChild(3).GetComponent<Image>().enabled = false;
         weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
+        warriorDeck_spell.Add("Cleave");
+        warriorDeck_spell.Add("Execute");
+        warriorDeck_spell.Add("Shield_Block");
+        warriorDeck.Add(warriorDeck_spell);
+
+        warriorDeck_weapon.Add("Fiery_War_Axe");
+        warriorDeck_weapon.Add("Archanite_Reaper");
+        warriorDeck.Add(warriorDeck_weapon);
+
+        warriorDeck_minion.Add("Kor'kron_Elite");
+        warriorDeck_minion.Add("Elven_Archer");
+        warriorDeck_minion.Add("Acidic_Swamp_Ooze");
+        warriorDeck_minion.Add("Bloodfen_Raptor");
+        warriorDeck_minion.Add("River_Crocolisk");
+        warriorDeck_minion.Add("Razorfen_Hunter");
+        warriorDeck_minion.Add("Shattered_Sun_Cleric");
+        warriorDeck_minion.Add("Chillwind_Yeti");
+        warriorDeck_minion.Add("Gnomish_Inventor");
+        warriorDeck_minion.Add("Sen'jin_Shieldmasta");
+        warriorDeck_minion.Add("Stormpike_Commando");
+        warriorDeck_minion.Add("Boulderfist_Ogre");
+        warriorDeck_minion.Add("Stormwind_Champion");
+        warriorDeck.Add(warriorDeck_minion);
+
+        paladinDeck_spell.Add("Blessing_of_Kings");
+        paladinDeck_spell.Add("Consecration");
+        paladinDeck_spell.Add("Hammer_of_Wrath");
+        paladinDeck.Add(paladinDeck_spell);
+
+        paladinDeck_weapon.Add("Truesilver_Champion");
+        paladinDeck.Add(paladinDeck_weapon);
+
+        paladinDeck_minion.Add("Guardian_of_Kings");
+        paladinDeck_minion.Add("Acidic_Swamp_Ooze");
+        paladinDeck_minion.Add("Bloodfen_Raptor");
+        paladinDeck_minion.Add("Murloc_Tidehunter");
+        paladinDeck_minion.Add("River_Crocolisk");
+        paladinDeck_minion.Add("Razorfen_Hunter");
+        paladinDeck_minion.Add("Shattered_Sun_Cleric");
+        paladinDeck_minion.Add("Chillwind_Yeti");
+        paladinDeck_minion.Add("Frostwolf_Warlord");
+        paladinDeck_minion.Add("Boulderfist_Ogre");
+        paladinDeck_minion.Add("Stormwind_Champion");
+        paladinDeck.Add(paladinDeck_minion);
+
+        ReloadBorders();
 
     }
     void Update()
@@ -955,6 +1012,10 @@ public class Game : MonoBehaviour
                 if(requiredMana <= manaLeft)
                 {
                     parentObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = true; 
+                }
+                else
+                {
+                    parentObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = false;
                 }
             }
         }

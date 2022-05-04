@@ -184,7 +184,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                     bool changeMade = false; 
                     if(card.cardType == CardType.Weapon)
                     {
-                        if(!GameObject.Find("Player Weapon").transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled)
+                        if(!GameObject.Find("Player Weapon").transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled)
                         {
                             g.AddWeapon(this.gameObject.name, 1);
                             changeMade = true; 
@@ -234,6 +234,41 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
                                     p.DealDamage(n1, 2);
                                     p.DealDamage(n2, 2);
+                                }
+                                break;
+                            case "Execute":
+                                int amountOfDamagedMinions = 0;
+                                List<GameObject> damagedMinons = new List<GameObject>();
+                                foreach(GameObject enemyMercenary in GameObject.Find("Scripts").GetComponent<Enemy>().mercenaries)
+                                {
+                                    try
+                                    {
+                                        int maxHealth = Resources.Load<Card>("Cards/" + enemyMercenary.name).health;
+                                        int currentHealth = int.Parse(enemyMercenary.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                                        if (currentHealth < maxHealth) {
+                                            amountOfDamagedMinions++;
+                                            damagedMinons.Add(enemyMercenary);
+                                        }
+                                    } catch(System.FormatException fe) { }
+                                }
+
+                                if(amountOfDamagedMinions > 0)
+                                {
+                                    if(amountOfDamagedMinions == 1)
+                                    {
+                                        GameObject.Find("Scripts").GetComponent<Enemy>().mercenaries.Remove(damagedMinons[0]);
+                                        Destroy(damagedMinons[0]);
+                                    }
+                                    else
+                                    {
+                                        int minionIndex = Random.Range(0, damagedMinons.Count-1);
+                                        GameObject.Find("Scripts").GetComponent<Enemy>().mercenaries.Remove(damagedMinons[minionIndex]);
+                                        Destroy(damagedMinons[minionIndex]);
+                                    }
+                                }
+                                else
+                                {
+                                    changeMade = false; 
                                 }
                                 break; 
                             default:
