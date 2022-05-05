@@ -54,7 +54,6 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         }
         else if (tag == "Mercenary" || (tag == "Hero" && GameObject.Find("Scripts").GetComponent<Player>().attack > 0))
         {
-
             if(draggable)
             {
                 GameObject arrow = GameObject.Find("Arrow");
@@ -265,6 +264,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                                         GameObject.Find("Scripts").GetComponent<Enemy>().mercenaries.Remove(damagedMinons[minionIndex]);
                                         Destroy(damagedMinons[minionIndex]);
                                     }
+                                    g.ReloadMercenaries(0);
                                 }
                                 else
                                 {

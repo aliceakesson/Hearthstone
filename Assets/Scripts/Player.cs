@@ -154,7 +154,11 @@ public class Player : Humanoid
                         playerObj.transform.GetChild(1).GetComponent<Text>().text = this.health + "";
 
                         GameObject weapon = GameObject.Find("Player Weapon");
-                        int durability = int.Parse(weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().text);
+                        int durability = 0;
+                        try
+                        {
+                            durability = int.Parse(weapon.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text);
+                        } catch(MissingReferenceException mre) { return; }
                         durability--;
                         if (durability <= 0)
                         {
