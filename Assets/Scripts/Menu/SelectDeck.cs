@@ -8,7 +8,7 @@ public class SelectDeck : MonoBehaviour
 {
 
     int cardsInMenu = 0; 
-    public int cardsChosen = 0;
+    public static int cardsChosen = 0;
 
     Vector2 startPos = new Vector2(-235.3f, 109.9f);
 

@@ -16,7 +16,7 @@ public class CardToDeck : MonoBehaviour, IPointerClickHandler
         cardObject.transform.parent = GameObject.Find("Chosen Deck").transform.GetChild(1);
         cardObject.name = this.name;
 
-        int cardsChosen = GameObject.Find("Scripts").GetComponent<SelectDeck>().cardsChosen; 
+        int cardsChosen = SelectDeck.cardsChosen; 
 
         cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(startPos.x, startPos.y - yMargin * cardsChosen);
 
@@ -28,7 +28,7 @@ public class CardToDeck : MonoBehaviour, IPointerClickHandler
         GameObject.Find("Scripts").GetComponent<SelectDeck>().cardDeck.Add(this.name);
 
         GameObject.Find("Card Count").transform.GetChild(1).GetComponent<Text>().text = (cardsChosen+1) + "/30";
-        GameObject.Find("Scripts").GetComponent<SelectDeck>().cardsChosen++;
+        SelectDeck.cardsChosen++;
 
     }
 }
