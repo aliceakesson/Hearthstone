@@ -9,11 +9,12 @@ Will include:
 +other basic mechanics required for the game
 
 Currently includes: 
-- Game board 
-- Ability to drag cards to board 
+- Inital menu, card-deck-choosing menu, main game 
 - Simple UI
-- Mercenaries
-- Ability to attack mercenaries
+- Different cards (minions, weapons & spells)
+- Hero power
+- Ability to deal & take damage with hero 
+- Music (good one)
 
 ![hearthstone 1](https://user-images.githubusercontent.com/91065258/167304795-9b34cc28-4107-406d-9f52-d9d001675fb5.png)
 ![hearthstone 2](https://user-images.githubusercontent.com/91065258/167304801-8e659754-0661-47a0-b622-19bd05cb3d14.png)
