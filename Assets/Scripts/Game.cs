@@ -57,6 +57,8 @@ public class Game : MonoBehaviour
         //ImportMercenary("River_Crocolisk", 0);
         //ImportMercenary("Bloodfen_Raptor", 0);
 
+        List<string> cardDeck = new List<string>();
+
         playerTurn = true;
 
         FindObjectOfType<AudioManager>().Play("test3");
