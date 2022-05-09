@@ -11,16 +11,17 @@ public class SelectDeck : MonoBehaviour
     public int cardsChosen = 0;
 
     Vector2 startPos = new Vector2(-235.3f, 109.9f);
+
+    public List<GameObject> chosenCards;
     
     private void Start()
     {
+        ImportCard("Bloodfen_Raptor");
         ImportCard("River_Crocolisk");
-        ImportCard("River_Crocolisk");
-        ImportCard("River_Crocolisk");
-        ImportCard("River_Crocolisk");
-        ImportCard("River_Crocolisk");
-        ImportCard("River_Crocolisk");
-        ImportCard("River_Crocolisk");
+        ImportCard("Cleave");
+        ImportCard("Execute");
+        ImportCard("Fiery_War_Axe");
+        ImportCard("Silver_Hand_Recruit");
     }
 
     void ImportCard(string cardName)
@@ -61,6 +62,22 @@ public class SelectDeck : MonoBehaviour
         cardObject.transform.GetChild(0).GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().text = card.attack + ""; 
         cardObject.transform.GetChild(0).GetChild(1).GetChild(4).GetChild(0).GetComponent<Text>().text = card.health + "";
 
+        if(card.cardType == CardType.Weapon)
+        {
+            cardObject.transform.GetChild(0).GetChild(1).GetChild(3).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cards/Armor");
+
+            cardObject.transform.GetChild(0).GetChild(1).GetChild(4).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cards/Durability");
+            cardObject.transform.GetChild(0).GetChild(1).GetChild(4).GetChild(0).GetComponent<Text>().text = card.durability + "";
+        }
+        else if(card.cardType == CardType.Spell)
+        {
+            cardObject.transform.GetChild(0).GetChild(1).GetChild(3).GetComponent<Image>().enabled = false;
+            cardObject.transform.GetChild(0).GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
+            cardObject.transform.GetChild(0).GetChild(1).GetChild(4).GetComponent<Image>().enabled = false;
+            cardObject.transform.GetChild(0).GetChild(1).GetChild(4).GetChild(0).GetComponent<Text>().enabled = false;
+        }
+
         cardObject.AddComponent<CardToDeck>();
 
         cardsInMenu++;
@@ -83,8 +100,6 @@ public class SelectDeck : MonoBehaviour
                 cardDeck.Remove(card);
             }
         }
-
-        //AsyncOperation operation = SceneManager.LoadSceneAsync(2);
 
         if (cardsChosen == 30)
         {
