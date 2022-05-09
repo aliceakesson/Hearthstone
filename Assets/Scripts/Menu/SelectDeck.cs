@@ -8,12 +8,10 @@ public class SelectDeck : MonoBehaviour
 {
 
     int cardsInMenu = 0; 
-    public static int cardsChosen = 0;
+    public int cardsChosen = 0;
 
     Vector2 startPos = new Vector2(-235.3f, 109.9f);
-
-    public List<string> cardDeck = new List<string>();
-
+    
     private void Start()
     {
         ImportCard("River_Crocolisk");
@@ -71,11 +69,47 @@ public class SelectDeck : MonoBehaviour
 
     public void PlayGame()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(2);
-        //if(cardsChosen == 30)
-        //{
-        //    AsyncOperation operation = SceneManager.LoadSceneAsync(2);
-        //}
+
+        List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;
+        if (cardDeck.Count > 0)
+        {
+            List<string> cardDeckCopy = new List<string>();
+            foreach (string card in cardDeck)
+            {
+                cardDeckCopy.Add(card);
+            }
+            foreach (string card in cardDeckCopy)
+            {
+                cardDeck.Remove(card);
+            }
+        }
+
+        //AsyncOperation operation = SceneManager.LoadSceneAsync(2);
+
+        if (cardsChosen == 30)
+        {
+
+            bool canPlayGame = true; 
+
+            GameObject cards = GameObject.Find("Chosen Deck").transform.GetChild(1).gameObject;
+            if(cards.transform.childCount != 30)
+            {
+                canPlayGame = false; 
+            }
+            else
+            {
+                for(int i = 0; i < 30; i++)
+                {
+                    string name = cards.transform.GetChild(i).name;
+                    cardDeck.Add(name);
+                }
+            }
+
+            if(canPlayGame)
+            {
+                AsyncOperation operation = SceneManager.LoadSceneAsync(2);
+            }
+        }
     }
 
 }
