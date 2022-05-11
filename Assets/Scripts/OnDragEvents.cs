@@ -295,6 +295,22 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
                                 obj.GetComponent<OnDragEvents>().elvenArcher = true; 
                                 break;
+                            case "Acidic_Swamp_Ooze":
+                                if(GameObject.Find("Enemy Weapon").transform.GetChild(0).GetComponent<Image>().enabled)
+                                {
+                                    GameObject weapon = GameObject.Find("Enemy Weapon");
+                                    weapon.transform.GetChild(0).GetComponent<Image>().enabled = false; 
+                                    weapon.transform.GetChild(1).GetComponent<Image>().enabled = false; 
+                                    weapon.transform.GetChild(2).GetComponent<Image>().enabled = false; 
+                                    weapon.transform.GetChild(3).GetComponent<Image>().enabled = false; 
+
+                                    weapon.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false; 
+                                    weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false; 
+                                }
+                                break;
+                            case "Razorfen_Hunter":
+                                g.ImportMercenary("Boar", 1);
+                                break;
                             default:
                                 break;
                         }

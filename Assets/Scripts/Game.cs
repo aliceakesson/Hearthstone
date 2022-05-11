@@ -105,9 +105,8 @@ public class Game : MonoBehaviour
         ImportCard("Archanite_Reaper", 1);
         ImportCard("Fiery_War_Axe", 1);
         ImportCard("Elven_Archer", 1);
-        ImportCard("Elven_Archer", 1);
-        ImportCard("Elven_Archer", 1);
-        ImportCard("Elven_Archer", 1);
+        ImportCard("Acidic_Swamp_Ooze", 1);
+        ImportCard("Razorfen_Hunter", 1);
 
         #region Välja kort efter cardDeck
         //List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;

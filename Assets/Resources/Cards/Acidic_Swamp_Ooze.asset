@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8930cb69c4695514aab1cb250ea87507, type: 3}
+  m_Name: Acidic_Swamp_Ooze
+  m_EditorClassIdentifier: 
+  health: 2
+  attack: 3
+  mana: 2
+  name: Acidic Swamp Ooze
+  description: 'Battlecry: Destroy your opponent''s weapon'
+  cardType: 2
+  image: {fileID: 21300000, guid: de55a76dea51f6f4f82d25ded8706084, type: 3}
+  durability: 0
