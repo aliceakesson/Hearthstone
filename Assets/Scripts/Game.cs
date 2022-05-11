@@ -104,44 +104,50 @@ public class Game : MonoBehaviour
 
         ImportCard("Archanite_Reaper", 1);
         ImportCard("Fiery_War_Axe", 1);
+        ImportCard("Elven_Archer", 1);
+        ImportCard("Elven_Archer", 1);
+        ImportCard("Elven_Archer", 1);
+        ImportCard("Elven_Archer", 1);
 
-        List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;
-        List<int> chosenIndexes = new List<int>();
-        for (int i = 0; i < 3; i++)
-        {
-            int index = Random.Range(0, 29);
-            if (!chosenIndexes.Contains(index))
-            {
-                ImportCard(cardDeck[index], 1);
-            }
-            else
-            {
-                while (chosenIndexes.Contains(index))
-                {
-                    index = Random.Range(0, 29);
-                }
-            }
-        }
+        #region Välja kort efter cardDeck
+        //List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;
+        //List<int> chosenIndexes = new List<int>();
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    int index = Random.Range(0, 29);
+        //    if (!chosenIndexes.Contains(index))
+        //    {
+        //        ImportCard(cardDeck[index], 1);
+        //    }
+        //    else
+        //    {
+        //        while (chosenIndexes.Contains(index))
+        //        {
+        //            index = Random.Range(0, 29);
+        //        }
+        //    }
+        //}
 
-        chosenIndexes = new List<int>();
-        for (int i = 0; i < 3; i++)
-        {
-            int index = Random.Range(0, 29);
-            if (!chosenIndexes.Contains(index))
-            {
-                ImportCard(cardDeck[index], 0);
-            }
-            else
-            {
-                int margin = 200, k = 0;
-                while (chosenIndexes.Contains(index) && k < margin)
-                {
-                    index = Random.Range(0, 29);
-                    k++; 
-                }
-                ImportCard(cardDeck[index], 0);
-            }
-        }
+        //chosenIndexes = new List<int>();
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    int index = Random.Range(0, 29);
+        //    if (!chosenIndexes.Contains(index))
+        //    {
+        //        ImportCard(cardDeck[index], 0);
+        //    }
+        //    else
+        //    {
+        //        int margin = 200, k = 0;
+        //        while (chosenIndexes.Contains(index) && k < margin)
+        //        {
+        //            index = Random.Range(0, 29);
+        //            k++; 
+        //        }
+        //        ImportCard(cardDeck[index], 0);
+        //    }
+        //}
+        #endregion
 
         playerTurn = true;
 

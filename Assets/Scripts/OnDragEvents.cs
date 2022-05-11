@@ -19,6 +19,81 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     Vector2 card_onBeginDragStartPos;
     Vector2 merc_onBeginDragStartPos;
 
+    public bool elvenArcher = false; 
+
+    void Update()
+    {
+
+        if(elvenArcher)
+        {
+            merc_onBeginDragStartPos = this.gameObject.GetComponent<RectTransform>().position;
+
+            GameObject arrowClone = GameObject.Find("Arrow(Clone)");
+            GameObject triangle = arrowClone.transform.GetChild(0).gameObject;
+            GameObject boxes = arrowClone.transform.GetChild(1).gameObject;
+
+            RectTransform rt = arrowClone.GetComponent<RectTransform>();
+            rt.position = merc_onBeginDragStartPos;
+
+            arrowClone.GetComponent<RectTransform>().rotation = Quaternion.identity;
+
+            Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            Vector2 worldStartPos = this.gameObject.GetComponent<RectTransform>().position;
+            float arrowHeight = Mathf.Sqrt(Mathf.Pow(mousePos.x - worldStartPos.x, 2) + Mathf.Pow(mousePos.y - worldStartPos.y, 2));
+
+            float margin = 20;
+            if (arrowHeight < margin)
+            {
+                arrowHeight = margin;
+            }
+
+            rt = arrowClone.GetComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(rt.rect.width, arrowHeight * 2);
+
+            rt = boxes.GetComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(rt.rect.width, arrowHeight);
+
+            float prevY = rt.anchoredPosition.y;
+            rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, arrowHeight / 2);
+
+            foreach (Transform box in boxes.transform)
+            {
+                rt = box.gameObject.GetComponent<RectTransform>();
+                rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y + (arrowHeight / 2 - prevY));
+            }
+
+            float angle = 0;
+            if (mousePos.x > worldStartPos.x) //till höger om mercenary
+            {
+                if (mousePos.y > worldStartPos.y) //över mercenary
+                {
+                    angle = Mathf.Atan2((mousePos.y - merc_onBeginDragStartPos.y), (mousePos.x - merc_onBeginDragStartPos.x)) * Mathf.Rad2Deg;
+                    angle = 90 - angle;
+                }
+                else if (mousePos.y < worldStartPos.y)
+                {
+                    angle = Mathf.Atan2((merc_onBeginDragStartPos.y - mousePos.y), (mousePos.x - merc_onBeginDragStartPos.x)) * Mathf.Rad2Deg;
+                    angle += 90;
+                }
+            }
+            else if (mousePos.x < worldStartPos.x)
+            {
+                if (mousePos.y > worldStartPos.y)
+                {
+                    angle = Mathf.Atan2((mousePos.y - merc_onBeginDragStartPos.y), (merc_onBeginDragStartPos.x - mousePos.x)) * Mathf.Rad2Deg;
+                    angle += 270;
+                }
+                else if (mousePos.y < worldStartPos.y)
+                {
+                    angle = Mathf.Atan2((merc_onBeginDragStartPos.x - mousePos.x), (merc_onBeginDragStartPos.y - mousePos.y)) * Mathf.Rad2Deg;
+                    angle += 180;
+                }
+            }
+
+            arrowClone.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, -angle), Space.Self);
+        }
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
 
@@ -196,6 +271,33 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                     else if(card.cardType == CardType.Minion)
                     {
                         g.ImportMercenary(this.gameObject.name, 1);
+                        switch (this.gameObject.name) // battlecry events 
+                        {
+                            case "Elven_Archer":
+                                GameObject arrow = GameObject.Find("Arrow");
+
+                                GameObject arrowClone = Instantiate(arrow);
+                                GameObject triangle = arrowClone.transform.GetChild(0).gameObject;
+                                GameObject boxes = arrowClone.transform.GetChild(1).gameObject;
+
+                                merc_onBeginDragStartPos = this.gameObject.GetComponent<RectTransform>().position;
+
+                                arrowClone.transform.parent = GameObject.Find("Board").transform;
+                                arrowClone.layer = LayerMask.NameToLayer("UI");
+
+                                RectTransform rt = arrowClone.GetComponent<RectTransform>();
+                                rt.position = merc_onBeginDragStartPos;
+
+                                GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+                                GameObject board = GameObject.Find("Player Board");
+                                GameObject obj = board.transform.GetChild(board.transform.childCount-1).gameObject;
+
+                                obj.GetComponent<OnDragEvents>().elvenArcher = true; 
+                                break;
+                            default:
+                                break;
+                        }
                         changeMade = true; 
                     }
                     else if(card.cardType == CardType.Spell)
@@ -377,6 +479,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
                 }
 
+                bool attack = false; 
                 try
                 {
                     if (GameObject.Find("Enemy Hero").GetComponent<OnClickEvents>().pointerIsOverObject)
@@ -389,15 +492,23 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                         else if (GameObject.Find("Player Board").transform.childCount > 1)
                             playerIndex = transform.GetSiblingIndex();
 
+                        attack = true; 
                         p.Attack(playerIndex, -1);
                     }
                 }
                 catch (MissingComponentException mce) { }
 
                 if (tag == "Mercenary")
+                {
                     GetComponent<CanvasGroup>().blocksRaycasts = true;
-
-                draggable = false; 
+                    if (attack)
+                        draggable = false; 
+                }
+                else
+                {
+                    draggable = false;
+                }
+              
             }
             
         }

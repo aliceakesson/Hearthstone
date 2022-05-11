@@ -22,6 +22,70 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 clickable = false;
             }
         }
+        else if(transform.parent.name == "Enemy Board")
+        {
+            if(GameObject.Find("Player Board").transform.childCount > 0)
+            {
+                foreach (Transform tr in GameObject.Find("Player Board").transform)
+                {
+                    if(tr.GetComponent<OnDragEvents>().elvenArcher)
+                    {
+                        try
+                        {
+                            int hp = int.Parse(transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                            --hp;
+                            if(hp <= 0)
+                            {
+                                GameObject.Find("Scripts").GetComponent<Enemy>().mercenaries.Remove(this.gameObject);
+                                Destroy(this.gameObject);
+                                GameObject.Find("Scripts").GetComponent<Game>().ReloadMercenaries(0);
+                            }
+                            else
+                            {
+                                transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+                            }
+                        } catch(System.FormatException fe) { }
+
+                        tr.GetComponent<OnDragEvents>().elvenArcher = false;
+                        Destroy(GameObject.Find("Arrow(Clone)"));
+
+                        break; 
+                    }
+                }
+            }
+        }
+        else if(this.gameObject.name == "Enemy Hero")
+        {
+            if (GameObject.Find("Player Board").transform.childCount > 0)
+            {
+                foreach (Transform tr in GameObject.Find("Player Board").transform)
+                {
+                    if (tr.GetComponent<OnDragEvents>().elvenArcher)
+                    {
+                        try
+                        {
+                            int hp = int.Parse(transform.GetChild(1).GetComponent<Text>().text);
+                            --hp;
+                            if (hp <= 0)
+                            {
+                                print("You Win");
+                                GameObject.Find("Scripts").GetComponent<Game>().gameIsFinished = true;
+                            }
+                            else
+                            {
+                                transform.GetChild(1).GetComponent<Text>().text = hp + "";
+                            }
+                        }
+                        catch (System.FormatException fe) { }
+
+                        tr.GetComponent<OnDragEvents>().elvenArcher = false;
+                        Destroy(GameObject.Find("Arrow(Clone)"));
+
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
