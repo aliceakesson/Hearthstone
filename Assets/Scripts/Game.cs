@@ -102,6 +102,9 @@ public class Game : MonoBehaviour
         ImportMercenary("River_Crocolisk", 0);
         ImportMercenary("Bloodfen_Raptor", 0);
 
+        ImportCard("Archanite_Reaper", 1);
+        ImportCard("Fiery_War_Axe", 1);
+
         List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;
         List<int> chosenIndexes = new List<int>();
         for (int i = 0; i < 3; i++)
@@ -130,10 +133,13 @@ public class Game : MonoBehaviour
             }
             else
             {
-                while (chosenIndexes.Contains(index))
+                int margin = 200, k = 0;
+                while (chosenIndexes.Contains(index) && k < margin)
                 {
                     index = Random.Range(0, 29);
+                    k++; 
                 }
+                ImportCard(cardDeck[index], 0);
             }
         }
 
@@ -198,6 +204,7 @@ public class Game : MonoBehaviour
         ReloadBorders();
 
     }
+
     void Update()
     {
 
@@ -527,6 +534,14 @@ public class Game : MonoBehaviour
         if(side == 1)
         {
             mercObject.AddComponent<OnDragEvents>();
+
+            if(card.cardType == CardType.Minion & card.description.Length >= 6) // charge 
+            {
+                if(card.description.Contains("Charge"))
+                {
+                    mercObject.GetComponent<OnDragEvents>().draggable = true; 
+                }
+            }
         }
 
         mercObject.AddComponent<OnClickEvents>();
