@@ -23,13 +23,13 @@ public class Enemy : Humanoid
 
                 try
                 {
-                    int attack = enemyObj.GetComponent<Mercenary>().attack;
-                    playerObj.GetComponent<Mercenary>().health -= attack;
+                    int attack = int.Parse(enemyObj.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text);
 
-                    Text healthText = playerObj.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>();
-                    healthText.text = playerObj.GetComponent<Mercenary>().health + "";
+                    int playerHp = int.Parse(playerObj.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                    playerHp -= attack;
+                    playerObj.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = playerHp + "";
 
-                    if (playerObj.GetComponent<Mercenary>().health <= 0)
+                    if (playerHp <= 0)
                     {
                         Player p = GameObject.Find("Scripts").GetComponent<Player>();
                         p.mercenaries.Remove(playerObj);
@@ -52,12 +52,12 @@ public class Enemy : Humanoid
                     try
                     {
                         int attack = this.attack;
-                        playerObj.GetComponent<Mercenary>().health -= attack;
 
-                        Text healthText = playerObj.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>();
-                        healthText.text = playerObj.GetComponent<Mercenary>().health + "";
+                        int playerHp = int.Parse(playerObj.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                        playerHp -= attack;
+                        playerObj.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = playerHp + "";
 
-                        if (playerObj.GetComponent<Mercenary>().health <= 0)
+                        if (playerHp <= 0)
                         {
                             Player p = GameObject.Find("Scripts").GetComponent<Player>();
                             p.mercenaries.Remove(playerObj);
@@ -85,7 +85,7 @@ public class Enemy : Humanoid
 
                 try
                 {
-                    int attack = enemyObj.GetComponent<Mercenary>().attack;
+                    int attack = int.Parse(enemyObj.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text);
                     GameObject armorObj = GameObject.Find("Player Hero").transform.GetChild(2).gameObject; 
 
                     if (hasArmor) {

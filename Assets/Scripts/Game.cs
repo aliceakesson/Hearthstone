@@ -101,12 +101,14 @@ public class Game : MonoBehaviour
         ImportMercenary("River_Crocolisk", 1);
         ImportMercenary("River_Crocolisk", 0);
         ImportMercenary("Bloodfen_Raptor", 0);
+        ImportMercenary("Sen'jin_Shieldmasta", 0);
 
-        ImportCard("Archanite_Reaper", 1);
-        ImportCard("Fiery_War_Axe", 1);
         ImportCard("Elven_Archer", 1);
         ImportCard("Acidic_Swamp_Ooze", 1);
         ImportCard("Razorfen_Hunter", 1);
+        ImportCard("Shattered_Sun_Cleric", 1);
+        ImportCard("Chillwind_Yeti", 1);
+        ImportCard("Sen'jin_Shieldmasta", 1);
 
         #region Välja kort efter cardDeck
         //List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;
@@ -523,7 +525,14 @@ public class Game : MonoBehaviour
             imageName = "Mercenary-Minion";
         }
 
-        frame = Resources.Load<Sprite>(cardsFramesURL + imageName);
+        string frameName = cardsFramesURL + imageName; 
+        if(card.description.Length >= 5)
+        {
+            if(card.description.Contains("Taunt"))
+            {
+                frameName = frameName + "-Taunt";
+            }
+        }
 
         GameObject mercObject = new GameObject(cardName, typeof(RectTransform));
         GameObject example = GameObject.Find("Mercenary Example");
@@ -588,7 +597,7 @@ public class Game : MonoBehaviour
         frame1.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         frame1.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
         frame1.AddComponent<Image>();
-        frame1.GetComponent<Image>().sprite = Resources.Load<Sprite>(cardsFramesURL + imageName + "-mask");
+        frame1.GetComponent<Image>().sprite = Resources.Load<Sprite>(frameName + "-mask");
         frame1.AddComponent<Mask>();
         frame1.GetComponent<Mask>().showMaskGraphic = false;
 
@@ -608,7 +617,7 @@ public class Game : MonoBehaviour
         frame2.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         frame2.GetComponent<RectTransform>().sizeDelta = new Vector2(rt.rect.width, rt.rect.height);
         frame2.AddComponent<Image>();
-        frame2.GetComponent<Image>().sprite = frame;
+        frame2.GetComponent<Image>().sprite = Resources.Load<Sprite>(frameName);
 
         GameObject attackObj = new GameObject("Attack", typeof(RectTransform));
         rt = example.transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<RectTransform>();
@@ -959,7 +968,33 @@ public class Game : MonoBehaviour
 
                     if (playerBoard.transform.childCount > 1)
                     {
-                        playerIndex = Random.Range(0, playerBoard.transform.childCount - 1);
+                        int tauntIndex = 0;
+                        bool taunt = false; 
+                        foreach(Transform playerMercenary in playerBoard.transform)
+                        {
+                            Card card = Resources.Load<Card>("Cards/" + playerMercenary.gameObject.name);
+                            if(card.description.Length >= 5)
+                            {
+                                if(card.description.Contains("Taunt"))
+                                {
+                                    taunt = true;
+                                    if(playerBoard.transform.childCount > 1)
+                                    {
+                                        tauntIndex = playerMercenary.GetSiblingIndex();
+                                    }
+                                    break; 
+                                }
+                            }
+                        }
+
+                        if(taunt)
+                        {
+                            playerIndex = tauntIndex;
+                        }
+                        else
+                        {
+                            playerIndex = Random.Range(0, playerBoard.transform.childCount - 1);
+                        }
                     }
 
                     e.Attack(enemyIndex, playerIndex);

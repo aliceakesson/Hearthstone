@@ -19,12 +19,13 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     Vector2 card_onBeginDragStartPos;
     Vector2 merc_onBeginDragStartPos;
 
-    public bool elvenArcher = false; 
+    public bool elvenArcher = false;
+    public bool shatteredSunCleric = false; 
 
     void Update()
     {
 
-        if(elvenArcher)
+        if(elvenArcher || shatteredSunCleric)
         {
             merc_onBeginDragStartPos = this.gameObject.GetComponent<RectTransform>().position;
 
@@ -311,6 +312,31 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                             case "Razorfen_Hunter":
                                 g.ImportMercenary("Boar", 1);
                                 break;
+                            case "Shattered_Sun_Cleric":
+                                if(GameObject.Find("Player Board").transform.childCount > 0)
+                                {
+                                    arrow = GameObject.Find("Arrow");
+
+                                    arrowClone = Instantiate(arrow);
+                                    triangle = arrowClone.transform.GetChild(0).gameObject;
+                                    boxes = arrowClone.transform.GetChild(1).gameObject;
+
+                                    merc_onBeginDragStartPos = this.gameObject.GetComponent<RectTransform>().position;
+
+                                    arrowClone.transform.parent = GameObject.Find("Board").transform;
+                                    arrowClone.layer = LayerMask.NameToLayer("UI");
+
+                                    rt = arrowClone.GetComponent<RectTransform>();
+                                    rt.position = merc_onBeginDragStartPos;
+
+                                    GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+                                    board = GameObject.Find("Player Board");
+                                    obj = board.transform.GetChild(board.transform.childCount - 1).gameObject;
+
+                                    obj.GetComponent<OnDragEvents>().shatteredSunCleric = true;
+                                }
+                                break; 
                             default:
                                 break;
                         }
@@ -486,7 +512,27 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                             if (GameObject.Find("Enemy Board").transform.childCount > 1)
                                 enemyIndex = enemyMerc.GetSiblingIndex();
 
-                            p.Attack(playerIndex, enemyIndex);
+                            if(!enemyMerc.transform.GetChild(0).GetComponent<Image>().sprite.name.Contains("Taunt"))
+                            {
+                                bool anotherMercenaryHasTaunt = false; 
+                                foreach(Transform enemyMerc2 in GameObject.Find("Enemy Board").transform)
+                                {
+                                    if(enemyMerc2.gameObject != enemyMerc.gameObject)
+                                    {
+                                        if (enemyMerc2.transform.GetChild(0).GetComponent<Image>().sprite.name.Contains("Taunt"))
+                                            anotherMercenaryHasTaunt = true; 
+                                    }
+                                }
+
+                                if(!anotherMercenaryHasTaunt)
+                                {
+                                    p.Attack(playerIndex, enemyIndex);
+                                }
+                            }
+                            else
+                            {
+                                p.Attack(playerIndex, enemyIndex);
+                            }
 
                             break;
                         }

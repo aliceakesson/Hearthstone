@@ -2394,6 +2394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   draggable: 1
   elvenArcher: 0
+  shatteredSunCleric: 0
 --- !u!1 &444530199
 GameObject:
   m_ObjectHideFlags: 0
@@ -9716,6 +9717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   draggable: 0
   elvenArcher: 0
+  shatteredSunCleric: 0
 --- !u!1 &2109243822
 GameObject:
   m_ObjectHideFlags: 0

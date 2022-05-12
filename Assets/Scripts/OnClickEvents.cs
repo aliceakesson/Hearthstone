@@ -86,6 +86,35 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 }
             }
         }
+        else if(transform.parent.name == "Player Board")
+        {
+            if (GameObject.Find("Player Board").transform.childCount > 0)
+            {
+                foreach (Transform tr in GameObject.Find("Player Board").transform)
+                {
+                    if (tr.GetComponent<OnDragEvents>().shatteredSunCleric)
+                    {
+                        try
+                        {
+                            int hp = int.Parse(transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                            int attack = int.Parse(transform.GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text);
+                            ++hp;
+                            ++attack; 
+                            
+                            transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+                            transform.GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text = attack + "";
+                            
+                        }
+                        catch (System.FormatException fe) { }
+
+                        tr.GetComponent<OnDragEvents>().shatteredSunCleric = false;
+                        Destroy(GameObject.Find("Arrow(Clone)"));
+
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
