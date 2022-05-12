@@ -365,6 +365,19 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                                         } catch(System.FormatException fe) { }
                                     }
                                 }
+                                break;
+                            case "Gnomish_Inventor":
+                                List<string> warriorDeckCards = new List<string>();
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    for (int j = 0; j < g.warriorDeck[i].Count; j++)
+                                    {
+                                        warriorDeckCards.Add(g.warriorDeck[i][j]);
+                                    }
+                                }
+
+                                int index = Random.Range(0, warriorDeckCards.Count);
+                                g.ImportCard(warriorDeckCards[index], 1);
                                 break; 
                             default:
                                 break;
@@ -443,6 +456,26 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                                 {
                                     changeMade = false; 
                                 }
+                                break;
+                            case "Shield_Block":
+                                try
+                                {
+                                    int armor = int.Parse(GameObject.Find("Player Hero").transform.GetChild(3).GetChild(0).GetComponent<Text>().text);
+                                    armor += 5;
+                                    GameObject.Find("Player Hero").transform.GetChild(3).GetChild(0).GetComponent<Text>().text = armor + "";
+
+                                    List<string> warriorDeckCards = new List<string>();
+                                    for(int i = 0; i < 3; i++)
+                                    {
+                                        for(int j = 0; j < g.warriorDeck[i].Count; j++)
+                                        {
+                                            warriorDeckCards.Add(g.warriorDeck[i][j]);
+                                        }
+                                    }
+
+                                    int index = Random.Range(0, warriorDeckCards.Count);
+                                    g.ImportCard(warriorDeckCards[index], 1);
+                                } catch(System.FormatException fe) { }
                                 break; 
                             default:
                                 changeMade = false; 

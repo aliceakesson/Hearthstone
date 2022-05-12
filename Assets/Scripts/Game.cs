@@ -25,12 +25,12 @@ public class Game : MonoBehaviour
     public int maxMana = 1;
     public Color manaLight, manaDark;
 
-    List<List<string>> warriorDeck = new List<List<string>>();
+    public List<List<string>> warriorDeck = new List<List<string>>();
     List<string> warriorDeck_spell = new List<string>();
     List<string> warriorDeck_weapon = new List<string>();
     List<string> warriorDeck_minion = new List<string>();
 
-    List<List<string>> paladinDeck = new List<List<string>>();
+    public List<List<string>> paladinDeck = new List<List<string>>();
     List<string> paladinDeck_spell = new List<string>();
     List<string> paladinDeck_weapon = new List<string>();
     List<string> paladinDeck_minion = new List<string>();
@@ -106,8 +106,7 @@ public class Game : MonoBehaviour
         ImportCard("Razorfen_Hunter", 1);
         ImportCard("Shattered_Sun_Cleric", 1);
         ImportCard("Stormpike_Commando", 1);
-        ImportCard("Boulderfist_Ogre", 1);
-        ImportCard("Stormwind_Champion", 1);
+        ImportCard("Gnomish_Inventor", 1);
 
         #region Välja kort efter cardDeck
         //List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;
