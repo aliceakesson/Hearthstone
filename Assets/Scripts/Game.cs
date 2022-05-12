@@ -101,14 +101,13 @@ public class Game : MonoBehaviour
         ImportMercenary("River_Crocolisk", 1);
         ImportMercenary("River_Crocolisk", 0);
         ImportMercenary("Bloodfen_Raptor", 0);
-        ImportMercenary("Sen'jin_Shieldmasta", 0);
 
         ImportCard("Elven_Archer", 1);
-        ImportCard("Acidic_Swamp_Ooze", 1);
         ImportCard("Razorfen_Hunter", 1);
         ImportCard("Shattered_Sun_Cleric", 1);
-        ImportCard("Chillwind_Yeti", 1);
-        ImportCard("Sen'jin_Shieldmasta", 1);
+        ImportCard("Stormpike_Commando", 1);
+        ImportCard("Boulderfist_Ogre", 1);
+        ImportCard("Stormwind_Champion", 1);
 
         #region Välja kort efter cardDeck
         //List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;

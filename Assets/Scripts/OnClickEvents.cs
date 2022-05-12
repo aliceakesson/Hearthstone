@@ -51,6 +51,31 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
                         break; 
                     }
+                    else if (tr.GetComponent<OnDragEvents>().stormpikeCommando)
+                    {
+                        try
+                        {
+                            int hp = int.Parse(transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                            hp-=2;
+
+                            if (hp <= 0)
+                            {
+                                GameObject.Find("Scripts").GetComponent<Enemy>().mercenaries.Remove(this.gameObject);
+                                Destroy(this.gameObject);
+                                GameObject.Find("Scripts").GetComponent<Game>().ReloadMercenaries(0);
+                            }
+                            else
+                            {
+                                transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+                            }
+                        }
+                        catch (System.FormatException fe) { }
+
+                        tr.GetComponent<OnDragEvents>().stormpikeCommando = false;
+                        Destroy(GameObject.Find("Arrow(Clone)"));
+
+                        break;
+                    }
                 }
             }
         }
@@ -79,6 +104,30 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                         catch (System.FormatException fe) { }
 
                         tr.GetComponent<OnDragEvents>().elvenArcher = false;
+                        Destroy(GameObject.Find("Arrow(Clone)"));
+
+                        break;
+                    }
+                    else if (tr.GetComponent<OnDragEvents>().stormpikeCommando)
+                    {
+                        try
+                        {
+                            int hp = int.Parse(transform.GetChild(1).GetComponent<Text>().text);
+                            hp-=2;
+
+                            if (hp <= 0)
+                            {
+                                print("You Win");
+                                GameObject.Find("Scripts").GetComponent<Game>().gameIsFinished = true;
+                            }
+                            else
+                            {
+                                transform.GetChild(1).GetComponent<Text>().text = hp + "";
+                            }
+                        }
+                        catch (System.FormatException fe) { }
+
+                        tr.GetComponent<OnDragEvents>().stormpikeCommando = false;
                         Destroy(GameObject.Find("Arrow(Clone)"));
 
                         break;

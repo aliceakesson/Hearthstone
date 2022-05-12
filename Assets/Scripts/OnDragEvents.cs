@@ -21,11 +21,12 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
     public bool elvenArcher = false;
     public bool shatteredSunCleric = false; 
+    public bool stormpikeCommando = false; 
 
     void Update()
     {
 
-        if(elvenArcher || shatteredSunCleric)
+        if(elvenArcher || shatteredSunCleric || stormpikeCommando)
         {
             merc_onBeginDragStartPos = this.gameObject.GetComponent<RectTransform>().position;
 
@@ -272,9 +273,11 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                     else if(card.cardType == CardType.Minion)
                     {
                         g.ImportMercenary(this.gameObject.name, 1);
+                        changeMade = true;
                         switch (this.gameObject.name) // battlecry events 
                         {
                             case "Elven_Archer":
+                            case "Stormpike_Commando":
                                 GameObject arrow = GameObject.Find("Arrow");
 
                                 GameObject arrowClone = Instantiate(arrow);
@@ -294,7 +297,11 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                                 GameObject board = GameObject.Find("Player Board");
                                 GameObject obj = board.transform.GetChild(board.transform.childCount-1).gameObject;
 
-                                obj.GetComponent<OnDragEvents>().elvenArcher = true; 
+                                if(this.gameObject.name == "Elven_Archer")
+                                    obj.GetComponent<OnDragEvents>().elvenArcher = true;
+                                else if(this.gameObject.name == "Stormpike_Commando")
+                                    obj.GetComponent<OnDragEvents>().stormpikeCommando = true;
+
                                 break;
                             case "Acidic_Swamp_Ooze":
                                 if(GameObject.Find("Enemy Weapon").transform.GetChild(0).GetComponent<Image>().enabled)
@@ -336,11 +343,33 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
                                     obj.GetComponent<OnDragEvents>().shatteredSunCleric = true;
                                 }
+                                else
+                                {
+                                    changeMade = false; 
+                                }
+                                break;
+                            case "Stormwind_Champion":
+                                if(GameObject.Find("Player Board").transform.childCount > 0)
+                                {
+                                    foreach(Transform mercenary in GameObject.Find("Player Board").transform)
+                                    {
+                                        try
+                                        {
+                                            int hp = int.Parse(mercenary.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                                            ++hp;
+                                            mercenary.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+
+                                            int attack = int.Parse(mercenary.GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text);
+                                            ++attack;
+                                            mercenary.GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text = attack + "";
+                                        } catch(System.FormatException fe) { }
+                                    }
+                                }
                                 break; 
                             default:
                                 break;
                         }
-                        changeMade = true; 
+                         
                     }
                     else if(card.cardType == CardType.Spell)
                     {
