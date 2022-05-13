@@ -9,12 +9,12 @@ using UnityEngine.UI;
 public class Game : MonoBehaviour
 {
 
-    readonly string cardsURL = "Cards/";
-    readonly string cardsImagesURL = "Images/Cards/";
-    readonly string cardsFramesURL = "Images/Cards/Frames/";
-    readonly string belweFontsURL = "Fonts/belwe/";
+    public readonly string cardsURL = "Cards/";
+    public readonly string cardsImagesURL = "Images/Cards/";
+    public readonly string cardsFramesURL = "Images/Cards/Frames/";
+    public readonly string belweFontsURL = "Fonts/belwe/";
 
-    readonly string usedFont = "belwe bold bt";
+    public readonly string usedFont = "belwe bold bt";
 
     public bool playerTurn = false;
     bool prevPlayerTurn = false;
@@ -35,9 +35,15 @@ public class Game : MonoBehaviour
     List<string> paladinDeck_weapon = new List<string>();
     List<string> paladinDeck_minion = new List<string>();
 
+    Enemy e = new Enemy();
+    Player p = new Player();
+
     void Start()
     {
         print("Start");
+
+        p = GameObject.Find("Scripts").GetComponent<Player>();
+        e = GameObject.Find("Scripts").GetComponent<Enemy>();
 
         warriorDeck_spell.Add("Cleave");
         warriorDeck_spell.Add("Execute");
@@ -88,9 +94,12 @@ public class Game : MonoBehaviour
         //ImportCard("River_Crocolisk", 1);
         //ImportCard("River_Crocolisk", 1);
 
-        //ImportCard("River_Crocolisk", 0);
-        //ImportCard("River_Crocolisk", 0);
-        //ImportCard("River_Crocolisk", 0);
+        ImportCard("River_Crocolisk", 0);
+        ImportCard("River_Crocolisk", 0);
+        ImportCard("River_Crocolisk", 0);
+        ImportCard("Fiery_War_Axe", 0);
+
+        e.UseCard(3);
 
         //ImportCard("Cleave", 1);
         //ImportCard("Execute", 1);
@@ -98,9 +107,9 @@ public class Game : MonoBehaviour
         //ImportCard("Fiery_War_Axe", 1);
         //ImportCard("Fiery_War_Axe", 1);
 
-        ImportMercenary("River_Crocolisk", 1);
-        ImportMercenary("River_Crocolisk", 0);
-        ImportMercenary("Bloodfen_Raptor", 0);
+        //ImportMercenary("River_Crocolisk", 1);
+        //ImportMercenary("River_Crocolisk", 0);
+        //ImportMercenary("Bloodfen_Raptor", 0);
 
         ImportCard("Elven_Archer", 1);
         ImportCard("Razorfen_Hunter", 1);
@@ -151,9 +160,6 @@ public class Game : MonoBehaviour
         playerTurn = true;
 
         FindObjectOfType<AudioManager>().Play("test3");
-
-        Player p = GameObject.Find("Scripts").GetComponent<Player>();
-        Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
 
         p.health = 30;
         p.armor = 0;
