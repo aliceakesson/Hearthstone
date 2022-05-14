@@ -202,6 +202,9 @@ public class Enemy : Humanoid
 
     public void UseCard(int index)
     {
+
+        Game g = GameObject.Find("Scripts").GetComponent<Game>();
+
         string cardName = GameObject.Find("Enemy Deck").transform.GetChild(index).name;
         Card card = Resources.Load<Card>("Cards/" + cardName);
 
@@ -353,6 +356,17 @@ public class Enemy : Humanoid
             else
             {
                 g.AddWeapon(cardName, 0);
+            }
+        }
+        else if(card.cardType == CardType.Spell)
+        {
+            switch(cardName)
+            {
+                case "Blessing_of_Kings":
+                    print("Blessing_of_Kings");
+                    break; 
+                default:
+                    break; 
             }
         }
 

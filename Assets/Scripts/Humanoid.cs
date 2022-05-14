@@ -13,12 +13,6 @@ public class Humanoid : MonoBehaviour
     public int armor;
     public int heroPowerMana;
 
-    public Game g = new Game();
-
-    private void Start()
-    {
-        g = GameObject.Find("Scripts").GetComponent<Game>();
-    }
 
     /// <summary>
     /// Metod där spelaren eller fienden attackerar motsatta sidan

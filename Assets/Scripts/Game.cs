@@ -26,14 +26,7 @@ public class Game : MonoBehaviour
     public Color manaLight, manaDark;
 
     public List<List<string>> warriorDeck = new List<List<string>>();
-    List<string> warriorDeck_spell = new List<string>();
-    List<string> warriorDeck_weapon = new List<string>();
-    List<string> warriorDeck_minion = new List<string>();
-
     public List<List<string>> paladinDeck = new List<List<string>>();
-    List<string> paladinDeck_spell = new List<string>();
-    List<string> paladinDeck_weapon = new List<string>();
-    List<string> paladinDeck_minion = new List<string>();
 
     Enemy e = new Enemy();
     Player p = new Player();
@@ -41,6 +34,14 @@ public class Game : MonoBehaviour
     void Start()
     {
         print("Start");
+
+        List<string> warriorDeck_spell = new List<string>();
+        List<string> warriorDeck_weapon = new List<string>();
+        List<string> warriorDeck_minion = new List<string>();
+
+        List<string> paladinDeck_spell = new List<string>();
+        List<string> paladinDeck_weapon = new List<string>();
+        List<string> paladinDeck_minion = new List<string>();
 
         p = GameObject.Find("Scripts").GetComponent<Player>();
         e = GameObject.Find("Scripts").GetComponent<Enemy>();
@@ -98,8 +99,9 @@ public class Game : MonoBehaviour
         ImportCard("River_Crocolisk", 0);
         ImportCard("River_Crocolisk", 0);
         ImportCard("Fiery_War_Axe", 0);
+        ImportCard("Fiery_War_Axe", 0);
 
-        e.UseCard(3);
+        
 
         //ImportCard("Cleave", 1);
         //ImportCard("Execute", 1);
@@ -211,6 +213,9 @@ public class Game : MonoBehaviour
         weapon.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
         weapon.transform.GetChild(3).GetComponent<Image>().enabled = false;
         weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
+        e.UseCard(3);
+        e.UseCard(3);
 
         ReloadBorders();
 
@@ -749,18 +754,36 @@ public class Game : MonoBehaviour
             return; 
         }
 
-        weaponObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = true;
-        weaponObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = card.image;
-        weaponObj.transform.GetChild(0).GetChild(1).GetComponent<Image>().enabled = true;
+        if(side == 0)
+        {
+            weaponObj.transform.GetChild(0).GetComponent<Image>().enabled = true;
+            weaponObj.transform.GetChild(0).GetComponent<Image>().sprite = card.image;
+            weaponObj.transform.GetChild(1).GetComponent<Image>().enabled = true;
 
-        weaponObj.transform.GetChild(0).GetChild(2).GetComponent<Image>().enabled = true;
-        weaponObj.transform.GetChild(0).GetChild(3).GetComponent<Image>().enabled = true;
-    
-        weaponObj.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().enabled = true;
-        weaponObj.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
-    
-        weaponObj.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().enabled = true;
-        weaponObj.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text = card.durability + "";
+            weaponObj.transform.GetChild(2).GetComponent<Image>().enabled = true;
+            weaponObj.transform.GetChild(3).GetComponent<Image>().enabled = true;
+
+            weaponObj.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = true;
+            weaponObj.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
+
+            weaponObj.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = true;
+            weaponObj.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = card.durability + "";
+        }
+        else
+        {
+            weaponObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = true;
+            weaponObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = card.image;
+            weaponObj.transform.GetChild(0).GetChild(1).GetComponent<Image>().enabled = true;
+
+            weaponObj.transform.GetChild(0).GetChild(2).GetComponent<Image>().enabled = true;
+            weaponObj.transform.GetChild(0).GetChild(3).GetComponent<Image>().enabled = true;
+
+            weaponObj.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().enabled = true;
+            weaponObj.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text = card.attack + "";
+
+            weaponObj.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().enabled = true;
+            weaponObj.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text = card.durability + "";
+        }
 
         hero.transform.GetChild(2).GetComponent<Image>().enabled = true; 
         hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = true; 
