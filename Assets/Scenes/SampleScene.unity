@@ -7900,6 +7900,7 @@ MonoBehaviour:
   maxMana: 1
   manaLight: {r: 1, g: 1, b: 1, a: 1}
   manaDark: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
+  enemyDeck: {fileID: 1365588767}
 --- !u!4 &1582130127
 Transform:
   m_ObjectHideFlags: 0

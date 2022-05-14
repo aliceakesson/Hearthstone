@@ -67,8 +67,18 @@ public class Enemy : Humanoid
 
                             Destroy(playerObj);
                         }
+
+                        if(GameObject.Find("Enemy Weapon").transform.GetChild(0).GetComponent<Image>().enabled &&
+                            GameObject.Find("Enemy Weapon").transform.GetChild(0).GetComponent<Image>().sprite.name == "Truesilver_Champion")
+                        {
+                            int ownHp = int.Parse(enemyObj.transform.GetChild(1).GetComponent<Text>().text);
+                            ownHp += 2;
+                            enemyObj.transform.GetChild(1).GetComponent<Text>().text = ownHp + "";
+                        }
+
                     }
                     catch (MissingComponentException mce) { }
+
                 }
             }
         }
@@ -203,12 +213,16 @@ public class Enemy : Humanoid
     public void UseCard(int index)
     {
 
-        Game g = GameObject.Find("Scripts").GetComponent<Game>();
+        print("Use Card");
 
-        string cardName = GameObject.Find("Enemy Deck").transform.GetChild(index).name;
+        Game g = GameObject.Find("Scripts").GetComponent<Game>();
+        Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+
+        GameObject cardObject = GameObject.Find("Enemy Deck").transform.GetChild(index).gameObject;
+        string cardName = e.cardObjects[index].name;
         Card card = Resources.Load<Card>("Cards/" + cardName);
 
-        bool changeMade = true; 
+        bool changeMade = true;
 
         if(card.cardType == CardType.Minion) //import mercenary
         {
@@ -328,23 +342,148 @@ public class Enemy : Humanoid
             healthText.GetComponent<Text>().maskable = false;
             #endregion
 
-            mercenaries.Add(mercObject);
+            e.mercenaries.Add(mercObject);
 
             float margin = 10;
             float width = mercObject.GetComponent<RectTransform>().rect.width;
             float lengthOfLine = 0;
 
-            foreach (GameObject obj in mercenaries)
+            foreach (GameObject obj in e.mercenaries)
             {
                 lengthOfLine += width + margin;
             }
             lengthOfLine -= margin;
 
             float startPosX = -lengthOfLine / 2;
-            for (int i = 0; i < mercenaries.Count; i++)
+            for (int i = 0; i < e.mercenaries.Count; i++)
             {
                 float x = startPosX + i * (width + margin);
-                mercenaries[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + width / 2, 0);
+                e.mercenaries[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + width / 2, 0);
+            }
+
+            switch (cardName) //battlecry events
+            {
+                case "Guardian_of_Kings":
+                    try
+                    {
+                        int hp = int.Parse(GameObject.Find("Enemy Hero").transform.GetChild(1).GetComponent<Text>().text);
+
+                        hp += 6;
+                        if (hp > 30)
+                            hp = 30;
+                        GameObject.Find("Enemy Hero").transform.GetChild(1).GetComponent<Text>().text = hp + "";
+                    } catch(System.FormatException fe) { }
+                    break;
+                case "Acidic_Swamp_Ooze":
+                    if(GameObject.Find("Player Weapon").transform.GetChild(0).GetComponent<Image>().enabled)
+                    {
+                        GameObject weapon = GameObject.Find("Player Weapon");
+                        weapon.transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = false;
+                        weapon.transform.GetChild(0).GetChild(1).GetComponent<Image>().enabled = false;
+                        weapon.transform.GetChild(0).GetChild(2).GetComponent<Image>().enabled = false;
+                        weapon.transform.GetChild(0).GetChild(3).GetComponent<Image>().enabled = false;
+
+                        weapon.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
+                        weapon.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+                    }
+                    break;
+                case "Murloc_Tidehunter":
+                    if (GameObject.Find("Enemy Board").transform.childCount < 6)
+                        g.ImportMercenary("Murloc_Scout", 0);
+                    else
+                        changeMade = false;
+                    break;
+                case "Razorfen_Hunter":
+                    if (GameObject.Find("Enemy Board").transform.childCount < 6)
+                        g.ImportMercenary("Boar", 0);
+                    else
+                        changeMade = false; 
+                    break;
+                case "Shattered_Sun_Cleric":
+                    if(GameObject.Find("Enemy Board").transform.childCount > 1)
+                    {
+                        int chosenIndex = 0; 
+                        if(GameObject.Find("Enemy Board").transform.childCount > 2)
+                            chosenIndex = Random.Range(0, GameObject.Find("Enemy Board").transform.childCount-2);
+
+                        GameObject obj = GameObject.Find("Enemy Board").transform.GetChild(chosenIndex).gameObject;
+
+                        try
+                        {
+                            int hp = int.Parse(obj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                            ++hp;
+                            obj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+
+                            int attackValue = int.Parse(obj.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text);
+                            ++attackValue;
+                            obj.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text = attackValue + "";
+                        } catch(System.FormatException fe) { }
+                    }
+                    else
+                    {
+                        changeMade = false; 
+                    }
+                    break;
+                case "Frostwolf_Warlord":
+                    int count = GameObject.Find("Enemy Board").transform.childCount;
+                    if (count > 1)
+                    {
+                        --count; 
+                        for(int i = 0; i < count; i++)
+                        {
+                            if(i % 2 == 0) // jämna tal
+                            {
+                                GameObject obj = GameObject.Find("Enemy Board").transform.GetChild(i).gameObject;
+
+                                try
+                                {
+                                    int hp = int.Parse(obj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                                    ++hp;
+                                    obj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+
+                                    int attackValue = int.Parse(obj.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text);
+                                    ++attackValue;
+                                    obj.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text = attackValue + "";
+                                }
+                                catch (System.FormatException fe) { }
+                            }
+                        }
+                    }
+                    break;
+                case "Stormwind_Champion":
+                    int childCount = GameObject.Find("Enemy Board").transform.childCount;
+                    if (childCount > 1)
+                    {
+                        --childCount; 
+                        for(int i = 0; i < childCount; i++)
+                        {
+                           
+                            GameObject obj = GameObject.Find("Enemy Board").transform.GetChild(i).gameObject;
+
+                            try
+                            {
+                                int hp = int.Parse(obj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                                ++hp;
+                                obj.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+
+                                int attackValue = int.Parse(obj.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text);
+                                ++attackValue;
+                                obj.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text = attackValue + "";
+                            }
+                            catch (System.FormatException fe) { }
+                            
+                        }
+                    }
+                    break; 
+                default:
+                    break;
+            }
+
+            if(!changeMade)
+            {
+                Destroy(mercObject);
+                e.mercenaries.Remove(mercObject);
+                g.ReloadMercenaries(0);
             }
         }
         else if(card.cardType == CardType.Weapon)
@@ -363,7 +502,128 @@ public class Enemy : Humanoid
             switch(cardName)
             {
                 case "Blessing_of_Kings":
-                    print("Blessing_of_Kings");
+                    if (GameObject.Find("Enemy Board").transform.childCount > 0)
+                    {
+                        int count = GameObject.Find("Enemy Board").transform.childCount;
+                        int minionIndex = 0;
+                        if (count > 1)
+                        {
+                            minionIndex = Random.Range(0, count - 1);
+                        }
+
+                        GameObject minion = GameObject.Find("Enemy Board").transform.GetChild(minionIndex).gameObject;
+
+                        try
+                        {
+                            int hp = int.Parse(minion.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                            hp += 4;
+                            minion.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+
+                            int attack = int.Parse(minion.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text);
+                            attack += 4;
+                            minion.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text = attack + "";
+                        }
+                        catch (System.FormatException fe) { }
+
+                    }
+                    else
+                    {
+                        changeMade = false;
+                    }
+                    break;
+                case "Consecration":
+                    if(GameObject.Find("Player Board").transform.childCount > 0)
+                    {
+                        foreach(Transform tr in GameObject.Find("Player Board").transform)
+                        {
+                            try
+                            {
+                                int hp = int.Parse(tr.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                                hp -= 2; 
+
+                                if(hp <= 0)
+                                {
+                                    Player p = GameObject.Find("Scripts").GetComponent<Player>();
+                                    p.mercenaries.Remove(tr.gameObject);
+
+                                    Destroy(tr.gameObject);
+
+                                    g.ReloadMercenaries(1);
+                                }
+                                else
+                                {
+                                    tr.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+                                }
+                            } catch(System.FormatException fe) { }
+                        }
+                    }
+                    else
+                    {
+                        changeMade = false; 
+                    }
+                    break;
+                case "Hammer_of_Wrath":
+                    print("Hammer of wrath");
+                    if(GameObject.Find("Player Board").transform.childCount > 0)
+                    {
+                        int minionIndex = 0;
+                        if (GameObject.Find("Player Board").transform.childCount > 1)
+                            minionIndex = Random.Range(0, GameObject.Find("Player Board").transform.childCount-1);
+
+                        GameObject minion = GameObject.Find("Player Board").transform.GetChild(minionIndex).gameObject;
+                        try
+                        {
+                            int hp = int.Parse(minion.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                            hp -= 3;
+
+                            if (hp <= 0)
+                            {
+                                Player p = GameObject.Find("Scripts").GetComponent<Player>();
+                                p.mercenaries.Remove(minion);
+
+                                Destroy(minion);
+
+                                g.ReloadMercenaries(1);
+                            }
+                            else
+                            {
+                                minion.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+                            }
+                        }
+                        catch (System.FormatException fe) { }
+                    }
+                    else
+                    {
+                        GameObject hero = GameObject.Find("Player Hero");
+                        try
+                        {
+                            int hp = int.Parse(hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().text);
+                            hp -= 3;
+
+                            if (hp <= 0)
+                            {
+                                print("You Lose");
+                                g.gameIsFinished = true; 
+                            }
+                            else
+                            {
+                                hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = hp + "";
+                            }
+                        }
+                        catch (System.FormatException fe) { }
+                    }
+
+                    List<string> paladinDeckCards = new List<string>();
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < g.paladinDeck[i].Count; j++)
+                        {
+                            paladinDeckCards.Add(g.paladinDeck[i][j]);
+                        }
+                    }
+
+                    int cardIndex = Random.Range(0, paladinDeckCards.Count);
+                    g.ImportCard(paladinDeckCards[cardIndex], 0);
                     break; 
                 default:
                     break; 
@@ -372,10 +632,13 @@ public class Enemy : Humanoid
 
         if(changeMade)
         {
-            cardObjects.RemoveAt(index);
+            Destroy(GameObject.Find("Enemy Deck").transform.GetChild(index).gameObject);
+
+            e.cardObjects.RemoveAt(index);
+
             g.ReloadCards(0);
         }
-        
+
     }
 
 }

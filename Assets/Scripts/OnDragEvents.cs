@@ -252,7 +252,7 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                 Game g = GameObject.Find("Scripts").GetComponent<Game>();
 
                 int manaLeft = g.maxMana - (GameObject.Find("Mana Text").GetComponent<Text>().text[0] - 48); //ascii
-                int mana = Resources.Load<Card>("Cards/" + this.gameObject.name).mana; //cards url
+                int mana = Resources.Load<Card>("Cards/" + this.gameObject.name).mana; 
 
                 if(manaLeft >= mana)
                 {

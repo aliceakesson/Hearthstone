@@ -31,6 +31,8 @@ public class Game : MonoBehaviour
     Enemy e = new Enemy();
     Player p = new Player();
 
+    public GameObject enemyDeck; 
+
     void Start()
     {
         print("Start");
@@ -91,27 +93,9 @@ public class Game : MonoBehaviour
         paladinDeck_minion.Add("Stormwind_Champion");
         paladinDeck.Add(paladinDeck_minion);
 
-        //ImportCard("Bloodfen_Raptor", 1);
-        //ImportCard("River_Crocolisk", 1);
-        //ImportCard("River_Crocolisk", 1);
-
         ImportCard("River_Crocolisk", 0);
-        ImportCard("River_Crocolisk", 0);
-        ImportCard("River_Crocolisk", 0);
-        ImportCard("Fiery_War_Axe", 0);
-        ImportCard("Fiery_War_Axe", 0);
-
-        
-
-        //ImportCard("Cleave", 1);
-        //ImportCard("Execute", 1);
-
-        //ImportCard("Fiery_War_Axe", 1);
-        //ImportCard("Fiery_War_Axe", 1);
-
-        //ImportMercenary("River_Crocolisk", 1);
-        //ImportMercenary("River_Crocolisk", 0);
-        //ImportMercenary("Bloodfen_Raptor", 0);
+        ImportCard("Murloc_Tidehunter", 0);
+        ImportCard("Hammer_of_Wrath", 0);
 
         ImportCard("Elven_Archer", 1);
         ImportCard("Razorfen_Hunter", 1);
@@ -214,9 +198,6 @@ public class Game : MonoBehaviour
         weapon.transform.GetChild(3).GetComponent<Image>().enabled = false;
         weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
 
-        e.UseCard(3);
-        e.UseCard(3);
-
         ReloadBorders();
 
     }
@@ -235,7 +216,6 @@ public class Game : MonoBehaviour
         prevPlayerTurn = playerTurn;
 
     }
-
 
     /// <summary>
     /// Importerar ett kort till antingen spelaren eller fiendens kortlek
@@ -829,7 +809,7 @@ public class Game : MonoBehaviour
                 {
                     float x = startPosX + i * (cardWidth - margin);
                     e.cardObjects[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + cardWidth / 2, 0);
-                    //p.cardObjects[i].GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, -1 * (startAngle + angle*i));
+                    //e.cardObjects[i].GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, -1 * (startAngle + angle*i));
                 }
             }
 
@@ -939,6 +919,7 @@ public class Game : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
+
         GameObject playerBoard = GameObject.Find("Player Board");
         GameObject enemyBoard = GameObject.Find("Enemy Board");
 
@@ -1035,7 +1016,7 @@ public class Game : MonoBehaviour
 
         }
 
-        if (e.cardObjects.Count > 0)
+        if (e.cardObjects.Count > 0 && e.mercenaries.Count < 6)
         {
 
             int index = 0;
@@ -1044,9 +1025,10 @@ public class Game : MonoBehaviour
                 index = Random.Range(0, e.cardObjects.Count-1);
             }
 
-            ImportMercenary(e.cardObjects[index].name, 0);
+            e.UseCard(index);
+            //ImportMercenary(e.cardObjects[index].name, 0);
 
-            e.cardObjects.RemoveAt(index);
+            //e.cardObjects.RemoveAt(index);
             ReloadCards(0);
 
         }
@@ -1147,5 +1129,6 @@ public class Game : MonoBehaviour
         }
 
     }
+
 
 }

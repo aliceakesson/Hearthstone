@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8930cb69c4695514aab1cb250ea87507, type: 3}
+  m_Name: Truesilver_Champion
+  m_EditorClassIdentifier: 
+  health: 0
+  attack: 4
+  mana: 4
+  name: Truesilver Champion
+  description: Whenever your hero attack, restore 2 Health to it.
+  cardType: 1
+  image: {fileID: 21300000, guid: c9f857353a601f046a7d16fec927ff0b, type: 3}
+  durability: 2

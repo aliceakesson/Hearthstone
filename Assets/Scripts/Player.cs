@@ -202,7 +202,6 @@ public class Player : Humanoid
     public override void UseHeroPower(string heroPowerName)
     {
 
-        print(heroPowerName);
         GameObject heroPowerObject = GameObject.Find("Player HeroPower"); 
 
         Game g = GameObject.Find("Scripts").GetComponent<Game>();
