@@ -6,6 +6,11 @@ using UnityEngine.UI;
 public class Player : Humanoid
 {
 
+    public Player()
+    {
+
+    }
+
     /// <summary>
     /// Skadar en av fiendes soldater
     /// </summary>

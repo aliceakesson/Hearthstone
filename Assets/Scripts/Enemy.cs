@@ -6,6 +6,11 @@ using UnityEngine.UI;
 public class Enemy : Humanoid
 {
 
+    public Enemy()
+    {
+
+    }
+
     /// <summary>
     /// Skadar en av spelarens soldater
     /// </summary>

@@ -6,6 +6,11 @@ public class Mercenary : MonoBehaviour
 {
 
     public int health;
-    public int attack; 
+    public int attack;
+
+    public Mercenary()
+    {
+
+    }
     
 }

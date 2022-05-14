@@ -10,6 +10,11 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public bool pointerIsOverObject = false;
     public bool clickable = true;
 
+    public OnClickEvents()
+    {
+
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if(this.gameObject.name == "Player HeroPower") 

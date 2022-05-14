@@ -8,6 +8,10 @@ using TMPro;
 public class MenuButtonEvents : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
+    public MenuButtonEvents()
+    {
+
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         TextMeshProUGUI tmp = GetComponent<TextMeshProUGUI>();

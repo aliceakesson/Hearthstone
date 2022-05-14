@@ -6,6 +6,11 @@ using UnityEngine;
 public class PublicData : ScriptableObject
 {
 
+    public PublicData()
+    {
+
+    }
+
     public List<string> cardDeck;
 
 }

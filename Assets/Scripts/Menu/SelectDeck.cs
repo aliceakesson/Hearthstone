@@ -13,7 +13,11 @@ public class SelectDeck : MonoBehaviour
     Vector2 startPos = new Vector2(-235.3f, 109.9f);
 
     public List<GameObject> chosenCards;
-    
+
+    public SelectDeck()
+    {
+
+    }
     private void Start()
     {
         ImportCard("Bloodfen_Raptor");

@@ -34,7 +34,12 @@ public class Game : MonoBehaviour
 
     public GameObject enemyDeck;
 
-    public Canvas defaultCanvas, gameEndedCanvas; 
+    public Canvas defaultCanvas, gameEndedCanvas;
+
+    public Game()
+    {
+
+    }
 
     void Start()
     {

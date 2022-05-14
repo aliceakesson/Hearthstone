@@ -13,6 +13,10 @@ public class Humanoid : MonoBehaviour
     public int armor;
     public int heroPowerMana;
 
+    public Humanoid()
+    {
+
+    }
 
     /// <summary>
     /// Metod där spelaren eller fienden attackerar motsatta sidan

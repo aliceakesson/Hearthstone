@@ -4,11 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CardToDeck : MonoBehaviour, IPointerClickHandler
+public class CardToDeck : SelectDeck, IPointerClickHandler
 {
 
     Vector2 startPos = new Vector2(3.24f, 156.98f);
     float yMargin = 32.64f;
+
+    public CardToDeck()
+    {
+
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
         if(transform.parent.name == "Card Options")

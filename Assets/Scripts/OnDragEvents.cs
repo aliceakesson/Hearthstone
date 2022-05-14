@@ -21,8 +21,12 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
     public bool elvenArcher = false;
     public bool shatteredSunCleric = false; 
-    public bool stormpikeCommando = false; 
+    public bool stormpikeCommando = false;
 
+    public OnDragEvents()
+    {
+
+    }
     void Update()
     {
 
