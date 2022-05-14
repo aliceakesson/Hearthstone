@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+//using UnityEditor.Rendering.PostProcessing; 
 
 /// <summary>
 /// "Main"-klassen, här implementeras all gameplay
@@ -31,7 +32,9 @@ public class Game : MonoBehaviour
     Enemy e = new Enemy();
     Player p = new Player();
 
-    public GameObject enemyDeck; 
+    public GameObject enemyDeck;
+
+    public Canvas defaultCanvas, gameEndedCanvas; 
 
     void Start()
     {

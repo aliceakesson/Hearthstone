@@ -190,7 +190,7 @@ public class Enemy : Humanoid
 
         switch (heroPowerName)
         {
-            case "Reinforce": // Använder switch/case för flexibilitet senare, behövs dock ej
+            case "Reinforce": // Använder switch/case för flexibilitet senare, behövs dock ej 
                 try
                 {
                     Game g = GameObject.Find("Scripts").GetComponent<Game>();
