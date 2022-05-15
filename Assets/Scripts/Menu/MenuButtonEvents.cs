@@ -74,7 +74,7 @@ public class MenuButtonEvents : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
                     bool canPlayGame = true;
 
-                    GameObject cards = GameObject.Find("Chosen Deck").transform.GetChild(1).gameObject;
+                    GameObject cards = GameObject.Find("Cards").gameObject;
                     if (cards.transform.childCount != 30)
                     {
                         canPlayGame = false;

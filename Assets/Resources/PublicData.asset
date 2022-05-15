@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88722d355a7917249a08ce13f738a020, type: 3}
   m_Name: PublicData
   m_EditorClassIdentifier: 
-  cardDeck: []
+  cardDeck:
+  - 

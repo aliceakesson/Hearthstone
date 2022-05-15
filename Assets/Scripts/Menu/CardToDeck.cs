@@ -12,8 +12,15 @@ public class CardToDeck : MonoBehaviour, IPointerClickHandler
     {
 
     }
+
+    void Start()
+    {
+
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
+
         if(transform.parent.name == "Card Options")
         {
             

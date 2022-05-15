@@ -14,18 +14,34 @@ public class SelectDeck : MenuButtonEvents
 
     public List<GameObject> chosenCards;
 
+    List<List<GameObject>> pages = new List<List<GameObject>>();
+
     public SelectDeck()
     {
 
     }
     private void Start()
     {
-        ImportCard("Bloodfen_Raptor");
-        ImportCard("River_Crocolisk");
         ImportCard("Cleave");
         ImportCard("Execute");
+        ImportCard("Shield_Block");
         ImportCard("Fiery_War_Axe");
-        ImportCard("Silver_Hand_Recruit");
+        ImportCard("Archanite_Reaper");
+        ImportCard("Kor'kron_Elite");
+        ImportCard("Elven_Archer");
+        ImportCard("Acidic_Swamp_Ooze");
+        ImportCard("Bloodfen_Raptor");
+        ImportCard("River_Crocolisk");
+        ImportCard("Razorfen_Hunter");
+        ImportCard("Shattered_Sun_Cleric");
+        ImportCard("Chillwind_Yeti");
+        ImportCard("Gnomish_Inventor");
+        ImportCard("Sen'jin_Shieldmasta");
+        ImportCard("Stormpike_Commando");
+        ImportCard("Boulderfist_Ogre");
+        ImportCard("Stormwind_Champion");
+
+        ReloadPage(1);
     }
 
     void ImportCard(string cardName)
@@ -56,6 +72,13 @@ public class SelectDeck : MenuButtonEvents
             yIndex = 1;
         }
 
+        int page = (int)(cardsInMenu / 8 + 1);
+        if(pages.Count < page)
+        {
+            List<GameObject> list = new List<GameObject>();
+            pages.Add(list);
+        }
+
         cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(startPos.x + xMargin * xIndex, startPos.y - yMargin * yIndex);
 
         cardObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = card.image;
@@ -83,6 +106,10 @@ public class SelectDeck : MenuButtonEvents
         }
 
         cardObject.AddComponent<CardToDeck>();
+        cardObject.AddComponent<CanvasGroup>();
+
+        //cardObject.transform.parent = GameObject.Find("Card Options/Pages").transform.GetChild(page-1);
+        pages[page-1].Add(cardObject);
 
         cardsInMenu++;
 
@@ -91,6 +118,77 @@ public class SelectDeck : MenuButtonEvents
     public override void PlayGame()
     {
         SwitchScene(2);
+    }
+
+    public void SwitchPage(string side)
+    {
+
+        int currentPage = 1; 
+        try
+        {
+            currentPage = int.Parse(GameObject.Find("Page Text").GetComponent<Text>().text[5].ToString());
+        } catch(System.FormatException fe) { }
+
+        int amountOfPages = (int)(cardsInMenu / 8 + 1);
+
+        switch(side)
+        {
+            case "Left": case "left":
+                if (currentPage > 1)
+                    --currentPage; 
+                break;
+            case "Right": case "right":
+                if (currentPage < amountOfPages)
+                    ++currentPage;
+                break;
+            default:
+                break; 
+        }
+
+        GameObject.Find("Page Text").GetComponent<Text>().text = "Page " + currentPage;
+
+        ReloadPage(currentPage);
+
+    }
+
+    public void ReloadPage(int page)
+    {
+
+        for(int i = 0; i < pages.Count; i++)
+        {
+            bool b = false; 
+            if(i+1 == page)
+            {
+                b = true; 
+            }
+
+            if(pages[i].Count > 0)
+            {
+                foreach (GameObject obj in pages[i])
+                {
+                    Transform tr = obj.transform; 
+
+                    tr.GetChild(0).GetChild(0).GetComponent<Image>().enabled = b;
+                    tr.GetChild(0).GetChild(1).GetComponent<Image>().enabled = b;
+
+                    tr.GetChild(0).GetChild(1).GetChild(0).GetComponent<Text>().enabled = b;
+                    tr.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().enabled = b;
+
+                    tr.GetChild(0).GetChild(1).GetChild(2).GetComponent<Image>().enabled = b;
+                    tr.GetChild(0).GetChild(1).GetChild(3).GetComponent<Image>().enabled = b;
+                    tr.GetChild(0).GetChild(1).GetChild(4).GetComponent<Image>().enabled = b;
+
+                    tr.GetChild(0).GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().enabled = b;
+                    tr.GetChild(0).GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().enabled = b;
+                    tr.GetChild(0).GetChild(1).GetChild(4).GetChild(0).GetComponent<Text>().enabled = b;
+
+                    tr.GetComponent<CardToDeck>().enabled = b;
+
+                    tr.GetComponent<CanvasGroup>().blocksRaycasts = b; 
+                }
+            }
+        }
+
     }
 
 }
