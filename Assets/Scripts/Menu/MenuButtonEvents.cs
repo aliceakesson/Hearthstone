@@ -5,13 +5,24 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using TMPro;
 
+/// <summary>
+/// Klass som tar hand om event kring meny-knappen samt byte av scen
+/// </summary>
 public class MenuButtonEvents : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
+    /// <summary>
+    /// Konstuktor för MenuButtonEvents
+    /// </summary>
     public MenuButtonEvents()
     {
 
     }
+
+    /// <summary>
+    /// Unitys inbyggda funktion för när en mus är över ett objekt
+    /// </summary>
+    /// <param name="eventData">Data kring eventet</param>
     public void OnPointerEnter(PointerEventData eventData)
     {
         TextMeshProUGUI tmp = GetComponent<TextMeshProUGUI>();
@@ -27,6 +38,10 @@ public class MenuButtonEvents : MonoBehaviour, IPointerEnterHandler, IPointerExi
         tmp.colorGradient = new TMPro.VertexGradient(tl, tr, bl, br);
     }
 
+    /// <summary>
+    /// Unitys inbyggda funktion för när en mus lämnar ett objekt
+    /// </summary>
+    /// <param name="eventData">Data kring eventet</param>
     public void OnPointerExit(PointerEventData eventData)
     {
         TextMeshProUGUI tmp = GetComponent<TextMeshProUGUI>();
@@ -42,11 +57,18 @@ public class MenuButtonEvents : MonoBehaviour, IPointerEnterHandler, IPointerExi
         tmp.colorGradient = new TMPro.VertexGradient(tl, tr, bl, br);
     }
 
+    /// <summary>
+    /// Byter scen till scen 1, där kort väljs
+    /// </summary>
     public virtual void PlayGame()
     {
         SwitchScene(1);
     }
 
+    /// <summary>
+    /// Byter scen av spelet
+    /// </summary>
+    /// <param name="sceneIndex">Index på vilken scen som ska synas nu</param>
     protected void SwitchScene(int sceneIndex)
     {
         switch(sceneIndex)

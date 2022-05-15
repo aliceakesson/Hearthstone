@@ -32,16 +32,23 @@ public class Game : MonoBehaviour
     Enemy e = new Enemy();
     Player p = new Player();
 
-    public GameObject enemyDeck;
+    public GameObject enemyDeck, playerDeck;
     string[] enemyCardDeck = new string[30];
+    string[] playerCardDeck = new string[30];
 
     public Canvas defaultCanvas, gameEndedCanvas;
 
+    /// <summary>
+    /// Konstruktor för Game
+    /// </summary>
     public Game()
     {
 
     }
 
+    /// <summary>
+    /// Unitys inbyggda startfunktion
+    /// </summary>
     void Start()
     {
         print("Start");
@@ -103,14 +110,17 @@ public class Game : MonoBehaviour
         paladinDeck.Add(paladinDeck_minion);
 
         #region Välja spelarens kort efter cardDeck
-        List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;
+        for(int i = 0; i < Resources.Load<PublicData>("PublicData").cardDeck.Count; i++)
+        {
+            playerCardDeck[i] = Resources.Load<PublicData>("PublicData").cardDeck[i];
+        }
         List<int> chosenIndexes = new List<int>();
         for (int i = 0; i < 3; i++)
         {
             int index = Random.Range(0, 29);
             if (!chosenIndexes.Contains(index))
             {
-                ImportCard(cardDeck[index], 1);
+                ImportCard(playerCardDeck[index], 1);
             }
             else
             {
@@ -120,7 +130,7 @@ public class Game : MonoBehaviour
                     index = Random.Range(0, 29);
                     k++;
                 }
-                ImportCard(cardDeck[index], 1);
+                ImportCard(playerCardDeck[index], 1);
             }
         }
         #endregion
@@ -258,6 +268,9 @@ public class Game : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Unitys inbyggda loop-funktion
+    /// </summary>
     void Update()
     {
 
@@ -976,162 +989,198 @@ public class Game : MonoBehaviour
     public void EndTurn()
     {
 
-        GameObject playerBoard = GameObject.Find("Player Board");
-        GameObject enemyBoard = GameObject.Find("Enemy Board");
-
-        foreach (Transform mercenary in playerBoard.transform)
+        if(!gameIsFinished)
         {
-            mercenary.GetComponent<OnDragEvents>().draggable = false; 
-        }
-        GameObject.Find("Player Hero").GetComponent<OnDragEvents>().draggable = false;
+            GameObject playerBoard = GameObject.Find("Player Board");
+            GameObject enemyBoard = GameObject.Find("Enemy Board");
 
-        GameObject.Find("Player HeroPower").GetComponent<OnClickEvents>().clickable = false;
-
-        try
-        {
-            GameObject[] borders = GameObject.FindGameObjectsWithTag("Green Border");
-            foreach (GameObject border in borders)
+            foreach (Transform mercenary in playerBoard.transform)
             {
-                border.transform.GetChild(0).GetComponent<Image>().enabled = false;
+                mercenary.GetComponent<OnDragEvents>().draggable = false;
             }
-        } catch(MissingComponentException mce) { }
+            GameObject.Find("Player Hero").GetComponent<OnDragEvents>().draggable = false;
 
-        playerTurn = false;
+            GameObject.Find("Player HeroPower").GetComponent<OnClickEvents>().clickable = false;
 
-        GameObject heroPowerObj = GameObject.Find("Player HeroPower");
-        heroPowerObj.GetComponent<OnClickEvents>().clickable = false;
-        heroPowerObj.transform.GetChild(0).GetComponent<Image>().enabled = false; 
-        heroPowerObj.transform.GetChild(1).GetComponent<Image>().enabled = false;
-
-        GameObject heroPowerObj2 = GameObject.Find("Enemy HeroPower");
-        heroPowerObj2.transform.GetChild(0).GetComponent<Image>().enabled = true;
-        heroPowerObj2.transform.GetChild(1).GetComponent<Image>().enabled = true;
-
-        GameObject endTurnButton = GameObject.Find("Button");
-        endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "ENEMY TURN";
-        endTurnButton.transform.GetChild(0).GetComponent<Text>().fontSize = 12;
-        ColorBlock cb = endTurnButton.GetComponent<Button>().colors;
-        cb.normalColor = buttonNotClickable;
-        endTurnButton.GetComponent<Button>().colors = cb;
-        endTurnButton.GetComponent<Button>().interactable = false;
-
-        Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
-        List<GameObject> mercenaries = e.mercenaries;
-        if (mercenaries.Count > 0)
-        {
-
-            foreach(Transform mercenary in enemyBoard.transform)
+            try
             {
-                int enemyIndex = 0;
-                if (mercenaries.Count > 1)
-                    enemyIndex = mercenary.GetSiblingIndex();
-
-                if(playerBoard.transform.childCount > 0)
+                GameObject[] borders = GameObject.FindGameObjectsWithTag("Green Border");
+                foreach (GameObject border in borders)
                 {
-                    int playerIndex = 0;
+                    border.transform.GetChild(0).GetComponent<Image>().enabled = false;
+                }
+            }
+            catch (MissingComponentException mce) { }
 
-                    if (playerBoard.transform.childCount > 1)
+            playerTurn = false;
+
+            GameObject heroPowerObj = GameObject.Find("Player HeroPower");
+            heroPowerObj.GetComponent<OnClickEvents>().clickable = false;
+            heroPowerObj.transform.GetChild(0).GetComponent<Image>().enabled = false;
+            heroPowerObj.transform.GetChild(1).GetComponent<Image>().enabled = false;
+
+            GameObject heroPowerObj2 = GameObject.Find("Enemy HeroPower");
+            heroPowerObj2.transform.GetChild(0).GetComponent<Image>().enabled = true;
+            heroPowerObj2.transform.GetChild(1).GetComponent<Image>().enabled = true;
+
+            GameObject endTurnButton = GameObject.Find("Button");
+            endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "ENEMY TURN";
+            endTurnButton.transform.GetChild(0).GetComponent<Text>().fontSize = 12;
+            ColorBlock cb = endTurnButton.GetComponent<Button>().colors;
+            cb.normalColor = buttonNotClickable;
+            endTurnButton.GetComponent<Button>().colors = cb;
+            endTurnButton.GetComponent<Button>().interactable = false;
+
+            Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
+            List<GameObject> mercenaries = e.mercenaries;
+            if (mercenaries.Count > 0)
+            {
+
+                foreach (Transform mercenary in enemyBoard.transform)
+                {
+                    int enemyIndex = 0;
+                    if (mercenaries.Count > 1)
+                        enemyIndex = mercenary.GetSiblingIndex();
+
+                    if (playerBoard.transform.childCount > 0)
                     {
-                        int tauntIndex = 0;
-                        bool taunt = false; 
-                        foreach(Transform playerMercenary in playerBoard.transform)
+                        int playerIndex = 0;
+
+                        if (playerBoard.transform.childCount > 1)
                         {
-                            Card card = Resources.Load<Card>("Cards/" + playerMercenary.gameObject.name);
-                            if(card.description.Length >= 5)
+                            int tauntIndex = 0;
+                            bool taunt = false;
+                            foreach (Transform playerMercenary in playerBoard.transform)
                             {
-                                if(card.description.Contains("Taunt"))
+                                Card card = Resources.Load<Card>("Cards/" + playerMercenary.gameObject.name);
+                                if (card.description.Length >= 5)
                                 {
-                                    taunt = true;
-                                    if(playerBoard.transform.childCount > 1)
+                                    if (card.description.Contains("Taunt"))
                                     {
-                                        tauntIndex = playerMercenary.GetSiblingIndex();
+                                        taunt = true;
+                                        if (playerBoard.transform.childCount > 1)
+                                        {
+                                            tauntIndex = playerMercenary.GetSiblingIndex();
+                                        }
+                                        break;
                                     }
-                                    break; 
                                 }
+                            }
+
+                            if (taunt)
+                            {
+                                playerIndex = tauntIndex;
+                            }
+                            else
+                            {
+                                playerIndex = Random.Range(0, playerBoard.transform.childCount - 1);
                             }
                         }
 
-                        if(taunt)
-                        {
-                            playerIndex = tauntIndex;
-                        }
-                        else
-                        {
-                            playerIndex = Random.Range(0, playerBoard.transform.childCount - 1);
-                        }
+                        e.Attack(enemyIndex, playerIndex);
+                    }
+                    else
+                    {
+                        e.Attack(enemyIndex, -1);
                     }
 
-                    e.Attack(enemyIndex, playerIndex);
+                }
+
+            }
+
+            if (e.cardObjects.Count > 0 && e.mercenaries.Count < 6)
+            {
+
+                int index = 0;
+                if (e.cardObjects.Count > 1)
+                {
+                    index = Random.Range(0, e.cardObjects.Count - 1);
+                }
+
+                Card card = Resources.Load<Card>("Cards/" + enemyDeck.transform.GetChild(index).name);
+                if (card.mana <= maxMana)
+                {
+                    //ImportMercenary(e.cardObjects[index].name, 0);
+                    e.UseCard(index);
                 }
                 else
                 {
-                    e.Attack(enemyIndex, -1);
+                    int margin = 1000, marginCount = 0;
+                    while (card.mana > maxMana && marginCount < margin)
+                    {
+                        marginCount++;
+
+                        index = 0;
+                        if (e.cardObjects.Count > 1)
+                        {
+                            index = Random.Range(0, e.cardObjects.Count - 1);
+                        }
+
+                        card = Resources.Load<Card>("Cards/" + enemyDeck.transform.GetChild(index).name);
+                    }
+
+                    e.UseCard(index);
                 }
 
+
+                //e.cardObjects.RemoveAt(index);
+                ReloadCards(0);
+
             }
 
-        }
+            if (playerDeck.transform.childCount < 10)
+                ImportCard(playerCardDeck[Random.Range(0, 29)], 1);
 
-        if (e.cardObjects.Count > 0 && e.mercenaries.Count < 6)
-        {
+            if (enemyDeck.transform.childCount < 10)
+                ImportCard(enemyCardDeck[Random.Range(0, 29)], 0);
 
-            int index = 0;
-            if(e.cardObjects.Count > 1)
+            //reloadar. nu är det spelarens tur igen
+
+            if (maxMana < 10)
+                maxMana++;
+
+            foreach (Transform mana in GameObject.Find("Mana Bar").transform)
             {
-                index = Random.Range(0, e.cardObjects.Count-1);
+                if (mana.GetSiblingIndex() < maxMana)
+                {
+                    mana.GetComponent<Image>().color = manaDark;
+                    mana.GetComponent<Image>().enabled = true;
+                }
+                else
+                {
+                    mana.GetComponent<Image>().enabled = false;
+                }
             }
+            GameObject.Find("Mana Text").GetComponent<Text>().text = "0/" + maxMana;
 
-            e.UseCard(index);
-            //ImportMercenary(e.cardObjects[index].name, 0);
-
-            //e.cardObjects.RemoveAt(index);
-            ReloadCards(0);
-
-        }
-
-        //reloadar. nu är det spelarens tur igen
-
-        if(maxMana < 10)
-            maxMana++;
-
-        foreach (Transform mana in GameObject.Find("Mana Bar").transform)
-        {
-            if(mana.GetSiblingIndex() < maxMana)
+            foreach (Transform mercenary in GameObject.Find("Player Board").transform)
             {
-                mana.GetComponent<Image>().color = manaDark;
-                mana.GetComponent<Image>().enabled = true;
+                mercenary.GetComponent<OnDragEvents>().draggable = true;
             }
-            else
-            {
-                mana.GetComponent<Image>().enabled = false;
-            }
+            GameObject.Find("Player Hero").GetComponent<OnDragEvents>().draggable = true;
+            cb.normalColor = buttonClickable;
+            endTurnButton.GetComponent<Button>().colors = cb;
+            endTurnButton.GetComponent<Button>().interactable = true;
+            endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "END TURN";
+            endTurnButton.transform.GetChild(0).GetComponent<Text>().fontSize = 14;
+
+            heroPowerObj.GetComponent<OnClickEvents>().clickable = true;
+            heroPowerObj.transform.GetChild(0).GetComponent<Image>().enabled = true;
+            heroPowerObj.transform.GetChild(1).GetComponent<Image>().enabled = true;
+
+            heroPowerObj2.transform.GetChild(0).GetComponent<Image>().enabled = false;
+            heroPowerObj2.transform.GetChild(1).GetComponent<Image>().enabled = false;
+
+            ReloadBorders();
+
+            playerTurn = true;
         }
-        GameObject.Find("Mana Text").GetComponent<Text>().text = "0/" + maxMana;
-
-        foreach (Transform mercenary in GameObject.Find("Player Board").transform)
-        {
-            mercenary.GetComponent<OnDragEvents>().draggable = true;
-        }
-        GameObject.Find("Player Hero").GetComponent<OnDragEvents>().draggable = true; 
-        cb.normalColor = buttonClickable;
-        endTurnButton.GetComponent<Button>().colors = cb;
-        endTurnButton.GetComponent<Button>().interactable = true;
-        endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "END TURN";
-        endTurnButton.transform.GetChild(0).GetComponent<Text>().fontSize = 14;
-
-        heroPowerObj.GetComponent<OnClickEvents>().clickable = true;
-        heroPowerObj.transform.GetChild(0).GetComponent<Image>().enabled = true;
-        heroPowerObj.transform.GetChild(1).GetComponent<Image>().enabled = true;
-
-        heroPowerObj2.transform.GetChild(0).GetComponent<Image>().enabled = false;
-        heroPowerObj2.transform.GetChild(1).GetComponent<Image>().enabled = false;
-
-        ReloadBorders();
-
-        playerTurn = true;
 
     }
 
+    /// <summary>
+    /// Läser om gröna ramer runt objekt som endast syns när ett objekt är valbart 
+    /// </summary>
     public void ReloadBorders()
     {
 

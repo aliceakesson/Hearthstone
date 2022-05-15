@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Klass för spelaren, den man själv spelar som 
+/// </summary>
 public class Player : Humanoid
 {
 
+    /// <summary>
+    /// Konstuktor för Player
+    /// </summary>
     public Player()
     {
 
@@ -190,6 +196,9 @@ public class Player : Humanoid
         
     }
 
+    /// <summary>
+    /// Metod som drar ett nytt kort till handen
+    /// </summary>
     public override void DrawCard()
     {
 
@@ -204,6 +213,10 @@ public class Player : Humanoid
 
     }
 
+    /// <summary>
+    /// Metod för att använda ens "Hero Power"
+    /// </summary>
+    /// <param name="heroPowerName">Namnet på förmågan</param>
     public override void UseHeroPower(string heroPowerName)
     {
 
@@ -261,6 +274,11 @@ public class Player : Humanoid
 
     }
 
+    /// <summary>
+    /// Metod för att skada någon utan att själv bli skadad
+    /// </summary>
+    /// <param name="index">Index för den mercenary (eller hero) som ska bli skadad</param>
+    /// <param name="dmg">Antal Health som förloras</param>
     public override void DealDamage(int enemyIndex, int damage)
     {
         GameObject enemy = GameObject.Find("Enemy Board").transform.GetChild(enemyIndex).gameObject;

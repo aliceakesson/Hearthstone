@@ -4,22 +4,32 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Klass som tar hand om algoritmer kring val av kort till spelet
+/// </summary>
 public class SelectDeck : MenuButtonEvents
 {
 
     int cardsInMenu = 0; 
     public int cardsChosen = 0;
-
+    
     Vector2 startPos = new Vector2(-235.3f, 109.9f);
 
     public List<GameObject> chosenCards;
 
     List<List<GameObject>> pages = new List<List<GameObject>>();
 
+    /// <summary>
+    /// Konstruktor för SelectDeck
+    /// </summary>
     public SelectDeck()
     {
 
     }
+    
+    /// <summary>
+    /// Unitys inbyggda start-funktion
+    /// </summary>
     private void Start()
     {
         ImportCard("Cleave");
@@ -44,6 +54,10 @@ public class SelectDeck : MenuButtonEvents
         ReloadPage(1);
     }
 
+    /// <summary>
+    /// Lägger till ett kort bland alternativen för kort man kan välja
+    /// </summary>
+    /// <param name="cardName">Namnet på kortet</param>
     void ImportCard(string cardName)
     {
 
@@ -115,11 +129,18 @@ public class SelectDeck : MenuButtonEvents
 
     }
 
+    /// <summary>
+    /// Sätter igång spelet
+    /// </summary>
     public override void PlayGame()
     {
         SwitchScene(2);
     }
 
+    /// <summary>
+    /// Byter sida bland kort-alternativen
+    /// </summary>
+    /// <param name="side">Den sida man "bläddrar över", dvsa "Left" eller "Right"</param>
     public void SwitchPage(string side)
     {
 
@@ -151,6 +172,10 @@ public class SelectDeck : MenuButtonEvents
 
     }
 
+    /// <summary>
+    /// Byter vilka kort som syns, efter att en sida har vänds bland kort-alternativen
+    /// </summary>
+    /// <param name="page">Indexet på den sida som nu ska visas</param>
     public void ReloadPage(int page)
     {
 
@@ -184,7 +209,17 @@ public class SelectDeck : MenuButtonEvents
 
                     tr.GetComponent<CardToDeck>().enabled = b;
 
-                    tr.GetComponent<CanvasGroup>().blocksRaycasts = b; 
+                    tr.GetComponent<CanvasGroup>().blocksRaycasts = b;
+
+                    Card card = Resources.Load<Card>("Cards/" + obj.name);
+                    if(card.cardType == CardType.Spell)
+                    {
+                        tr.GetChild(0).GetChild(1).GetChild(3).GetComponent<Image>().enabled = false;
+                        tr.GetChild(0).GetChild(1).GetChild(4).GetComponent<Image>().enabled = false;
+
+                        tr.GetChild(0).GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+                        tr.GetChild(0).GetChild(1).GetChild(4).GetChild(0).GetComponent<Text>().enabled = false;
+                    }
                 }
             }
         }

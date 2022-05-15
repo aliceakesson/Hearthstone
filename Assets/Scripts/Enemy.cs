@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Klass för fienden, det vill säga AI motståndaren
+/// </summary>
 public class Enemy : Humanoid
 {
 
+    /// <summary>
+    /// Konstuktor för Enemy
+    /// </summary>
     public Enemy()
     {
 
@@ -177,6 +183,9 @@ public class Enemy : Humanoid
 
     }
 
+    /// <summary>
+    /// Metod som drar ett nytt kort till handen
+    /// </summary>
     public override void DrawCard()
     {
         Game g = GameObject.Find("Scripts").GetComponent<Game>();
@@ -190,6 +199,10 @@ public class Enemy : Humanoid
 
     }
 
+    /// <summary>
+    /// Metod för att använda ens "Hero Power"
+    /// </summary>
+    /// <param name="heroPowerName">Namnet på förmågan</param>
     public override void UseHeroPower(string heroPowerName)
     {
 
@@ -211,10 +224,19 @@ public class Enemy : Humanoid
 
     }
 
+    /// <summary>
+    /// Metod för att skada någon utan att själv bli skadad
+    /// </summary>
+    /// <param name="index">Index för den mercenary (eller hero) som ska bli skadad</param>
+    /// <param name="dmg">Antal Health som förloras</param>
     public override void DealDamage(int playerIndex, int damage)
     {
     }
 
+    /// <summary>
+    /// Metod för att använda ett kort från ens hand
+    /// </summary>
+    /// <param name="index">Det index som kortet har i handen</param>
     public void UseCard(int index)
     {
 
@@ -390,6 +412,10 @@ public class Enemy : Humanoid
 
                         weapon.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
                         weapon.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
+                        GameObject hero = GameObject.Find("Player Hero");
+                        hero.transform.GetChild(2).GetComponent<Image>().enabled = false;
+                        hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
                     }
                     break;
                 case "Murloc_Tidehunter":
@@ -568,67 +594,73 @@ public class Enemy : Humanoid
                     }
                     break;
                 case "Hammer_of_Wrath":
-                    print("Hammer of wrath");
-                    if(GameObject.Find("Player Board").transform.childCount > 0)
+                    if(g.enemyDeck.transform.childCount < 10)
                     {
-                        int minionIndex = 0;
-                        if (GameObject.Find("Player Board").transform.childCount > 1)
-                            minionIndex = Random.Range(0, GameObject.Find("Player Board").transform.childCount-1);
-
-                        GameObject minion = GameObject.Find("Player Board").transform.GetChild(minionIndex).gameObject;
-                        try
+                        if (GameObject.Find("Player Board").transform.childCount > 0)
                         {
-                            int hp = int.Parse(minion.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
-                            hp -= 3;
+                            int minionIndex = 0;
+                            if (GameObject.Find("Player Board").transform.childCount > 1)
+                                minionIndex = Random.Range(0, GameObject.Find("Player Board").transform.childCount - 1);
 
-                            if (hp <= 0)
+                            GameObject minion = GameObject.Find("Player Board").transform.GetChild(minionIndex).gameObject;
+                            try
                             {
-                                Player p = GameObject.Find("Scripts").GetComponent<Player>();
-                                p.mercenaries.Remove(minion);
+                                int hp = int.Parse(minion.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text);
+                                hp -= 3;
 
-                                Destroy(minion);
+                                if (hp <= 0)
+                                {
+                                    Player p = GameObject.Find("Scripts").GetComponent<Player>();
+                                    p.mercenaries.Remove(minion);
 
-                                g.ReloadMercenaries(1);
+                                    Destroy(minion);
+
+                                    g.ReloadMercenaries(1);
+                                }
+                                else
+                                {
+                                    minion.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+                                }
                             }
-                            else
+                            catch (System.FormatException fe) { }
+                        }
+                        else
+                        {
+                            GameObject hero = GameObject.Find("Player Hero");
+                            try
                             {
-                                minion.transform.GetChild(1).GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = hp + "";
+                                int hp = int.Parse(hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().text);
+                                hp -= 3;
+
+                                if (hp <= 0)
+                                {
+                                    print("You Lose");
+                                    g.gameIsFinished = true;
+                                }
+                                else
+                                {
+                                    hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = hp + "";
+                                }
+                            }
+                            catch (System.FormatException fe) { }
+                        }
+
+                        List<string> paladinDeckCards = new List<string>();
+                        for (int i = 0; i < 3; i++)
+                        {
+                            for (int j = 0; j < g.paladinDeck[i].Count; j++)
+                            {
+                                paladinDeckCards.Add(g.paladinDeck[i][j]);
                             }
                         }
-                        catch (System.FormatException fe) { }
+
+                        int cardIndex = Random.Range(0, paladinDeckCards.Count);
+                        g.ImportCard(paladinDeckCards[cardIndex], 0);
                     }
                     else
                     {
-                        GameObject hero = GameObject.Find("Player Hero");
-                        try
-                        {
-                            int hp = int.Parse(hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().text);
-                            hp -= 3;
-
-                            if (hp <= 0)
-                            {
-                                print("You Lose");
-                                g.gameIsFinished = true; 
-                            }
-                            else
-                            {
-                                hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = hp + "";
-                            }
-                        }
-                        catch (System.FormatException fe) { }
+                        changeMade = false; 
                     }
-
-                    List<string> paladinDeckCards = new List<string>();
-                    for (int i = 0; i < 3; i++)
-                    {
-                        for (int j = 0; j < g.paladinDeck[i].Count; j++)
-                        {
-                            paladinDeckCards.Add(g.paladinDeck[i][j]);
-                        }
-                    }
-
-                    int cardIndex = Random.Range(0, paladinDeckCards.Count);
-                    g.ImportCard(paladinDeckCards[cardIndex], 0);
                     break; 
                 default:
                     break; 

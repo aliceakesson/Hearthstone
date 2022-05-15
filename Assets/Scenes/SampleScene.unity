@@ -8530,6 +8530,7 @@ MonoBehaviour:
   manaLight: {r: 1, g: 1, b: 1, a: 1}
   manaDark: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
   enemyDeck: {fileID: 1365588767}
+  playerDeck: {fileID: 545122902}
   defaultCanvas: {fileID: 1339769436}
   gameEndedCanvas: {fileID: 1316459158}
 --- !u!4 &1582130127

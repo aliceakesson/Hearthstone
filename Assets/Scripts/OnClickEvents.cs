@@ -4,17 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Event för musens rörelse (även klick) kring ett specifikt objekt (de objekt som har skriptet som komponent)
+/// </summary>
 public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
 
     public bool pointerIsOverObject = false;
     public bool clickable = true;
 
+    /// <summary>
+    /// Konstruktor för OnClickEvents
+    /// </summary>
     public OnClickEvents()
     {
 
     }
 
+    /// <summary>
+    /// Unitys inbyggda startfunktion kring när man klickar på ett objekt 
+    /// </summary>
+    /// <param name="eventData">Data kring eventet</param>
     public void OnPointerClick(PointerEventData eventData)
     {
         if(this.gameObject.name == "Player HeroPower") 
@@ -171,6 +181,10 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         }
     }
 
+    /// <summary>
+    /// Unitys inbyggda funktion för när en mus är över ett objekt
+    /// </summary>
+    /// <param name="eventData">Data kring eventet</param>
     public void OnPointerEnter(PointerEventData eventData)
     {
 
@@ -216,6 +230,10 @@ public class OnClickEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     }
 
+    /// <summary>
+    /// Unitys inbyggda funktion för när en mus lämnar ett objekt
+    /// </summary>
+    /// <param name="eventData">Data kring eventet</param>
     public void OnPointerExit(PointerEventData eventData)
     {
 

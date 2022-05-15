@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Event för när ett objekt dras eller släpps
+/// </summary>
 public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
 
@@ -23,10 +26,17 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     public bool shatteredSunCleric = false; 
     public bool stormpikeCommando = false;
 
+    /// <summary>
+    /// Konstuktor för OnDragEvents
+    /// </summary>
     public OnDragEvents()
     {
 
     }
+
+    /// <summary>
+    /// Unitys inbyggda loop-funktion
+    /// </summary>
     void Update()
     {
 
@@ -100,6 +110,10 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         }
     }
 
+    /// <summary>
+    /// Unitys inbyggda funktion för när en mus börjar dra någonting
+    /// </summary>
+    /// <param name="eventData">Data kring eventet</param>
     public void OnBeginDrag(PointerEventData eventData)
     {
 
@@ -160,6 +174,10 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
     }
 
+    /// <summary>
+    /// Unitys inbyggda funktion som itereras så länge ett objekt dras
+    /// </summary>
+    /// <param name="eventData">Data kring eventet</param>
     public void OnDrag(PointerEventData eventData)
     {
         if (tag == "Card")
@@ -240,6 +258,10 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         }
     }
 
+    /// <summary>
+    /// Unitys inbyggda funktion för när ett objekt slutar dras
+    /// </summary>
+    /// <param name="eventData">Data kring eventet</param>
     public void OnEndDrag(PointerEventData eventData)
     {
         //print("On End Drag");
@@ -317,7 +339,11 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                                     weapon.transform.GetChild(3).GetComponent<Image>().enabled = false; 
 
                                     weapon.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false; 
-                                    weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false; 
+                                    weapon.transform.GetChild(3).GetChild(0).GetComponent<Text>().enabled = false;
+
+                                    GameObject hero = GameObject.Find("Enemy Hero");
+                                    hero.transform.GetChild(2).GetComponent<Image>().enabled = false;
+                                    hero.transform.GetChild(2).GetChild(0).GetComponent<Text>().enabled = false;
                                 }
                                 break;
                             case "Razorfen_Hunter":
@@ -371,17 +397,24 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                                 }
                                 break;
                             case "Gnomish_Inventor":
-                                List<string> warriorDeckCards = new List<string>();
-                                for (int i = 0; i < 3; i++)
+                                if(g.playerDeck.transform.childCount < 10)
                                 {
-                                    for (int j = 0; j < g.warriorDeck[i].Count; j++)
+                                    List<string> warriorDeckCards = new List<string>();
+                                    for (int i = 0; i < 3; i++)
                                     {
-                                        warriorDeckCards.Add(g.warriorDeck[i][j]);
+                                        for (int j = 0; j < g.warriorDeck[i].Count; j++)
+                                        {
+                                            warriorDeckCards.Add(g.warriorDeck[i][j]);
+                                        }
                                     }
-                                }
 
-                                int index = Random.Range(0, warriorDeckCards.Count);
-                                g.ImportCard(warriorDeckCards[index], 1);
+                                    int index = Random.Range(0, warriorDeckCards.Count);
+                                    g.ImportCard(warriorDeckCards[index], 1);
+                                }
+                                else
+                                {
+                                    changeMade = false; 
+                                }
                                 break; 
                             default:
                                 break;
@@ -462,24 +495,32 @@ public class OnDragEvents : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                                 }
                                 break;
                             case "Shield_Block":
-                                try
+                                if(g.playerDeck.transform.childCount < 10)
                                 {
-                                    int armor = int.Parse(GameObject.Find("Player Hero").transform.GetChild(3).GetChild(0).GetComponent<Text>().text);
-                                    armor += 5;
-                                    GameObject.Find("Player Hero").transform.GetChild(3).GetChild(0).GetComponent<Text>().text = armor + "";
-
-                                    List<string> warriorDeckCards = new List<string>();
-                                    for(int i = 0; i < 3; i++)
+                                    try
                                     {
-                                        for(int j = 0; j < g.warriorDeck[i].Count; j++)
-                                        {
-                                            warriorDeckCards.Add(g.warriorDeck[i][j]);
-                                        }
-                                    }
+                                        int armor = int.Parse(GameObject.Find("Player Hero").transform.GetChild(3).GetChild(0).GetComponent<Text>().text);
+                                        armor += 5;
+                                        GameObject.Find("Player Hero").transform.GetChild(3).GetChild(0).GetComponent<Text>().text = armor + "";
 
-                                    int index = Random.Range(0, warriorDeckCards.Count);
-                                    g.ImportCard(warriorDeckCards[index], 1);
-                                } catch(System.FormatException fe) { }
+                                        List<string> warriorDeckCards = new List<string>();
+                                        for (int i = 0; i < 3; i++)
+                                        {
+                                            for (int j = 0; j < g.warriorDeck[i].Count; j++)
+                                            {
+                                                warriorDeckCards.Add(g.warriorDeck[i][j]);
+                                            }
+                                        }
+
+                                        int index = Random.Range(0, warriorDeckCards.Count);
+                                        g.ImportCard(warriorDeckCards[index], 1);
+                                    }
+                                    catch (System.FormatException fe) { }
+                                }
+                                else
+                                {
+                                    changeMade = false; 
+                                }
                                 break; 
                             default:
                                 changeMade = false; 

@@ -5,19 +5,32 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
 
+/// <summary>
+/// Tar hand om event kring när kort tas bort och läggs till bland valda kort 
+/// </summary>
 public class CardToDeck : MonoBehaviour, IPointerClickHandler
 {
 
+    /// <summary>
+    /// Konstruktor för CardToDeck
+    /// </summary>
     public CardToDeck()
     {
 
     }
 
+    /// <summary>
+    /// Unitys inbyggda startfunktion
+    /// </summary>
     void Start()
     {
 
     }
 
+    /// <summary>
+    /// Unitys inbyggda startfunktion kring när man klickar på ett objekt 
+    /// </summary>
+    /// <param name="eventData">Data kring eventet</param>
     public void OnPointerClick(PointerEventData eventData)
     {
 
@@ -71,6 +84,9 @@ public class CardToDeck : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    /// <summary>
+    /// Läser om listan med valda kort 
+    /// </summary>
     void ReloadChosenDeck()
     {
 
