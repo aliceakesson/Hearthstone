@@ -42,8 +42,60 @@ public class MenuButtonEvents : MonoBehaviour, IPointerEnterHandler, IPointerExi
         tmp.colorGradient = new TMPro.VertexGradient(tl, tr, bl, br);
     }
 
-    public void PlayGame()
+    public virtual void PlayGame()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+        SwitchScene(1);
+    }
+
+    protected void SwitchScene(int sceneIndex)
+    {
+        switch(sceneIndex)
+        {
+            case 1:
+                AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+                break;
+            case 2:
+                List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;
+                if (cardDeck.Count > 0)
+                {
+                    List<string> cardDeckCopy = new List<string>();
+                    foreach (string card in cardDeck)
+                    {
+                        cardDeckCopy.Add(card);
+                    }
+                    foreach (string card in cardDeckCopy)
+                    {
+                        cardDeck.Remove(card);
+                    }
+                }
+
+                if (GameObject.Find("Scripts").GetComponent<SelectDeck>().cardsChosen == 30)
+                {
+
+                    bool canPlayGame = true;
+
+                    GameObject cards = GameObject.Find("Chosen Deck").transform.GetChild(1).gameObject;
+                    if (cards.transform.childCount != 30)
+                    {
+                        canPlayGame = false;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            string name = cards.transform.GetChild(i).name;
+                            cardDeck.Add(name);
+                        }
+                    }
+
+                    if (canPlayGame)
+                    {
+                        operation = SceneManager.LoadSceneAsync(2);
+                    }
+                }
+            break;
+                default:
+                    break; 
+        }
     }
 }

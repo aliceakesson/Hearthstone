@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SelectDeck : MonoBehaviour
+public class SelectDeck : MenuButtonEvents
 {
 
     int cardsInMenu = 0; 
@@ -88,47 +88,9 @@ public class SelectDeck : MonoBehaviour
 
     }
 
-    public void PlayGame()
+    public override void PlayGame()
     {
-
-        List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;
-        if (cardDeck.Count > 0)
-        {
-            List<string> cardDeckCopy = new List<string>();
-            foreach (string card in cardDeck)
-            {
-                cardDeckCopy.Add(card);
-            }
-            foreach (string card in cardDeckCopy)
-            {
-                cardDeck.Remove(card);
-            }
-        }
-
-        if (cardsChosen == 30)
-        {
-
-            bool canPlayGame = true; 
-
-            GameObject cards = GameObject.Find("Chosen Deck").transform.GetChild(1).gameObject;
-            if(cards.transform.childCount != 30)
-            {
-                canPlayGame = false; 
-            }
-            else
-            {
-                for(int i = 0; i < 30; i++)
-                {
-                    string name = cards.transform.GetChild(i).name;
-                    cardDeck.Add(name);
-                }
-            }
-
-            if(canPlayGame)
-            {
-                AsyncOperation operation = SceneManager.LoadSceneAsync(2);
-            }
-        }
+        SwitchScene(2);
     }
 
 }
