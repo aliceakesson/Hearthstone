@@ -33,6 +33,7 @@ public class Game : MonoBehaviour
     Player p = new Player();
 
     public GameObject enemyDeck;
+    string[] enemyCardDeck = new string[30];
 
     public Canvas defaultCanvas, gameEndedCanvas;
 
@@ -101,11 +102,7 @@ public class Game : MonoBehaviour
         paladinDeck_minion.Add("Stormwind_Champion");
         paladinDeck.Add(paladinDeck_minion);
 
-        ImportCard("River_Crocolisk", 0);
-        ImportCard("Murloc_Tidehunter", 0);
-        ImportCard("Hammer_of_Wrath", 0);
-
-        #region Välja kort efter cardDeck
+        #region Välja spelarens kort efter cardDeck
         List<string> cardDeck = Resources.Load<PublicData>("PublicData").cardDeck;
         List<int> chosenIndexes = new List<int>();
         for (int i = 0; i < 3; i++)
@@ -117,11 +114,68 @@ public class Game : MonoBehaviour
             }
             else
             {
-                while (chosenIndexes.Contains(index))
+                int margin = 1000, k = 0;
+                while (chosenIndexes.Contains(index) && k < margin)
                 {
                     index = Random.Range(0, 29);
+                    k++;
+                }
+                ImportCard(cardDeck[index], 1);
+            }
+        }
+        #endregion
+
+        #region Fiendens cardDeck randomiserat, även ta fram första korten
+        for(int i = 0; i < 30; i++)
+        {
+            string card = "";
+            List<string> deck = new List<string>();
+            for(int j = 0; j < 3; j++)
+            {
+                for(int k = 0; k < paladinDeck[j].Count; k++)
+                {
+                    deck.Add(paladinDeck[j][k]);
                 }
             }
+
+            string card2 = deck[Random.Range(0, deck.Count-1)];
+
+            int n = 0; 
+            foreach(string s in deck)
+            {
+                if (s == card2)
+                    n++;
+            }
+
+            if(n < 2)
+            {
+                card = card2; 
+            }
+            else
+            {
+                int margin = 1000, marginCount = 0;
+                bool cardFound = false; 
+                while(!cardFound && marginCount < margin)
+                {
+                    marginCount++; 
+
+                    card2 = deck[Random.Range(0, deck.Count - 1)];
+
+                    n = 0;
+                    foreach (string s in deck)
+                    {
+                        if (s == card2)
+                            n++;
+                    }
+
+                    if (n < 2)
+                        cardFound = true; 
+                }
+
+                card = card2;
+            }
+
+            enemyCardDeck[i] = card; 
         }
 
         chosenIndexes = new List<int>();
@@ -130,17 +184,17 @@ public class Game : MonoBehaviour
             int index = Random.Range(0, 29);
             if (!chosenIndexes.Contains(index))
             {
-                ImportCard(cardDeck[index], 0);
+                ImportCard(enemyCardDeck[index], 0);
             }
             else
             {
-                int margin = 200, k = 0;
+                int margin = 1000, k = 0;
                 while (chosenIndexes.Contains(index) && k < margin)
                 {
                     index = Random.Range(0, 29);
                     k++;
                 }
-                ImportCard(cardDeck[index], 0);
+                ImportCard(enemyCardDeck[index], 0);
             }
         }
         #endregion
