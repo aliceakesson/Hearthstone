@@ -367,6 +367,8 @@ public class Enemy : Humanoid
             healthText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
             healthText.GetComponent<Text>().color = Color.white;
             healthText.GetComponent<Text>().maskable = false;
+
+            mercObject.GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1.2f);
             #endregion
 
             e.mercenaries.Add(mercObject);

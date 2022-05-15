@@ -110,7 +110,7 @@ public class Game : MonoBehaviour
         paladinDeck.Add(paladinDeck_minion);
 
         #region Välja spelarens kort efter cardDeck
-        for(int i = 0; i < Resources.Load<PublicData>("PublicData").cardDeck.Count; i++)
+        for (int i = 0; i < Resources.Load<PublicData>("PublicData").cardDeck.Count; i++)
         {
             playerCardDeck[i] = Resources.Load<PublicData>("PublicData").cardDeck[i];
         }
@@ -136,7 +136,7 @@ public class Game : MonoBehaviour
         #endregion
 
         #region Fiendens cardDeck randomiserat, även ta fram första korten
-        for(int i = 0; i < 30; i++)
+        for (int i = 0; i < 30; i++)
         {
             string card = "";
             List<string> deck = new List<string>();
@@ -313,6 +313,8 @@ public class Game : MonoBehaviour
             cardObject.GetComponent<Image>().sprite = frame;
             cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(cardWidth, cardHeight);
             cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+            cardObject.GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
             Enemy e = GameObject.Find("Scripts").GetComponent<Enemy>();
             e.cardObjects.Add(cardObject);
@@ -527,6 +529,7 @@ public class Game : MonoBehaviour
                 healthText.layer = LayerMask.NameToLayer("UI");
             }
 
+            cardObject.GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1.2f);
             #endregion
 
             cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 120);
@@ -724,6 +727,8 @@ public class Game : MonoBehaviour
         healthText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
         healthText.GetComponent<Text>().color = Color.white;
         healthText.GetComponent<Text>().maskable = false;
+
+        mercObject.GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1.2f);
         #endregion
 
         if(side == 0)
