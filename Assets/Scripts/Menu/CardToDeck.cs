@@ -21,13 +21,13 @@ public class CardToDeck : MonoBehaviour, IPointerClickHandler
             GameObject example = GameObject.Find("Card Deck Example");
 
             GameObject cardObject = GameObject.Instantiate(example);
-            cardObject.transform.parent = GameObject.Find("Chosen Deck").transform.GetChild(1);
+            cardObject.transform.parent = GameObject.Find("Cards").transform;
             cardObject.name = this.name;
 
             cardObject.AddComponent<CardToDeck>();
 
             int cardsChosen = GameObject.Find("Scripts").GetComponent<SelectDeck>().cardsChosen;
-            cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(startPos.x, startPos.y - yMargin * cardsChosen);
+            //cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(startPos.x, startPos.y - yMargin * cardsChosen);
             
             Card card = Resources.Load<Card>("Cards/" + this.name);
 
