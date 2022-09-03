@@ -640,8 +640,10 @@ public class Game : MonoBehaviour
         mercObject.GetComponent<Mercenary>().health = health;
         mercObject.GetComponent<Mercenary>().attack = attack;
 
+        AddCardToHistory(cardName, side);
+
         #region Skapande av mercenary UI
-        if(side == 1)
+        if (side == 1)
         {
             GameObject border = new GameObject("Green Border", typeof(RectTransform));
             rt = example.transform.GetChild(0).GetComponent<RectTransform>();
@@ -1254,5 +1256,56 @@ public class Game : MonoBehaviour
 
     }
 
+    public void AddCardToHistory(string cardName, int side)
+    {
+
+        GameObject cardHistory = GameObject.Find("Card History");
+        Card card = Resources.Load<Card>(cardsURL + cardName);
+
+        int size = 38;
+        int yMargin = 5;
+        int yStartPos = 160;
+
+        if (cardHistory.transform.childCount > 0)
+        {
+            for (int i = 0; i < cardHistory.transform.childCount; i++)
+            {
+                Vector2 pos = cardHistory.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
+                cardHistory.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector2(pos.x, pos.y - size - yMargin);
+            }
+
+            int limit = 8; 
+            if(cardHistory.transform.childCount > limit)
+            {
+                int difference = limit - cardHistory.transform.childCount; 
+                if(difference > 1)
+                {
+                    for(int i = 0; i < difference; i++)
+                    {
+                        Destroy(cardHistory.transform.GetChild(i + limit));
+                    }
+                }
+                else
+                {
+                    Destroy(cardHistory.transform.GetChild(limit));
+                }
+            }
+        }
+
+        GameObject cardObject = new GameObject("Card", typeof(RectTransform));
+        cardObject.transform.parent = cardHistory.transform;
+
+        cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
+        cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(5, yStartPos);
+        cardObject.layer = LayerMask.NameToLayer("UI");
+
+        cardObject.AddComponent<Image>();
+        cardObject.GetComponent<Image>().sprite = card.image;
+
+        cardObject.transform.SetAsFirstSibling();
+
+        //(lägg till algoritm för färg på border som ändras beroende på int side här)
+
+    }
 
 }
