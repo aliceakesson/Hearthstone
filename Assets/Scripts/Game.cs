@@ -38,6 +38,8 @@ public class Game : MonoBehaviour
 
     public Canvas defaultCanvas, gameEndedCanvas;
 
+    float timer;
+
     /// <summary>
     /// Konstruktor för Game
     /// </summary>
@@ -281,8 +283,20 @@ public class Game : MonoBehaviour
             cb.normalColor = buttonClickable;
             endTurnButton.GetComponent<Button>().colors = cb;
             endTurnButton.GetComponent<Button>().interactable = true;
+
+            timer = 0; 
         }
         prevPlayerTurn = playerTurn;
+
+        if(playerTurn)
+        {
+            timer += Time.deltaTime; 
+            if(timer > 75)
+            {
+                EndTurn();
+                timer = 0; 
+            }
+        }
 
     }
 
