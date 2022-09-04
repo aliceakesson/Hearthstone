@@ -1282,27 +1282,46 @@ public class Game : MonoBehaviour
                 {
                     for(int i = 0; i < difference; i++)
                     {
-                        Destroy(cardHistory.transform.GetChild(i + limit));
+                        Destroy(cardHistory.transform.GetChild(i + limit).gameObject);
                     }
                 }
                 else
                 {
-                    Destroy(cardHistory.transform.GetChild(limit));
+                    Destroy(cardHistory.transform.GetChild(limit).gameObject);
                 }
             }
         }
 
-        GameObject cardObject = new GameObject("Card", typeof(RectTransform));
-        cardObject.transform.parent = cardHistory.transform;
+        GameObject border = new GameObject("Border", typeof(RectTransform));
+        border.transform.parent = cardHistory.transform;
 
-        cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
-        cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(5, yStartPos);
+        border.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
+        border.GetComponent<RectTransform>().anchoredPosition = new Vector2(5, yStartPos);
+        border.layer = LayerMask.NameToLayer("UI");
+
+        border.AddComponent<Image>();
+        if(side == 0)
+        {
+            border.GetComponent<Image>().color = Color.red;
+        }
+        else
+        {
+            border.GetComponent<Image>().color = Color.blue;
+        }
+
+        border.transform.SetAsFirstSibling();
+
+        GameObject cardObject = new GameObject("Card", typeof(RectTransform));
+        cardObject.transform.parent = border.transform;
+
+        int borderSize = 2; 
+
+        cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(size - borderSize*2, size - borderSize*2);
+        cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         cardObject.layer = LayerMask.NameToLayer("UI");
 
         cardObject.AddComponent<Image>();
         cardObject.GetComponent<Image>().sprite = card.image;
-
-        cardObject.transform.SetAsFirstSibling();
 
         //(lägg till algoritm för färg på border som ändras beroende på int side här)
 

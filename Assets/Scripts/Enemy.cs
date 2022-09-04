@@ -518,6 +518,10 @@ public class Enemy : Humanoid
                 e.mercenaries.Remove(mercObject);
                 g.ReloadMercenaries(0);
             }
+            else
+            {
+                g.AddCardToHistory(cardName, 0);
+            }
         }
         else if(card.cardType == CardType.Weapon)
         {
