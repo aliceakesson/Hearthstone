@@ -40,6 +40,8 @@ public class Game : MonoBehaviour
 
     float timer;
 
+    bool lastCardWasSummon = false; 
+
     /// <summary>
     /// Konstruktor för Game
     /// </summary>
@@ -1262,68 +1264,76 @@ public class Game : MonoBehaviour
         GameObject cardHistory = GameObject.Find("Card History");
         Card card = Resources.Load<Card>(cardsURL + cardName);
 
-        int size = 38;
-        int yMargin = 5;
-        int yStartPos = 160;
-
-        if (cardHistory.transform.childCount > 0)
+        if(!lastCardWasSummon)
         {
-            for (int i = 0; i < cardHistory.transform.childCount; i++)
-            {
-                Vector2 pos = cardHistory.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
-                cardHistory.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector2(pos.x, pos.y - size - yMargin);
-            }
+            if (card.description.Contains("Summon"))
+                lastCardWasSummon = true; 
 
-            int limit = 8; 
-            if(cardHistory.transform.childCount > limit)
+            int size = 38;
+            int yMargin = 5;
+            int yStartPos = 160;
+
+            if (cardHistory.transform.childCount > 0)
             {
-                int difference = limit - cardHistory.transform.childCount; 
-                if(difference > 1)
+                for (int i = 0; i < cardHistory.transform.childCount; i++)
                 {
-                    for(int i = 0; i < difference; i++)
+                    Vector2 pos = cardHistory.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
+                    cardHistory.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector2(pos.x, pos.y - size - yMargin);
+                }
+
+                int limit = 8;
+                if (cardHistory.transform.childCount > limit)
+                {
+                    int difference = limit - cardHistory.transform.childCount;
+                    if (difference > 1)
                     {
-                        Destroy(cardHistory.transform.GetChild(i + limit).gameObject);
+                        for (int i = 0; i < difference; i++)
+                        {
+                            Destroy(cardHistory.transform.GetChild(i + limit).gameObject);
+                        }
+                    }
+                    else
+                    {
+                        Destroy(cardHistory.transform.GetChild(limit).gameObject);
                     }
                 }
-                else
-                {
-                    Destroy(cardHistory.transform.GetChild(limit).gameObject);
-                }
             }
-        }
 
-        GameObject border = new GameObject("Border", typeof(RectTransform));
-        border.transform.parent = cardHistory.transform;
+            GameObject border = new GameObject("Border", typeof(RectTransform));
+            border.transform.parent = cardHistory.transform;
 
-        border.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
-        border.GetComponent<RectTransform>().anchoredPosition = new Vector2(5, yStartPos);
-        border.layer = LayerMask.NameToLayer("UI");
+            border.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
+            border.GetComponent<RectTransform>().anchoredPosition = new Vector2(5, yStartPos);
+            border.layer = LayerMask.NameToLayer("UI");
 
-        border.AddComponent<Image>();
-        if(side == 0)
-        {
-            border.GetComponent<Image>().color = Color.red;
+            border.AddComponent<Image>();
+            if (side == 0)
+            {
+                border.GetComponent<Image>().color = Color.red;
+            }
+            else
+            {
+                border.GetComponent<Image>().color = Color.blue;
+            }
+
+            border.transform.SetAsFirstSibling();
+
+            GameObject cardObject = new GameObject(cardName, typeof(RectTransform));
+            cardObject.transform.parent = border.transform;
+
+            int borderSize = 2;
+
+            cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(size - borderSize * 2, size - borderSize * 2);
+            cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+            cardObject.layer = LayerMask.NameToLayer("UI");
+
+            cardObject.AddComponent<Image>();
+            cardObject.GetComponent<Image>().sprite = card.image;
         }
         else
         {
-            border.GetComponent<Image>().color = Color.blue;
+            lastCardWasSummon = false;
         }
-
-        border.transform.SetAsFirstSibling();
-
-        GameObject cardObject = new GameObject("Card", typeof(RectTransform));
-        cardObject.transform.parent = border.transform;
-
-        int borderSize = 2; 
-
-        cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(size - borderSize*2, size - borderSize*2);
-        cardObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        cardObject.layer = LayerMask.NameToLayer("UI");
-
-        cardObject.AddComponent<Image>();
-        cardObject.GetComponent<Image>().sprite = card.image;
-
-        //(lägg till algoritm för färg på border som ändras beroende på int side här)
 
     }
 

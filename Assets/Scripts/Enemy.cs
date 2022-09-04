@@ -390,6 +390,8 @@ public class Enemy : Humanoid
                 e.mercenaries[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + width / 2, 0);
             }
 
+            bool summonMade = false; 
+
             switch (cardName) //battlecry events
             {
                 case "Guardian_of_Kings":
@@ -422,13 +424,21 @@ public class Enemy : Humanoid
                     break;
                 case "Murloc_Tidehunter":
                     if (GameObject.Find("Enemy Board").transform.childCount < 6)
+                    {
+                        g.AddCardToHistory(cardName, 0); 
                         g.ImportMercenary("Murloc_Scout", 0);
+                        summonMade = true; 
+                    }
                     else
                         changeMade = false;
                     break;
                 case "Razorfen_Hunter":
                     if (GameObject.Find("Enemy Board").transform.childCount < 6)
+                    {
+                        g.AddCardToHistory(cardName, 0);
                         g.ImportMercenary("Boar", 0);
+                        summonMade = true; 
+                    }
                     else
                         changeMade = false; 
                     break;
@@ -518,8 +528,9 @@ public class Enemy : Humanoid
                 e.mercenaries.Remove(mercObject);
                 g.ReloadMercenaries(0);
             }
-            else
+            else if(!summonMade)
             {
+                print("!summonMade");
                 g.AddCardToHistory(cardName, 0);
             }
         }
