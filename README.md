@@ -20,4 +20,5 @@ Currently includes:
 ![hearthstone 2](https://user-images.githubusercontent.com/91065258/167304801-8e659754-0661-47a0-b622-19bd05cb3d14.png)
 ![hearthstone 3](https://user-images.githubusercontent.com/91065258/167304803-520ec621-114e-434f-9805-0826a3b774b0.png)
 
-sometimes i turn on the program just to listen to the sick tune 
+
+###### *sometimes i turn on the program just to listen to the sick tune*
