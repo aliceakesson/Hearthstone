@@ -1,3 +1,5 @@
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/aliceakesson)
+
 # Hearthstone
 Hearthstone in Unity with focus on OOP (exam project for coding class)
 
